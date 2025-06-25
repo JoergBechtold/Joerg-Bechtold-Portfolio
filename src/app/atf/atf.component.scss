@@ -1,7 +1,9 @@
 @import '../../assets/styles/variables.scss';
+@import '../../assets/styles/mixins.scss';
 
 
-.aft-main{
+
+.atf-main{
     height: 100dvh;
     width: 100%;
     background-color: $primary-bg-gray;
