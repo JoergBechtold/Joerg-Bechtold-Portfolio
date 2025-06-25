@@ -1,7 +1,7 @@
 
 import { Routes } from '@angular/router';
-import { AtfComponent } from './atf/atf.component';
+import { MainContentComponent } from './main-content/main-content.component';
 
 export const routes: Routes = [
-    { path: '', component: AtfComponent },
+    { path: '', component: MainContentComponent },
 ];
