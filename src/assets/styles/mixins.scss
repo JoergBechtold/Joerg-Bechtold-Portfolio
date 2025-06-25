@@ -1,5 +1,6 @@
-@mixin dFlexAllCenter($ai: center , $jc: center){
+@mixin dFlexAllCenter($ai: center , $jc: center, $g: 0){
   display: flex;
   align-items: $ai;
   justify-content: $jc;
+  gap: $g;
 }
