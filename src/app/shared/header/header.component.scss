@@ -1,0 +1,26 @@
+@import '../../../assets/styles/variables.scss';
+
+.header{
+    height: 110px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $primary-bg-gray;
+    padding-inline: $padding-inline-25-100;
+}
+
+.header-icon-box{
+    width: 105px;
+    display: grid;
+    place-items: center;
+    
+     img{
+        width: 100%;
+     }
+
+}
