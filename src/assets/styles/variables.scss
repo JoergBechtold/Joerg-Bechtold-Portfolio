@@ -5,11 +5,17 @@ $primary-bg-purple:#9747FF;
 $primary-bg-turquoise:#1CDAE6;
 $not-valide-red: #E61C40;
 $send-message-btn-gray: #00000040;
-$btn-white: #FFFFFF;
+$white: #FFFFFF;
 $btn-transparent: #00000000;
 
 //padding
 $padding-inline-25-100: clamp(25px, 10px + 4.6875vw, 100px);
 
+//header-hight
+$header-hight: 110px;
+
 //font-sizes
 $font-size-23: 23px;
+
+//width
+$max-width-1920: 1920px;

@@ -1,17 +1,22 @@
 @import '../../../assets/styles/variables.scss';
+@import '../../../styles.scss';
 
 .header{
-    height: 110px;
+    height: $header-hight;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    @include dFlexAllCenter();
     background-color: $primary-bg-gray;
     padding-inline: $padding-inline-25-100;
+}
+
+.header-content-box{
+    width: 100%;
+    max-width: $max-width-1920;
+    @include dFlexAllCenter( $jc: space-between);
 }
 
 .header-icon-box{
@@ -19,8 +24,17 @@
     display: grid;
     place-items: center;
     
-     img{
+     >img{
         width: 100%;
+        &:hover{
+            cursor: pointer;
+        }
      }
 
+}
+
+.links-header{
+    >a{
+        color: $white;
+    }
 }
