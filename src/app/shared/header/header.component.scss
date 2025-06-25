@@ -60,15 +60,37 @@ nav{
 
 .language-btns{
     @include dFlexAllCenter( $jc: space-between, $g: 14px);
-    
-    >button{
-        color: $white;
-        font-size: 23px;
-        font-weight: 400;
-        background-color: transparent;
-        border: 1px solid $primary-bg-green;
-        border-radius: 10px;
-        padding: 5px 8px 5px 8px;
+
+    > button {
+    color: $white;
+    font-size: 23px;
+    font-weight: 400;
+    background-color: transparent;
+    border: 1px solid $primary-bg-green;
+    border-radius: 10px;
+    padding: 5px 8px 5px 8px;
+    cursor: pointer; // Add cursor pointer for better UX
+    transition: background-color 0.3s ease, color 0.3s ease; // Smooth transition
+
+    // Styles for the active button
+    &.active-button {
+      background-color: $primary-bg-green; // Use your primary green variable
+      color: $white; // Ensure text color is white for contrast
     }
+
+    &:hover:not(.active-button) { // Optional: hover effect for non-active buttons
+      background-color: rgba($primary-bg-green, 0.2); // Slightly lighter green on hover
+    }
+  }
+    
+    // >button{
+    //     color: $white;
+    //     font-size: 23px;
+    //     font-weight: 400;
+    //     background-color: transparent;
+    //     border: 1px solid $primary-bg-green;
+    //     border-radius: 10px;
+    //     padding: 5px 8px 5px 8px;
+    // }
     
 }

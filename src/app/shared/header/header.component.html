@@ -15,8 +15,12 @@
             </div>
 
             <div class="language-btns">
-                <button>DE</button>
-                <button>EN</button>
+                <button [ngClass]="{ 'active-button': activeLanguage === 'DE' }" (click)="setLanguage('DE')">
+                    DE
+                </button>
+                <button [ngClass]="{ 'active-button': activeLanguage === 'EN' }" (click)="setLanguage('EN')">
+                    EN
+                </button>
             </div>
         </nav>
 
