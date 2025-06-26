@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
-import { ContactNavAtfComponent } from './atf/contact-nav-atf/contact-nav-atf.component';
+import { OverlayLandscapeComponent } from './overlay-landscape/overlay-landscape.component';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, HeaderComponent, FooterComponent, ContactNavAtfComponent],
+  imports: [CommonModule, RouterOutlet, HeaderComponent, FooterComponent, OverlayLandscapeComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

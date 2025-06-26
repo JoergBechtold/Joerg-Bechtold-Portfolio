@@ -1,11 +1,39 @@
-@import '../../assets/styles/variables.scss';
-@import '../../assets/styles/mixins.scss';
+@import "../../assets/styles/variables.scss";
+@import "../../assets/styles/mixins.scss";
 
+section{
+  height: 100dvh;
+  width: 100%;
+  background-color: $primary-bg-gray;
+  padding-top: $header-hight;
+  position: relative;
+  background-image: url(../../assets/img/background/HERO-BACKGROUND.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 0px 230px;
+  
+}
 
+.scroll-down-box {
+  position: absolute;
+  bottom: 110px;
+  right: 80px;
+  @include dFlexAllCenter($jc: space-between, $g: 3px);
+  transform: rotate(90deg);
+  
+  > p {
+    color: $white;
+    font-size: 23px;
+    font-weight: 400;
+    user-select: none;
+    -webkit-user-select: none; 
+    -moz-user-select: none;    
+    -ms-user-select: none;  
+  }
 
-.atf-main{
-    height: 100dvh;
-    width: 100%;
-    background-color: $primary-bg-gray;
-    padding-top: $header-hight;
+  > img {
+    width: 16px;
+    aspect-ratio: 1/1;
+    transform: rotate(-90deg) translateX(-1px);
+  }
 }

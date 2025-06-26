@@ -11,13 +11,7 @@
     @include dFlexAllCenter();
     background-color: $primary-bg-gray;
     padding-inline: $padding-inline-25-100;
-}
-
-.header-content-box{
-    width: 100%;
-    height: 100%;
-    max-width: $max-width-1920;
-    @include dFlexAllCenter( $jc: space-between);
+    z-index: 2;
 }
 
 .header-icon-box{
@@ -41,9 +35,20 @@
     }
 }
 
-nav{
-    @include dFlexAllCenter( $jc: space-between, $g: 92px);
+.header-content-box{
+    width: 100%;
+    height: 100%;
+    max-width: $max-width-1920;
+    @include dFlexAllCenter( $jc: space-between);
+
+     >nav{
+       @include dFlexAllCenter( $jc: space-between, $g: 92px);
+     }
 }
+
+
+
+
 
 .links-header{
     @include dFlexAllCenter( $jc: space-between, $g: 29px);

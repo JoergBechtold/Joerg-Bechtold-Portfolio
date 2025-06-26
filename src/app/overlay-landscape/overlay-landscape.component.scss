@@ -1,0 +1,12 @@
+@import '../../assets/styles/variables.scss';
+@import '../../assets/styles/mixins.scss';
+
+section{
+    height: 100dvh;
+    width: 100%;
+    background-color: aqua;
+    position: relative;
+    z-index: 10;
+    @include dFlexAllCenter();
+    display: none;
+}
