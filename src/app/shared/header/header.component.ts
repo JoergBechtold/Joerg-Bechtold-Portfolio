@@ -9,10 +9,5 @@ import { Component } from '@angular/core';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  activeLanguage: string = 'DE'; // Initialize with 'DE' as active
-
-  setLanguage(language: string) {
-    this.activeLanguage = language;
-  }
 
 }

@@ -1,0 +1,19 @@
+
+@import '../../../assets/styles/variables.scss';
+@import '../../../assets/styles/mixins.scss';
+
+section{
+  @include dFlexAllCenter($jc: space-between,$g: 32px);
+
+  > img {
+    transition: transform 0.2s ease-in-out;
+    cursor: pointer;
+    width: 30px;
+    aspect-ratio: 1/1;
+    
+    &:hover {
+        transform: scale(1.4) translateX(5px);
+    }
+  }
+
+}

@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { OverlayLandscapeComponent } from './overlay-landscape/overlay-landscape.component';
+// import { SocialMediaComponent } from './shared/social-media/social-media.component';
 
 
 @Component({

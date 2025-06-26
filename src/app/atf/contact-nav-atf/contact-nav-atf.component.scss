@@ -13,25 +13,7 @@ section {
     font-size: 23px;
   }
 
-  > img {
-    transition: transform 0.2s ease-in-out;
-
-    &:nth-of-type(2),
-    &:nth-of-type(3),
-    &:nth-of-type(4) {
-      cursor: pointer;
-      width: 30px;
-      aspect-ratio: 1/1;
-    }
-
-    &:hover {
-      &:nth-of-type(2),
-      &:nth-of-type(3),
-      &:nth-of-type(4) {
-        transform: scale(1.4) translateX(5px);
-      }
-    }
-  }
+  
 }
 
 
