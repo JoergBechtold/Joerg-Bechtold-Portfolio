@@ -9,9 +9,38 @@ section{
  height: 291px;
  border-top: 4px solid $primary-bg-green;
  @include paddingLeftRightHolePage();
+}
+
+p{
+         @include fontSizeWeightColor();
 
 }
 
 .footer-icon-box{
-    @include headerFooterLogoStyle()
+    @include headerFooterLogoStyle();
+    gap: 10px;
+    
+   > a:nth-of-type(2){
+         @include fontSizeWeightColor($si:16px);
+         position: relative;
+         overflow: hidden;
+
+           &::before {
+            content: '';
+            position: absolute;
+            bottom: 0; 
+            left: 0; 
+            width: 0;
+            height: 2.5px; 
+            background-color:$primary-bg-green; 
+            transition: width 0.3s ease-out;
+        }
+
+        &:hover {
+            &::before {
+                width: 50%;
+            }
+        }
+         
+    }
 }
