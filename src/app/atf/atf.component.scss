@@ -7,17 +7,48 @@ section{
   background-color: $primary-bg-gray;
   padding-top: $header-hight;
   position: relative;
-  background-image: url(../../assets/img/background/HERO-BACKGROUND.svg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 0px 230px;
 }
 
 main{
+  display: flex;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-10%, -70%);
+  z-index: 5;
+}
+
+.main-bg-img{
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+
+    > img:nth-child(1) {
+        position: absolute; 
+        left: 0;
+        bottom: -115px;                
+        width: 983px;    
+        display: block; 
+        z-index: 1;   
+    }
+
+    > img:nth-child(2) {
+        position: absolute;
+        left: 0; 
+        width: 100%;
+        bottom: -730px;                  
+        display: block; 
+        z-index: 2;   
+    }
+
+      > img:nth-child(3) {
+        left: 170px;
+        position: absolute; 
+        width: 537px;                  
+        display: block;    
+        z-index: 3;
+    }
 }
 
 .main-content{
@@ -63,19 +94,20 @@ main{
 }
 
 .vertical-text {
-    @include fontSizeWeightColor($si: 90px, $we:400);
+    @include fontSizeWeightColor($si: 70px, $we:400);
     white-space: nowrap; 
     transform: rotate(-90deg) translateX(-50%);
     transform-origin: bottom left;
     position: absolute;
     left: 0px; 
-    bottom: 50%;
+    bottom: 48%;
 }
 
 .scroll-down-box {
   position: absolute;
   bottom: 110px;
   right: 80px;
+  z-index: 5;
   @include dFlexAllCenter($jc: space-between, $g: 3px);
   transform: rotate(90deg);
   

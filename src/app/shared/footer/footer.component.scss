@@ -3,17 +3,25 @@
 
 
 section{
-@include dFlexAllCenter($jc:space-between);
- background-color: $primary-bg-gray;
- width: 100%;
- height: 291px;
- border-top: 4px solid $primary-bg-green;
- @include paddingLeftRightHolePage();
+    position: absolute;
+    left: 0;
+    right: 0;
+     background-color: $primary-bg-gray;
+    @include dFlexAllCenter();
+     height: 291px;
+     border-top: 4px solid $primary-bg-green;
+     @include paddingLeftRightHolePage();
+}
+
+.footer-content{
+     max-width: $max-width-1920;
+    @include dFlexAllCenter($jc:space-between);
+    width: 100%;
+    height: 100%
 }
 
 p{
-         @include fontSizeWeightColor();
-
+     @include fontSizeWeightColor();
 }
 
 .footer-icon-box{

@@ -6,6 +6,7 @@ section {
   left: 0;
   bottom: 25px;
   @include dFlexAllCenter($jc: space-between,$g: 32px);
+  z-index: 5;
 
   
   > a {
