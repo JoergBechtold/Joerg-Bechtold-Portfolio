@@ -5,14 +5,20 @@
 section{
   @include dFlexAllCenter($jc: space-between,$g: 32px);
 
-  > img {
+  > a {
     transition: transform 0.2s ease-in-out;
     cursor: pointer;
     width: 30px;
     aspect-ratio: 1/1;
     
+    
     &:hover {
         transform: scale(1.4) translateX(5px);
+    }
+
+    > img{
+        width: 100%;
+        display: block;
     }
   }
 
