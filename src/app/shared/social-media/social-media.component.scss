@@ -10,10 +10,10 @@ section{
     cursor: pointer;
     width: 30px;
     aspect-ratio: 1/1;
-    
-    
+    transform-origin: left center;
+
     &:hover {
-        transform: scale(1.4) translateX(5px);
+        transform: scale(1.4);
     }
 
     > img{
