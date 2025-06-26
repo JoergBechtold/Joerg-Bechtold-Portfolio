@@ -33,15 +33,12 @@
 
          >img{
          width: 100%;
-       
-         &:hover{
+        
+          &:hover{
            cursor: pointer;
-        }
+          }
+         }
     }
-    }
-    
-   
-
 }
 
 nav{
@@ -55,6 +52,11 @@ nav{
         color: $white;
         font-size: 23px;
         font-weight: 400;
+        transition:  color 0.3s ease; 
+
+        &:hover{
+            color: $primary-bg-green;
+        }
     }
 }
 
