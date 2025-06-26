@@ -22,9 +22,7 @@ section{
   transform: rotate(90deg);
   
   > p {
-    color: $white;
-    font-size: 23px;
-    font-weight: 400;
+    @include fontSizeWeightColor();
     user-select: none;
     -webkit-user-select: none; 
     -moz-user-select: none;    

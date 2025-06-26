@@ -2,8 +2,16 @@
 @import '../../../assets/styles/mixins.scss';
 
 
+section{
+@include dFlexAllCenter($jc:space-between);
+ background-color: $primary-bg-gray;
+ width: 100%;
+ height: 291px;
+ border-top: 4px solid $primary-bg-green;
+ @include paddingLeftRightHolePage();
 
+}
 
-p{
-    background-color: $primary-bg-purple;
+.footer-icon-box{
+    @include headerFooterLogoStyle()
 }

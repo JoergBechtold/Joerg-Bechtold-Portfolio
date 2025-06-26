@@ -1,6 +1,41 @@
+@import '../styles/variables.scss';
+
+
 @mixin dFlexAllCenter($ai: center , $jc: center, $g: 0){
   display: flex;
   align-items: $ai;
   justify-content: $jc;
   gap: $g;
+}
+
+@mixin headerFooterLogoStyle(){
+    width: 105px;
+    height: auto;
+    display: grid;
+    place-items: center; 
+
+    >a{
+        display: block; 
+        height: 100%;  
+        width: 100%; 
+
+         >img{
+         width: 100%;
+        
+          &:hover{
+           cursor: pointer;
+          }
+         }
+      }
+}
+
+@mixin paddingLeftRightHolePage(){
+    padding-inline: $padding-inline-25-100;
+}
+
+@mixin fontSizeWeightColor($si: 23px, $we:400, $co:white){
+  font-size: $si;
+  font-weight: $we;
+  color: $co;
+
 }

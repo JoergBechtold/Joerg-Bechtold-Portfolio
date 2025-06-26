@@ -10,29 +10,12 @@
     width: 100%;
     @include dFlexAllCenter();
     background-color: $primary-bg-gray;
-    padding-inline: $padding-inline-25-100;
+    @include paddingLeftRightHolePage();
     z-index: 2;
 }
 
 .header-icon-box{
-    width: 105px;
-    height: auto;
-    display: grid;
-    place-items: center; 
-
-    >a{
-        display: block; 
-        height: 100%;  
-        width: 100%; 
-
-         >img{
-         width: 100%;
-        
-          &:hover{
-           cursor: pointer;
-          }
-         }
-    }
+  @include headerFooterLogoStyle()
 }
 
 .header-content-box{
@@ -46,17 +29,11 @@
      }
 }
 
-
-
-
-
 .links-header{
     @include dFlexAllCenter( $jc: space-between, $g: 29px);
 
     >a{
-        color: $white;
-        font-size: 23px;
-        font-weight: 400;
+        @include fontSizeWeightColor();
         transition:  color 0.3s ease; 
 
         &:hover{
@@ -69,9 +46,7 @@
     @include dFlexAllCenter( $jc: space-between, $g: 14px);
 
     > button {
-      color: $white;
-      font-size: 23px;
-      font-weight: 400;
+      @include fontSizeWeightColor();
       background-color: transparent;
       border: 1px solid $primary-bg-green;
       border-radius: 10px;

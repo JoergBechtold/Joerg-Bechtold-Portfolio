@@ -1,6 +1,8 @@
 
 @import '../src/assets/styles/fonts.scss';
 @import '../src/assets/styles/variables.scss';
+@import '../src/assets/styles/mixins.scss';
+
 
 
 
@@ -11,6 +13,9 @@
   padding: 0;
   font-family: 'Poppins';
 }
+// body{
+//   // overflow-x: hidden;
+// }
 
 a{
   text-decoration: unset;
