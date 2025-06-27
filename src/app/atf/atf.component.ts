@@ -7,11 +7,10 @@ import { TranslateService, TranslateModule, LangChangeEvent } from '@ngx-transla
 
 
 @Component({
-  selector: 'app-atf',
-  standalone: true,
-  imports: [CommonModule, ContactNavAtfComponent, TranslateModule],
-  templateUrl: './atf.component.html',
-  styleUrl: './atf.component.scss'
+    selector: 'app-atf',
+    imports: [CommonModule, ContactNavAtfComponent, TranslateModule],
+    templateUrl: './atf.component.html',
+    styleUrl: './atf.component.scss'
 })
 
 

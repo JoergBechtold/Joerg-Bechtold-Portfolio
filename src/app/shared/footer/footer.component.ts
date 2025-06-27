@@ -6,11 +6,10 @@ import { SocialMediaComponent } from '../social-media/social-media.component';
 import { BaseTranslatableComponent } from '../base/base.component';
 
 @Component({
-  selector: 'app-footer',
-  standalone: true,
-  imports: [CommonModule, SocialMediaComponent, TranslateModule],
-  templateUrl: './footer.component.html',
-  styleUrl: './footer.component.scss'
+    selector: 'app-footer',
+    imports: [CommonModule, SocialMediaComponent, TranslateModule],
+    templateUrl: './footer.component.html',
+    styleUrl: './footer.component.scss'
 })
 
 export class FooterComponent extends BaseTranslatableComponent implements OnInit {

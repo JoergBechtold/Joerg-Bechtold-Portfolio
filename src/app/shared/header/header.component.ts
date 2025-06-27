@@ -6,15 +6,14 @@ import { RouterLink } from '@angular/router';
 import { BaseTranslatableComponent } from '../base/base.component';
 
 @Component({
-  selector: 'app-header',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterLink,
-    TranslateModule
-  ],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+    selector: 'app-header',
+    imports: [
+        CommonModule,
+        RouterLink,
+        TranslateModule
+    ],
+    templateUrl: './header.component.html',
+    styleUrl: './header.component.scss'
 })
 export class HeaderComponent extends BaseTranslatableComponent implements OnInit {
 
