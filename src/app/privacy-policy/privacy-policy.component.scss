@@ -1,0 +1,13 @@
+@import '../../assets/styles/variables.scss';
+@import '../../assets/styles/mixins.scss';
+
+
+section{
+    padding-top: $header-hight;
+    height: 100dvh;
+}
+
+.privacy-policy-content{
+    max-width: $max-width-1920;
+
+}
