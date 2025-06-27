@@ -1,8 +1,9 @@
-import { ApplicationConfig, importProvidersFrom, inject, provideAppInitializer } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { ApplicationConfig, importProvidersFrom, inject, provideAppInitializer, APP_ID } from '@angular/core';
+import { provideRouter, withNavigationErrorHandler } from '@angular/router';
 import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
 
 import { routes } from './app.routes';
 
@@ -23,9 +24,16 @@ function appInitializer(translate: TranslateService) {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes),
-    provideHttpClient(withFetch()),
+    { provide: APP_ID, useValue: 'joerg-bechtold-app' },
+    provideRouter(
+      routes,
+      withNavigationErrorHandler((error) => {
+        console.error('Router Navigation Error:', error);
 
+      })
+    ),
+
+    provideHttpClient(withFetch()),
     importProvidersFrom(TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -35,8 +43,8 @@ export const appConfig: ApplicationConfig = {
     })),
 
     provideAppInitializer(() => {
-        const initializerFn = (appInitializer)(inject(TranslateService));
-        return initializerFn();
-      })
+      const initializerFn = appInitializer(inject(TranslateService));
+      return initializerFn();
+    })
   ]
 };
