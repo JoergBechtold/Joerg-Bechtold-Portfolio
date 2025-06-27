@@ -3,12 +3,13 @@ import { AboutMeComponent } from '../components-sections/about-me/about-me.compo
 import { MySkillsComponent } from '../components-sections/my-skills/my-skills.component';
 import { PortfolioComponent } from '../components-sections/portfolio/portfolio.component';
 import { AtfComponent } from "../atf/atf.component";
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @Component({
   selector: 'app-main-content',
   standalone: true,
-  imports: [AboutMeComponent, MySkillsComponent, PortfolioComponent, AtfComponent],
+  imports: [AboutMeComponent, MySkillsComponent, PortfolioComponent, AtfComponent, TranslateModule],
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss'
 })

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { RouterLink } from '@angular/router';
+import { LangChangeEvent } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-header',
@@ -18,23 +19,18 @@ export class HeaderComponent implements OnInit {
   activeLanguage: string = 'de';
 
   constructor(public translate: TranslateService) {
-    translate.addLangs(['de', 'en']);
-    translate.setDefaultLang('de');
+
   }
 
   ngOnInit() {
-    const browserLang = this.translate.getBrowserLang();
-    const initialLang = browserLang && browserLang.match(/en|de/) ? browserLang : 'de';
-
-    this.translate.use(initialLang).subscribe(() => {
-      this.activeLanguage = initialLang;
-    });
-
-    this.translate.onLangChange.subscribe(event => {
+    this.activeLanguage = this.translate.currentLang;
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
       this.activeLanguage = event.lang;
+      console.log('Sprache im Header geändert zu:', this.activeLanguage);
     });
-  }
 
+
+  }
   setLanguage(lang: string) {
     this.translate.use(lang);
   }
