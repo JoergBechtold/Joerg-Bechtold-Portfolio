@@ -13,5 +13,15 @@
   },
   "FOOTER": {
     "LEGAL_NOTICE": "Impressum"
+  },
+  "ALT_TEXTS": {
+    "ARROW_DOWN_WHITE": "Weißer Pfeil nach unten",
+    "MAIN_SECTION_GRAY": "Grauer Bereich der Hauptsektion" 
+  },
+   "ATF": {
+    "SCROLL_DOWN": "nach unten scrollen",
+    "I_AM": "Ich bin",
+    "LETS_TALK": "Lass uns reden"
   }
+
 }

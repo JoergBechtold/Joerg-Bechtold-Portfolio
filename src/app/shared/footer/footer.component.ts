@@ -1,10 +1,9 @@
+// src/app/shared/footer/footer.component.ts
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { LangChangeEvent } from '@ngx-translate/core';
+import { TranslateService, TranslateModule, LangChangeEvent } from '@ngx-translate/core';
 import { SocialMediaComponent } from '../social-media/social-media.component';
-
-
+import { BaseTranslatableComponent } from '../base/base.component';
 
 @Component({
   selector: 'app-footer',
@@ -13,16 +12,18 @@ import { SocialMediaComponent } from '../social-media/social-media.component';
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss'
 })
-export class FooterComponent implements OnInit {
-  activeLanguage: string = 'de';
 
-  constructor(private translate: TranslateService) { }
+export class FooterComponent extends BaseTranslatableComponent implements OnInit {
 
-  ngOnInit() {
-    this.activeLanguage = this.translate.currentLang;
-    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-      this.activeLanguage = event.lang;
-      console.log('Sprache im Footer geändert zu:', this.activeLanguage);
-    });
+  constructor(protected override translate: TranslateService) {
+    super(translate);
   }
+
+  override ngOnInit(): void {
+    super.ngOnInit();
+  }
+
+  // protected override onLanguageChanged(newLang: string): void {
+
+  // }
 }

@@ -3,8 +3,9 @@
         <app-contact-nav-atf></app-contact-nav-atf>
 
         <div class="scroll-down-box">
-            <p>Scroll down</p>
-            <img src="../../assets/icons/general-icons/ARROW-DOWN-WHITE.svg" alt="Main Section Gray">
+            <p>{{ 'ATF.SCROLL_DOWN' | translate }}</p>
+            <img src="../../assets/icons/general-icons/ARROW-DOWN-WHITE.svg"
+                alt="{{ 'ALT_TEXTS.MAIN_SECTION_GRAY' | translate }}">
         </div>
 
         <div class="main-bg-img">
@@ -16,11 +17,15 @@
         <main>
             <div class="main-content">
                 <div class="intro-text">
-                    <span class="vertical-text">I am</span>
+                    <span [ngStyle]="{
+                        'font-size': activeLanguage === 'de' ? '50px' : '70px',
+                        'transform': activeLanguage === 'de' ? 'rotate(-90deg) translateX(-52%)' : 'rotate(-90deg) translateX(-50%)'
+                    }" class="vertical-text">{{
+                        'ATF.I_AM' | translate }}</span>
                     <h1>Jörg Bechtold</h1>
                     <h2>FRONTEND DEVELOPER</h2>
                 </div>
-                <button class="call-to-action-button">Let's talk!</button>
+                <button class="call-to-action-button">{{ 'ATF.LETS_TALK' | translate }}</button>
             </div>
         </main>
     </div>

@@ -13,5 +13,14 @@
   },
   "FOOTER": {
     "LEGAL_NOTICE": "Legal Notice"
+  },
+  "ALT_TEXTS": {
+    "ARROW_DOWN_WHITE": "White arrow down",
+    "MAIN_SECTION_GRAY": "Main Section Gray Area" 
+  },
+   "ATF": {
+    "SCROLL_DOWN": "scroll down",
+    "I_AM": "I am",
+    "LETS_TALK": "Let's talk!"
   }
 }
