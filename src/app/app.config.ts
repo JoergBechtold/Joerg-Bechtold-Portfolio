@@ -1,6 +1,6 @@
 import { ApplicationConfig, importProvidersFrom, APP_INITIALIZER } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
@@ -24,7 +24,8 @@ function appInitializer(translate: TranslateService) {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    importProvidersFrom(HttpClient),
+    provideHttpClient(withFetch()),
+
     importProvidersFrom(TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
