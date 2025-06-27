@@ -1,7 +1,7 @@
 
-@import '../src/assets/styles/fonts.scss';
-@import '../src/assets/styles/variables.scss';
-@import '../src/assets/styles/mixins.scss';
+@use '../src/assets/styles/fonts.scss' as*;
+@use '../src/assets/styles/variables.scss' as*;
+@use '../src/assets/styles/mixins.scss' as*;
 
 
 
