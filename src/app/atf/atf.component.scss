@@ -118,7 +118,7 @@ main{
   z-index: 5;
   @include dFlexAllCenter($jc: space-between, $g: 3px);
   transform: rotate(90deg);
-  // animation: scrollDownBounce 2s ease-in-out infinite;
+  animation: scrollDownBounce 2s ease-in-out infinite;
   
   > p {
     @include fontSizeWeightColor();
@@ -132,7 +132,7 @@ main{
     width: 16px;
     aspect-ratio: 1/1;
     transform: rotate(-90deg) translateX(-1px);
-    //  animation: arrowWiggle 0.8s ease-in-out infinite alternate;
+     animation: arrowWiggle 0.8s ease-in-out infinite alternate;
   }
 
 @keyframes scrollDownBounce {
