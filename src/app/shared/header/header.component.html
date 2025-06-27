@@ -1,4 +1,4 @@
-<div class="header">
+<!-- <div class="header">
     <div class="header-content-box">
         <div class="header-icon-box">
             <a title="Startseite" href="index.html">
@@ -8,17 +8,19 @@
 
         <nav>
             <div class="links-header">
-                <a href="">About me</a>
-                <a href="">Skills</a>
-                <a href="">Portfolio</a>
+                <a href="" translate="HEADER.ABOUT_ME"></a>
+                <a href="" translate="HEADER.SKILLS"></a>
+                <a href="" translate="HEADER.PORTFOLIO"></a>
 
             </div>
 
             <div class="language-btns">
-                <button [ngClass]="{ 'active-button': activeLanguage === 'DE' }" (click)="setLanguage('DE')">
+                <button translate="HEADER.LANG_DE" [ngClass]="{ 'active-button': activeLanguage === 'de' }"
+                    (click)="setLanguage('de')">
                     DE
                 </button>
-                <button [ngClass]="{ 'active-button': activeLanguage === 'EN' }" (click)="setLanguage('EN')">
+                <button translate="HEADER.LANG_EN" [ngClass]="{ 'active-button': activeLanguage === 'en' }"
+                    (click)="setLanguage('en')">
                     EN
                 </button>
             </div>
@@ -26,4 +28,33 @@
 
     </div>
 
+</div> -->
+
+<div class="header">
+    <div class="header-content-box">
+        <div class="header-icon-box">
+            <a title="Startseite" routerLink="/">
+                <img src="../../../assets/img/HEADER-Name.png" alt="Header icon">
+            </a>
+        </div>
+
+        <nav>
+            <div class="links-header">
+                <a routerLink="/about-me" translate="HEADER.ABOUT_ME"></a>
+                <a routerLink="/skills" translate="HEADER.SKILLS"></a>
+                <a routerLink="/portfolio" translate="HEADER.PORTFOLIO"></a>
+            </div>
+
+            <div class="language-btns">
+                <button translate="HEADER.LANG_DE" [ngClass]="{ 'active-button': activeLanguage === 'de' }"
+                    (click)="setLanguage('de')">
+
+                </button>
+                <button translate="HEADER.LANG_EN" [ngClass]="{ 'active-button': activeLanguage === 'en' }"
+                    (click)="setLanguage('en')">
+
+                </button>
+            </div>
+        </nav>
+    </div>
 </div>

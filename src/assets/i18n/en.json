@@ -1,0 +1,12 @@
+{
+  "HEADER": {
+    "ABOUT_ME": "About me",
+    "SKILLS": "Skills",
+    "PORTFOLIO": "Portfolio",
+    "LANG_DE": "DE",
+    "LANG_EN": "EN"
+  },
+  "MAIN": {
+    "GREETING": "Hello World!"
+  }
+}
