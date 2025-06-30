@@ -4,6 +4,7 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { RouterLink } from '@angular/router';
 import { BaseTranslatableComponent } from '../base/base.component';
+import { SidenavComponent } from "./sidenav/sidenav.component";
 
 @Component({
   selector: 'app-header',
@@ -11,6 +12,7 @@ import { BaseTranslatableComponent } from '../base/base.component';
     CommonModule,
     RouterLink,
     TranslateModule,
+    SidenavComponent
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
@@ -18,7 +20,6 @@ import { BaseTranslatableComponent } from '../base/base.component';
 export class HeaderComponent extends BaseTranslatableComponent implements OnInit {
   isMenuOpen: boolean = false;
   @Output() toggleSidebarEvent = new EventEmitter<void>();
-
 
   constructor(public override translate: TranslateService) {
     super(translate);
@@ -31,7 +32,6 @@ export class HeaderComponent extends BaseTranslatableComponent implements OnInit
   setLanguage(lang: string) {
     this.translate.use(lang);
   }
-
 
   toggleSidebar(): void {
     this.isMenuOpen = !this.isMenuOpen;
