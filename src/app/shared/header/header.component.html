@@ -8,27 +8,6 @@
 
         <app-header-nav></app-header-nav>
 
-
-        <!-- 
-        <nav class="hide-mobile">
-            <div class="links-header">
-                <a routerLink="/about-me" translate="HEADER.ABOUT_ME"></a>
-                <a routerLink="/skills" translate="HEADER.SKILLS"></a>
-                <a routerLink="/portfolio" translate="HEADER.PORTFOLIO"></a>
-            </div>
-
-            <div class="language-btns">
-                <button translate="HEADER.LANG_DE" [ngClass]="{ 'active-button': activeLanguage === 'de' }"
-                    (click)="setLanguage('de')">
-
-                </button>
-                <button translate="HEADER.LANG_EN" [ngClass]="{ 'active-button': activeLanguage === 'en' }"
-                    (click)="setLanguage('en')">
-
-                </button>
-            </div>
-        </nav> -->
-
         <div (click)="toggleSidebar()" class="hamburger-menu show-mobile">
             <div id="hamburger-icon-toggle" class="hamburger-icon "
                 [ngClass]="{ 'hamburger-menu-show-click': isMenuOpen }">
