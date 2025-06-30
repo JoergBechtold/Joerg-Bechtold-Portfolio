@@ -19,4 +19,4 @@
     </div>
 </div>
 
-<app-sidenav *ngIf="isMenuOpen" [ngClass]="{'open': isMenuOpen}"></app-sidenav>
+<app-sidenav [hidden]="!isMenuOpen" [ngClass]="{'open': isMenuOpen}"></app-sidenav>

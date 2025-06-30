@@ -3,21 +3,21 @@
 
 :host {
     position: fixed;
-    top: $header-hight; // Position below the header
+    top: $header-hight;
     right: 0;
-    width: 250px; // Adjust width as needed
-    height: calc(100% - #{$header-hight}); // Full height minus header
-    background-color: rgba(255, 255, 255, 0.083); // Same background as header
-    z-index: 9; // Below header but above content
-    transform: translateX(100%); // Start off-screen to the right
-    transition: transform 0.3s ease-in-out; // Smooth slide animation
-    display: flex; // Ensure flex properties apply
-    flex-direction: column; // Stack content vertically
-    align-items: center; // Center content horizontally
-    padding-top: 20px; // Add some padding
+    width: 350px; 
+    height: calc(100% - #{$header-hight}); 
+    background-color: rgb(20 29 47 / 97%); 
+    z-index: 9;
+    transform: translateX(100%); 
+    transition: transform 0.3s ease-in-out; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    padding-top: 20px;
 
     &.open {
-        transform: translateX(0); // Slide into view
+        transform: translateX(0); 
     }
 }
 
