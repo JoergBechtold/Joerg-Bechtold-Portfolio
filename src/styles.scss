@@ -2,6 +2,16 @@
 @use '../src/assets/styles/variables.scss' as*;
 @use '../src/assets/styles/mixins.scss' as*;
 
+html{
+  scrollbar-gutter: stable;
+  background-color: $primary-bg-gray;
+
+}
+
+body{
+  width: 100%;
+}
+
 * {
   box-sizing: border-box;
   scroll-behavior: smooth;
@@ -9,28 +19,10 @@
   padding: 0;
   font-family: 'Poppins';
 }
- @media screen and (max-width: $respons-width-920) {
-  .hide-mobile{
-    display: none !important;
-  }
 
-   .hamburger-menu {
-    display: flex; // Zeigt das Burger-Menü-Icon auf kleinen Bildschirmen an
-  }
- }
-
- @media screen and (min-width: $respons-width-920) {
-  .hide-desktop{
-  display: none;
-  }
-
-  .hamburger-menu {
-    display: none; // Versteckt das Burger-Menü-Icon auf großen Bildschirmen
-  }
+body.no-scroll {
+  overflow: hidden;
 }
-
-
-
 
 a{
   text-decoration: unset;
@@ -39,6 +31,26 @@ a{
 button{
   border: unset;
   cursor: pointer;
+}
+
+@media screen and (max-width: $respons-width-920) {
+  .hide-mobile{
+    display: none !important;
+  }
+
+   .hamburger-menu {
+    display: flex;
+  }
+ }
+
+@media screen and (min-width: $respons-width-920) {
+  .hide-desktop{
+  display: none;
+  }
+
+  .hamburger-menu {
+    display: none;
+  }
 }
 
 ::-webkit-scrollbar{
@@ -51,8 +63,9 @@ button{
 }
 
 ::-webkit-scrollbar-track {
-  background-color: black; 
+    background-color: $primary-bg-gray;
 }
+
 
 
 

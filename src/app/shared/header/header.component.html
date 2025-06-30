@@ -16,7 +16,7 @@
                 <span class="bar"></span>
             </div>
         </div>
-
-        <app-sidenav></app-sidenav>
     </div>
 </div>
+
+<app-sidenav *ngIf="isMenuOpen" [ngClass]="{'open': isMenuOpen}"></app-sidenav>
