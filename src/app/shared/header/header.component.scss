@@ -1,6 +1,8 @@
 @use '../../../assets/styles/variables.scss' as*;
 @use '../../../assets/styles/mixins.scss' as*;
 
+
+
 .header{
     height: $header-hight;
     position: fixed;
@@ -27,6 +29,37 @@
      >nav{
        @include dFlexAllCenter( $jc: space-between, $g: 92px);
      }
+}
+
+.hamburger-icon {
+  @include dFlexAllCenter( $jc: space-between);
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.bar {
+  height: 3px;
+  width: 32px;
+  background: white;
+  margin: 5px 0;
+  border-radius: 100px;
+  transition: 0.125s ease-in-out;
+}
+
+.bar:nth-child(2){
+  width: 16px;
+}
+
+.hamburger-menu-show-click .bar:nth-child(1) {
+  transform: translateY(13px) rotate(45deg);
+ 
+}
+.hamburger-menu-show-click .bar:nth-child(2) {
+  opacity: 0;
+}
+.hamburger-menu-show-click .bar:nth-child(3) {
+  transform: translateY(-13px) rotate(-45deg);
+ 
 }
 
 .links-header{

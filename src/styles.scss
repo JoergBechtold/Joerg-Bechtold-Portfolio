@@ -1,10 +1,6 @@
-
 @use '../src/assets/styles/fonts.scss' as*;
 @use '../src/assets/styles/variables.scss' as*;
 @use '../src/assets/styles/mixins.scss' as*;
-
-
-
 
 * {
   box-sizing: border-box;
@@ -13,11 +9,28 @@
   padding: 0;
   font-family: 'Poppins';
 }
-// body{
-//   // display: flex;
-//   // justify-content: center;
-//   // overflow-x: hidden;
-// }
+ @media screen and (max-width: $respons-width-920) {
+  .hide-mobile{
+    display: none !important;
+  }
+
+   .hamburger-menu {
+    display: flex; // Zeigt das Burger-Menü-Icon auf kleinen Bildschirmen an
+  }
+ }
+
+ @media screen and (min-width: $respons-width-920) {
+  .hide-desktop{
+  display: none;
+  }
+
+  .hamburger-menu {
+    display: none; // Versteckt das Burger-Menü-Icon auf großen Bildschirmen
+  }
+}
+
+
+
 
 a{
   text-decoration: unset;
