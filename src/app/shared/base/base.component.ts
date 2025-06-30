@@ -12,12 +12,8 @@ export abstract class BaseTranslatableComponent implements OnInit {
         this._activeLanguage = this.translate.currentLang;
         this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
             this._activeLanguage = event.lang;
-            // this.onLanguageChanged(event.lang);
         });
     }
-
-    // protected onLanguageChanged(newLang: string): void {
-    // }
 
     get activeLanguage(): string {
         return this._activeLanguage;
