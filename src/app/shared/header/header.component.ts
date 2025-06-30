@@ -1,37 +1,29 @@
-// src/app/shared/header/header.component.ts
 import { CommonModule, NgClass } from '@angular/common';
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { RouterLink } from '@angular/router';
-import { BaseTranslatableComponent } from '../base/base.component';
-import { SidenavComponent } from "./sidenav/sidenav.component";
+import { SidenavComponent } from "./components/side-nav/sidenav.component";
+import { HeaderNavComponent } from './components/header-nav/header-nav.component';
 
 @Component({
   selector: 'app-header',
+  standalone: true,
   imports: [
     CommonModule,
     RouterLink,
-    TranslateModule,
+    HeaderNavComponent,
     SidenavComponent
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent extends BaseTranslatableComponent implements OnInit {
+export class HeaderComponent implements OnInit {
+
   isMenuOpen: boolean = false;
   @Output() toggleSidebarEvent = new EventEmitter<void>();
 
-  constructor(public override translate: TranslateService) {
-    super(translate);
-  }
+  constructor() { }
 
-  override ngOnInit(): void {
-    super.ngOnInit();
-  }
-
-  setLanguage(lang: string) {
-    this.translate.use(lang);
-  }
+  ngOnInit(): void { }
 
   toggleSidebar(): void {
     this.isMenuOpen = !this.isMenuOpen;

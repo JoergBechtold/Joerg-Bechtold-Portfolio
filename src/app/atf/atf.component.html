@@ -2,7 +2,10 @@
     <div class="atf-content">
         <app-contact-nav-atf></app-contact-nav-atf>
 
-        <div class="scroll-down-box">
+        <div [ngStyle]="{
+            'right':activeLanguage === 'de' ? '31px' : '80px',
+            'bottom':activeLanguage === 'de' ? '159px' : '110px',
+        }" class="scroll-down-box">
             <p>{{ 'ATF.SCROLL_DOWN' | translate }}</p>
             <img src="../../assets/icons/general-icons/ARROW-DOWN-WHITE.svg"
                 alt="{{ 'ALT_TEXTS.MAIN_SECTION_GRAY' | translate }}">
@@ -19,6 +22,7 @@
                 <div class="intro-text">
                     <span [ngStyle]="{
                         'font-size': activeLanguage === 'de' ? '50px' : '70px',
+                        'left':activeLanguage === 'en' ? '7px' : '0px',
                         'transform': activeLanguage === 'de' ? 'rotate(-90deg) translateX(-52%)' : 'rotate(-90deg) translateX(-50%)'
                     }" class="vertical-text">{{
                         'ATF.I_AM' | translate }}</span>
