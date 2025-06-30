@@ -56,25 +56,6 @@
  
 }
 
-// /* Styles for the sidebar (app-sidenav) */
-// app-sidenav {
-//     position: fixed;
-//     top: $header-hight; // Position below the header
-//     right: 0;
-//     width: 250px; // Adjust width as needed
-//     height: calc(100% - #{$header-hight}); // Full height minus header
-//     background-color: rgba(255, 255, 255, 0.083); // Same background as header
-//     z-index: 9; // Below header but above content
-//     transform: translateX(100%); // Start off-screen to the right
-//     transition: transform 0.3s ease-in-out; // Smooth slide animation
-//     display: flex; // Ensure flex properties apply
-//     flex-direction: column; // Stack content vertically
-//     align-items: center; // Center content horizontally
-//     padding-top: 20px; // Add some padding
 
-//     &.open {
-//         transform: translateX(0); // Slide into view
-//     }
-// }
 
 
