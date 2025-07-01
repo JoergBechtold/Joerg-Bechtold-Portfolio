@@ -8,18 +8,30 @@
     "LANG_EN": "EN"
   },
   "MAIN": {
-   
+
   },
-  "FOOTER": {
-    "LEGAL_NOTICE": "Legal Notice"
+  "LINK": {
+    "LEGAL_NOTICE": "Legal Notice",
+    "PRIVACY_POLICY_TITLE": "Privacy Policy"
   },
   "ALT_TEXTS": {
     "ARROW_DOWN_WHITE": "White arrow down",
-    "MAIN_SECTION_GRAY": "Main Section Gray Area" 
+    "MAIN_SECTION_GRAY": "Main Section Gray Area"
   },
-   "ATF": {
+  "ATF": {
     "SCROLL_DOWN": "scroll down",
     "I_AM": "I am",
     "LETS_TALK": "Let's talk!"
+  },
+  "ROUTES": {
+    "HOME": "",
+    "PRIVACY_POLICY": "privacy-policy",
+    "LEGAL_NOTICE": "legal-notice",
+    "NOT_FOUND": "page-not-found"
+  },
+  "PAGE_NOT_FOUND": {
+    "TITLE": "404 - Page not found",
+    "MESSAGE": "The requested page does not exist.",
+    "GO_HOME": "Go to home page"
   }
 }

@@ -36,7 +36,7 @@ p{
 }
 
 .footer-icon-box{
-    @include headerFooterLogoStyle();
+    @include headerLINKLogoStyle();
     gap: 10px;
 
     @media screen and (max-width:740px) {

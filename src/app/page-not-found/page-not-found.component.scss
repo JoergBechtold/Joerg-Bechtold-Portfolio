@@ -1,0 +1,37 @@
+@use '../../assets/styles/variables.scss' as*;
+@use '../../assets/styles/mixins.scss' as*;
+
+section {
+  min-height: calc(100vh - $header-hight); 
+  @include dFlexAllCenter();
+  flex-direction: column;
+  background-color: $primary-bg-gray; 
+  color: white;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 24px;
+  margin-bottom: 30px;
+}
+
+a {
+  font-size: 22px;
+  padding: 10px 20px;
+  border: 1px solid $primary-bg-green;
+  border-radius: 5px;
+  text-decoration: none;
+  color: $primary-bg-green;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: $primary-bg-purple;
+    border: 1px solid $primary-bg-purple;
+    color: white;
+  }
+}
