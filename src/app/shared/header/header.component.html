@@ -6,7 +6,7 @@
             </a>
         </div>
 
-        <app-header-nav class="main-header-nav hide-mobile"></app-header-nav>
+        <app-navigation class="main-navigation hide-mobile"></app-navigation>
 
         <div (click)="toggleSidebar()" class="hamburger-menu show-mobile">
             <div id="hamburger-icon-toggle" class="hamburger-icon "
@@ -19,4 +19,4 @@
     </div>
 </div>
 
-<app-sidenav [hidden]="!isMenuOpen" [ngClass]="{'open': isMenuOpen}"></app-sidenav>
+<app-sidebar [hidden]="!isMenuOpen" [ngClass]="{'open': isMenuOpen}"></app-sidebar>

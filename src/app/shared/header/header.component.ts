@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, EventEmitter, Output, Inject, Renderer2, OnDestroy } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { HeaderNavComponent } from './components/navigation/navigation.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { DOCUMENT } from '@angular/common';
 import { BreakpointObserver } from '@angular/cdk/layout';
@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
   imports: [
     CommonModule,
     RouterLink,
-    HeaderNavComponent,
+    NavigationComponent,
     SidebarComponent
   ],
   templateUrl: './header.component.html',

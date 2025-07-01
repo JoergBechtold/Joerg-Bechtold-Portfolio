@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { HeaderNavComponent } from "../navigation/navigation.component";
+import { NavigationComponent } from "../navigation/navigation.component";
 import { CommonModule } from '@angular/common';
 
 
 @Component({
-  selector: 'app-sidenav',
+  selector: 'app-sidebar',
   standalone: true,
-  imports: [HeaderNavComponent, CommonModule],
+  imports: [NavigationComponent, CommonModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })

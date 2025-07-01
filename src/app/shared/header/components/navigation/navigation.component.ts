@@ -4,7 +4,7 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-header-nav',
+  selector: 'app-navigation',
   standalone: true,
   imports: [
     CommonModule,
@@ -14,7 +14,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.scss'
 })
-export class HeaderNavComponent implements OnInit {
+export class NavigationComponent implements OnInit {
   activeLanguage: string = 'de';
   @Input() isInSidebar: boolean = false;
 
