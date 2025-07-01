@@ -8,9 +8,7 @@
     "LANG_EN": "EN"
   },
   "MAIN": {
-    "GREETING": "Hallo Welt!",
-    "WELCOME_MESSAGE": "Willkommen auf meiner Website!",
-    "CALL_TO_ACTION": "Kontaktiere mich jetzt!"
+  
   },
   "FOOTER": {
     "LEGAL_NOTICE": "Impressum"

@@ -1,10 +1,10 @@
 <div class="nav-content-box">
     <nav [ngClass]="{'sidenav-layout': isInSidebar}">
         <div class="links-header">
-            <a href="#about_me" translate="HEADER.ABOUT_ME"></a>
-            <a href="#skills" translate="HEADER.SKILLS"></a>
-            <a href="#portfolio" translate="HEADER.PORTFOLIO"></a>
-            <a href="#contact" [hidden]="!isInSidebar" translate="HEADER.CONTACT"></a>
+            <a href="#about_me">{{ 'HEADER.ABOUT_ME' | translate }}</a>
+            <a href="#skills">{{ 'HEADER.SKILLS' | translate }}</a>
+            <a href="#portfolio">{{ 'HEADER.PORTFOLIO' | translate }}</a>
+            <a href="#contact" [hidden]="!isInSidebar">{{ 'HEADER.CONTACT' | translate }}</a>
         </div>
 
         <div class="language-btns">
