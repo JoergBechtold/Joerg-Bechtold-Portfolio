@@ -7,8 +7,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-sidenav',
   standalone: true,
   imports: [HeaderNavComponent, CommonModule],
-  templateUrl: './sidenav.component.html',
-  styleUrl: './sidenav.component.scss'
+  templateUrl: './side-nav.component.html',
+  styleUrl: './side-nav.component.scss'
 })
 export class SidenavComponent {
 
