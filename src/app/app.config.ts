@@ -3,8 +3,6 @@ import { provideRouter, withNavigationErrorHandler } from '@angular/router';
 import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
-
 import { routes } from './app.routes';
 
 export function HttpLoaderFactory(http: HttpClient) {
