@@ -7,21 +7,15 @@
     right: 0;
     width: 350px; 
     height: calc(100% - #{$header-hight}); 
-    background-color: rgb(20 29 47 / 97%); 
+    background-color: $side-nav-bg; 
     z-index: 9;
     transform: translateX(100%); 
     transition: transform 0.3s ease-in-out; 
-    display: flex; 
+    @include dFlexAllCenter();
     flex-direction: column; 
-    align-items: center; 
-    padding-top: 20px;
-
+  
     &.open {
         transform: translateX(0); 
     }
 }
 
-.test{
-    display: flex;
-    flex-direction: column;
-}

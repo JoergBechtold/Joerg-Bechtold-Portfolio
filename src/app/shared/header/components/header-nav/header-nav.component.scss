@@ -26,6 +26,17 @@
     }
 }
 
+.sidenav-layout {
+    display: flex;
+    flex-direction: column; 
+    gap: 29px !important; 
+}
+
+.sidenav-layout .links-header {
+    flex-direction: column; 
+    align-items: center;
+}
+
 .language-btns{
     @include dFlexAllCenter( $jc: space-between, $g: 14px);
 
@@ -48,29 +59,3 @@
       }
   }
 }
-
-// app-sidenav{
-//     .nav-content-box {
-//         flex-direction: column; // Arrange content vertically
-//         justify-content: flex-start; // Align to top
-//         align-items: center; // Center horizontally
-//         padding-top: 50px; // Add some top padding in sidebar
-//         height: auto; // Allow content to dictate height
-
-//         > nav {
-//             flex-direction: column; // Arrange links and language buttons vertically
-//             gap: 30px; // Adjust gap for vertical layout
-//             align-items: center; // Center items
-//         }
-//     }
-
-//     .links-header {
-//         flex-direction: column; // Arrange individual links vertically
-//         gap: 20px; // Adjust gap for vertical links
-//     }
-
-//     .language-btns {
-//         flex-direction: column; // Arrange language buttons vertically
-//         gap: 10px; // Adjust gap for vertical buttons
-//     }
-// }

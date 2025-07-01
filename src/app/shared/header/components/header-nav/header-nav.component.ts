@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { RouterLink } from '@angular/router';
@@ -16,6 +16,7 @@ import { RouterLink } from '@angular/router';
 })
 export class HeaderNavComponent implements OnInit {
   activeLanguage: string = 'de';
+  @Input() isInSidenav: boolean = false;
 
   constructor(private translate: TranslateService) { }
 
