@@ -2,12 +2,38 @@
 @use '../../assets/styles/mixins.scss' as*;
 
 
+:host{
+    color: white;   
+}
+
+a{
+    color: $primary-bg-green;
+    word-wrap: break-word; 
+    overflow-wrap: break-word;
+}
+     
+h1{
+    font-size: clamp(30px, 26.4px + 1.125vw, 48px);
+}
+
+h2{
+    font-size:  clamp(24px, 22.8px + 0.375vw, 30px);
+}
+
+ul{
+    list-style-type: none;
+}
+
 section{
     padding-top: $header-hight;
-    height: 100dvh;
+    display: flex;
+    justify-content: center;
 }
 
 .privacy-policy-content{
+    padding-block: $padding-block-50px;
     max-width: $max-width-1920;
-
+    text-align: center;
+    max-width: $max-width-700;
+    width: 90%;
 }
