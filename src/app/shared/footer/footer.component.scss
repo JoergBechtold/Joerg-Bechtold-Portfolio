@@ -1,15 +1,22 @@
 @use '../../../assets/styles/variables.scss' as*;
 @use '../../../assets/styles/mixins.scss' as*;
 
-section{
+:host{
     position: absolute;
     left: 0;
     right: 0;
     background-color: $primary-bg-gray;
-    @include dFlexAllCenter();
-    height: 291px;
+    // @include dFlexAllCenter();
+    // height: 291px;
     border-top: 4px solid $primary-bg-green;
     @include paddingLeftRightHolePage();
+}
+
+section{
+    @include dFlexAllCenter();
+    height: 291px;
+
+
 }
 
 .footer-content{

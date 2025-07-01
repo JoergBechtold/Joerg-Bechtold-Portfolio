@@ -1,13 +1,31 @@
 @use '../../assets/styles/variables.scss' as*;
 @use '../../assets/styles/mixins.scss' as*;
 
+:host{
+    color: white;
+
+    
+}
+
+a{
+    color: $primary-bg-green;
+}
+     
+h1{
+    @include fontSizeWeightColor($si: 48px);
+}
+
 
 section{
     padding-top: $header-hight;
-    height: 100dvh;
+    display: flex;
+    justify-content: center;
 }
 
 .legal-notice-content{
+    padding-block: $padding-block-50px;
     max-width: $max-width-1920;
-
+    text-align: center;
+    max-width: $max-width-700;
+    width: 90%;
 }
