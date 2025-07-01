@@ -13,6 +13,10 @@
 section{
     @include dFlexAllCenter();
     height: 291px;
+
+    @media screen and (max-width:740px) {
+       height: 380px;
+    }
 }
 
 .footer-content{
