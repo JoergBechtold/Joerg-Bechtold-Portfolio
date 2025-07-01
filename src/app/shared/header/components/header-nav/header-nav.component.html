@@ -4,8 +4,7 @@
             <a routerLink="/about-me" translate="HEADER.ABOUT_ME"></a>
             <a routerLink="/skills" translate="HEADER.SKILLS"></a>
             <a routerLink="/portfolio" translate="HEADER.PORTFOLIO"></a>
-            <a [ngStyle]="{'display': isInSidenav ? 'flex' : 'none'}" routerLink="/contact"
-                translate="HEADER.CONTACT"></a>
+            <a [hidden]="!isInSidenav" routerLink="/contact" translate="HEADER.CONTACT"></a>
         </div>
 
         <div class="language-btns">
