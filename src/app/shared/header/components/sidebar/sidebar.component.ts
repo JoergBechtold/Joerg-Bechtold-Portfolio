@@ -10,6 +10,6 @@ import { CommonModule } from '@angular/common';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
-export class SidenavComponent {
+export class SidebarComponent {
 
 }

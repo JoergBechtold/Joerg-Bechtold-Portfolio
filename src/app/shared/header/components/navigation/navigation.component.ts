@@ -16,7 +16,7 @@ import { RouterLink } from '@angular/router';
 })
 export class HeaderNavComponent implements OnInit {
   activeLanguage: string = 'de';
-  @Input() isInSidenav: boolean = false;
+  @Input() isInSidebar: boolean = false;
 
   constructor(private translate: TranslateService) { }
 
