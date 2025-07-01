@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, EventEmitter, Output, Inject, Renderer2, OnDestroy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { HeaderNavComponent } from './components/header-nav/header-nav.component';
-import { SidenavComponent } from './components/side-nav/side-nav.component';
+import { SidenavComponent } from './components/sidebar/sidebar.component';
 import { DOCUMENT } from '@angular/common';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
