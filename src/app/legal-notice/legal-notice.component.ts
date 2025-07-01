@@ -1,11 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { BaseTranslatableComponent } from '../shared/base/base.component';
+
+
 
 @Component({
     selector: 'app-legal-notice',
-    imports: [],
+    imports: [TranslateModule],
     templateUrl: './legal-notice.component.html',
     styleUrl: './legal-notice.component.scss'
 })
-export class LegalNoticeComponent {
+export class LegalNoticeComponent extends BaseTranslatableComponent implements OnInit {
 
+    constructor(protected override translate: TranslateService) {
+        super(translate);
+    }
+
+    override ngOnInit(): void {
+        super.ngOnInit();
+    }
 }
