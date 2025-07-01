@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { RouterLink } from '@angular/router';
@@ -25,6 +25,11 @@ export class NavigationComponent implements OnInit {
     this.translate.onLangChange.subscribe(lang => {
       this.activeLanguage = lang.lang;
     });
+  }
+  @Input() closeSidenav = new EventEmitter<void>();
+
+  onClose(): void {
+    this.closeSidenav.emit(); // Dies sendet das Signal an den Parent (AppComponent)
   }
 
   setLanguage(lang: string): void {

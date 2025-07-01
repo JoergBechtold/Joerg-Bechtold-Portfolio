@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { NavigationComponent } from "../navigation/navigation.component";
 import { CommonModule } from '@angular/common';
 
@@ -11,5 +11,11 @@ import { CommonModule } from '@angular/common';
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
+  @Output() closeSidenav = new EventEmitter<void>();
+
+
+  onClose(): void {
+    this.closeSidenav.emit();
+  }
 
 }
