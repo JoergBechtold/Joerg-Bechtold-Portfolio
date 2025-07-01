@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HeaderNavComponent } from "../header-nav/header-nav.component";
+import { HeaderNavComponent } from "../navigation/navigation.component";
 import { CommonModule } from '@angular/common';
 
 

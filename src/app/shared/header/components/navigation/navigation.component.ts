@@ -11,8 +11,8 @@ import { RouterLink } from '@angular/router';
     TranslateModule,
     RouterLink
   ],
-  templateUrl: './header-nav.component.html',
-  styleUrl: './header-nav.component.scss'
+  templateUrl: './navigation.component.html',
+  styleUrl: './navigation.component.scss'
 })
 export class HeaderNavComponent implements OnInit {
   activeLanguage: string = 'de';
