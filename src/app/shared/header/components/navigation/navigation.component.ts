@@ -47,14 +47,11 @@ export class NavigationComponent implements OnInit {
     console.log(`[NavigationComponent] Sprachwechsel angefordert: von '${this.activeLanguage}' zu '${lang}'`);
 
     let targetAppRouteKey: keyof typeof AppRouteKeys | undefined;
-
-    // Hole die aktuell aktive Route vom ActivatedRoute
     let routeSnapshot = this.activatedRoute.snapshot;
     while (routeSnapshot.firstChild) {
       routeSnapshot = routeSnapshot.firstChild;
     }
 
-    // Finde den MainRoute-Eintrag, der zum aktuellen Komponenten-Typ passt.
     for (const mainRoute of mainRoutes) {
       if (mainRoute.component === routeSnapshot.component) {
         const foundTranslationKeyValue = mainRoute.data?.['translationKey'];
@@ -73,21 +70,15 @@ export class NavigationComponent implements OnInit {
       }
     }
 
-    // Wenn kein passender Key gefunden wurde (z.B. auf einer 404-Seite oder anderen dynamischen Routen),
-    // fallback auf die Home-Seite.
     if (!targetAppRouteKey) {
       console.warn(`[NavigationComponent] Konnte keinen AppRouteKey für die aktuelle Komponente finden. Führe Fallback zur Home-Seite aus.`);
       targetAppRouteKey = 'home';
     }
 
-    // WICHTIG: Die Sprache von ngx-translate muss JETZT auf die NEUE Sprache umgestellt werden,
-    // BEVOR wir `translate.instant` aufrufen, um den ZIEL-Pfad zu erhalten.
-    // Dies stellt sicher, dass `translate.instant` den Pfad in der NEUEN Sprache zurückgibt.
     await this.translate.use(lang).toPromise();
 
-    // NEU: Router-Konfiguration hier aktualisieren
     const newLocalizedRoutes = createLocalizedRoutes(this.translate);
-    const updatedRoutes = [...routes]; // Eine Kopie der Hauptrouten
+    const updatedRoutes = [...routes];
     const langRouteIndex = updatedRoutes.findIndex(r => r.path === ':lang');
 
     if (langRouteIndex > -1) {
@@ -103,7 +94,7 @@ export class NavigationComponent implements OnInit {
     }
 
     let navigationPath: string[];
-    // Hole den übersetzten Pfad für den gefundenen AppRouteKey in der NEUEN Sprache.
+
     const newTranslatedSegment = this.translate.instant(AppRouteKeys[targetAppRouteKey]);
 
     if (targetAppRouteKey === 'home' && newTranslatedSegment === '') {
