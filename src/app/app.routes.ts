@@ -49,74 +49,83 @@ function createTranslatedRoute(route: Route, translate: TranslateService): Route
         return { ...route, path: translatedPath };
     }
     return route;
+
 }
+
 
 const langResolver = async (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
     const translate = inject(TranslateService);
     const router = inject(Router);
 
     const langParam = route.paramMap.get('lang');
+    const currentLang = await validateAndSetLanguage(translate, router, langParam);
+    if (currentLang === false) return false;
+
+    return handlePathValidation(state.url, translate, router, currentLang);
+};
+
+
+const validateAndSetLanguage = async (translate: TranslateService, router: Router, langParam: string | null): Promise<string | false> => {
     const defaultLang = translate.getDefaultLang();
-    let currentLang = langParam || defaultLang;
+    const currentLang = langParam || defaultLang;
 
     if (!translate.getLangs().includes(currentLang)) {
-        console.warn(`[langResolver] Ungültige Sprache in URL: '${langParam}'. Leite zu '${defaultLang}' um.`);
+        console.warn(`[langResolver] Invalid language in URL: '${langParam}'. Redirecting to '${defaultLang}'.`);
         router.navigateByUrl(`/${defaultLang}`, { replaceUrl: true });
         return false;
     }
-
-    if (translate.currentLang !== currentLang) {
-        await translate.use(currentLang).toPromise();
-    }
-
-    const currentUrlSegmentsFromState = state.url.split('/').filter(s => s !== '');
-    let pathSegmentFromUrl = '';
-
-    if (currentUrlSegmentsFromState.length > 1) {
-        pathSegmentFromUrl = currentUrlSegmentsFromState.slice(1).join('/');
-    }
-
-    let targetAppRouteKey: keyof typeof AppRouteKeys | undefined;
-    const tempLocalizedRoutes = createLocalizedRoutes(translate);
-
-    for (const routeConfig of tempLocalizedRoutes) {
-        if (routeConfig.path === pathSegmentFromUrl) {
-            const foundTranslationKeyValue = routeConfig.data?.['translationKey'];
-            for (const keyName of Object.keys(AppRouteKeys) as Array<keyof typeof AppRouteKeys>) {
-                if (AppRouteKeys[keyName] === foundTranslationKeyValue) {
-                    targetAppRouteKey = keyName;
-                    break;
-                }
-            }
-            break;
-        }
-    }
-
-    let fullExpectedUrl: string;
-    if (targetAppRouteKey) {
-        const correctTranslatedPathForTargetKey = translate.instant(AppRouteKeys[targetAppRouteKey]);
-        const effectiveCorrectPath = (targetAppRouteKey === 'home' && correctTranslatedPathForTargetKey === '') ? '' : correctTranslatedPathForTargetKey;
-
-        if (effectiveCorrectPath === '') {
-            fullExpectedUrl = `/${currentLang}`;
-        } else {
-            fullExpectedUrl = `/${currentLang}/${effectiveCorrectPath}`;
-        }
-
-        if (state.url !== fullExpectedUrl) {
-            router.navigateByUrl(fullExpectedUrl, { replaceUrl: true });
-            return false;
-        }
-        console.log(`[langResolver] Pfad '${pathSegmentFromUrl}' ist ein gültiger übersetzter Pfad für '${targetAppRouteKey}' in '${currentLang}'.`);
-    } else {
-        console.warn(`[langResolver] Der Pfad '${pathSegmentFromUrl}' ist keine gültige übersetzte Route in der Sprache '${currentLang}' oder keine bekannte Route.`);
-        const homeTranslatedPath = translate.instant(AppRouteKeys.home);
-        const homeUrl = `/${currentLang}${(homeTranslatedPath === '') ? '' : '/' + homeTranslatedPath}`;
-        router.navigateByUrl(homeUrl, { replaceUrl: true });
-        return false;
-    }
-    return true;
+    if (translate.currentLang !== currentLang) await translate.use(currentLang).toPromise();
+    return currentLang;
 };
+
+
+const extractPathSegment = (stateUrl: string): string =>
+    stateUrl.split('/').filter(s => s !== '').slice(1).join('/');
+
+const getExpectedUrl = (pathSegment: string, translate: TranslateService, currentLang: string, router: Router): string | undefined => {
+    const tempLocalizedRoutes = createLocalizedRoutes(translate);
+    const targetRoute = tempLocalizedRoutes.find(r => r.path === pathSegment);
+
+    if (!targetRoute) return undefined;
+
+    const foundTranslationKey = targetRoute.data?.['translationKey'];
+    const targetAppRouteKey = (Object.keys(AppRouteKeys) as Array<keyof typeof AppRouteKeys>)
+        .find(keyName => AppRouteKeys[keyName] === foundTranslationKey);
+
+    if (!targetAppRouteKey) return undefined;
+
+    const correctTranslatedPath = translate.instant(AppRouteKeys[targetAppRouteKey]);
+    const effectivePath = (targetAppRouteKey === 'home' && correctTranslatedPath === '') ? '' : correctTranslatedPath;
+
+    return `/${currentLang}${effectivePath ? '/' + effectivePath : ''}`;
+};
+
+
+const redirectToHome = (router: Router, translate: TranslateService, currentLang: string): boolean => {
+    console.warn(`[langResolver] Path is not a valid translated route in '${currentLang}'.`);
+    const homeTranslatedPath = translate.instant(AppRouteKeys.home);
+    const homeUrl = `/${currentLang}${homeTranslatedPath === '' ? '' : '/' + homeTranslatedPath}`;
+    router.navigateByUrl(homeUrl, { replaceUrl: true });
+    return false;
+};
+
+
+const handlePathValidation = (stateUrl: string, translate: TranslateService, router: Router, currentLang: string): boolean => {
+    const pathSegment = extractPathSegment(stateUrl);
+    const fullExpectedUrl = getExpectedUrl(pathSegment, translate, currentLang, router);
+
+    if (fullExpectedUrl && stateUrl === fullExpectedUrl) {
+        return true;
+    }
+
+    if (fullExpectedUrl && stateUrl !== fullExpectedUrl) {
+        router.navigateByUrl(fullExpectedUrl, { replaceUrl: true });
+        return false; // Line 8
+    }
+
+    return redirectToHome(router, translate, currentLang);
+};
+
 
 export const routes: Routes = [
     {
