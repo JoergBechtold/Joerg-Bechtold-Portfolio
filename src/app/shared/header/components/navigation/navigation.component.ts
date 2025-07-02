@@ -1,9 +1,8 @@
-// navigation.component.ts
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { AppRouteKeys, mainRoutes } from '../../../../app.routes';
+import { AppRouteKeys, mainRoutes, routes, createLocalizedRoutes } from '../../../../app.routes'; // Importiere 'routes' und 'createLocalizedRoutes'
 
 @Component({
   selector: 'app-navigation',
@@ -85,6 +84,23 @@ export class NavigationComponent implements OnInit {
     // BEVOR wir `translate.instant` aufrufen, um den ZIEL-Pfad zu erhalten.
     // Dies stellt sicher, dass `translate.instant` den Pfad in der NEUEN Sprache zurückgibt.
     await this.translate.use(lang).toPromise();
+
+    // NEU: Router-Konfiguration hier aktualisieren
+    const newLocalizedRoutes = createLocalizedRoutes(this.translate);
+    const updatedRoutes = [...routes]; // Eine Kopie der Hauptrouten
+    const langRouteIndex = updatedRoutes.findIndex(r => r.path === ':lang');
+
+    if (langRouteIndex > -1) {
+      updatedRoutes[langRouteIndex] = {
+        ...updatedRoutes[langRouteIndex],
+        children: newLocalizedRoutes
+      };
+      this.router.resetConfig(updatedRoutes);
+      console.log(`[NavigationComponent] Router-Konfiguration erfolgreich für Sprache '${lang}' zurückgesetzt.`);
+      console.log(`[NavigationComponent] Konfigurierte Kindrouten für /${lang}:`, newLocalizedRoutes.map(r => r.path));
+    } else {
+      console.error(`[NavigationComponent] Fehler: ':lang'-Route nicht in den Hauptrouten gefunden!`);
+    }
 
     let navigationPath: string[];
     // Hole den übersetzten Pfad für den gefundenen AppRouteKey in der NEUEN Sprache.
