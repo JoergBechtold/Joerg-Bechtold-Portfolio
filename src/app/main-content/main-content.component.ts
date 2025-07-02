@@ -7,6 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ContactComponent } from '../components-sections/contact/contact.component';
 
 
+
 @Component({
     selector: 'app-main-content',
     imports: [AboutMeComponent, MySkillsComponent, PortfolioComponent, AtfComponent, TranslateModule, ContactComponent],

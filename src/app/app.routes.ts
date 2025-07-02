@@ -1,4 +1,3 @@
-// src/app/app.routes.ts
 import { Routes, ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlSegment } from '@angular/router';
 import { MainContentComponent } from './main-content/main-content.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
@@ -7,6 +6,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
+// Definiert die Schlüssel für die Routen, die in den Übersetzungsdateien verwendet werden
 export const AppRouteKeys = {
     home: 'ROUTES.HOME',
     privacyPolicy: 'ROUTES.PRIVACY_POLICY',
@@ -14,32 +14,39 @@ export const AppRouteKeys = {
     notFound: 'ROUTES.NOT_FOUND'
 };
 
-const mainRoutes: Routes = [
+// Hauptrouten, die die "neutralen" Pfade definieren (nicht sprachspezifisch)
+export const mainRoutes: Routes = [ // <--- HIER 'export' HINZUFÜGEN
     {
-        path: '', // <-- Hier ist der "neutrale" Pfad für Home
+        path: '', // Der neutrale Pfad für die Startseite
         component: MainContentComponent,
         data: { translationKey: AppRouteKeys.home, titleKey: 'HEADER.ABOUT_ME' }
     },
     {
-        path: 'privacy-policy', // <-- Hier ist der "neutrale" Pfad für Privacy Policy
+        path: 'privacy-policy', // Der neutrale Pfad für die Datenschutzerklärung
         component: PrivacyPolicyComponent,
         data: { translationKey: AppRouteKeys.privacyPolicy, titleKey: 'LINK.PRIVACY_POLICY_TITLE' }
     },
     {
-        path: 'legal-notice', // <-- Hier ist der "neutrale" Pfad für Legal Notice
+        path: 'legal-notice', // Der neutrale Pfad für das Impressum
         component: LegalNoticeComponent,
         data: { translationKey: AppRouteKeys.legalNotice, titleKey: 'LINK.LEGAL_NOTICE' }
     },
 ];
 
+/**
+ * Erstellt lokalisierte Routen basierend auf der aktuellen Sprache des TranslateService.
+ * @param translate Der TranslateService-Instanz.
+ * @returns Ein Array von Routen mit übersetzten Pfaden.
+ */
 export function createLocalizedRoutes(translate: TranslateService): Routes {
     const localizedRoutes: Routes = [];
     for (const route of mainRoutes) {
         const translatedPathKey = route.data?.['translationKey'];
         if (translatedPathKey) {
             let translatedPath = translate.instant(translatedPathKey);
+            // Spezielle Behandlung für die Home-Route, wenn ihr übersetzter Pfad leer ist
             if (translatedPathKey === AppRouteKeys.home && translatedPath === '') {
-                translatedPath = '';
+                translatedPath = ''; // Sicherstellen, dass es ein leerer String für den Root-Pfad ist
             }
             const newRoute = { ...route, path: translatedPath };
             localizedRoutes.push(newRoute);
@@ -50,6 +57,14 @@ export function createLocalizedRoutes(translate: TranslateService): Routes {
     return localizedRoutes;
 }
 
+/**
+ * Resolver, der die Sprache aus dem URL-Parameter extrahiert,
+ * ngx-translate auf diese Sprache setzt und die Router-Konfiguration
+ * dynamisch mit den lokalisierten Routen aktualisiert.
+ * @param route Der ActivatedRouteSnapshot für die aktuelle Route.
+ * @param state Der RouterStateSnapshot für den aktuellen Router-Zustand.
+ * @returns True, wenn die Navigation fortgesetzt werden soll, False für eine Umleitung.
+ */
 const langResolver = async (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
     const translate = inject(TranslateService);
     const router = inject(Router);
@@ -58,22 +73,23 @@ const langResolver = async (route: ActivatedRouteSnapshot, state: RouterStateSna
     const defaultLang = translate.getDefaultLang();
     let currentLang = langParam || defaultLang;
 
+    console.log(`[langResolver] --- Start Resolver für URL: '${state.url}', Lang Param: '${langParam}' ---`);
+
     // Fall 1: Ungültige Sprache in URL (z.B. /xyz/home)
     if (!translate.getLangs().includes(currentLang)) {
         console.warn(`[langResolver] Ungültige Sprache in URL: '${langParam}'. Leite zu '${defaultLang}' um.`);
         router.navigateByUrl(`/${defaultLang}`, { replaceUrl: true });
-        return false; // Resolver stoppt hier und leitet um
+        console.log(`[langResolver] --- Ende Resolver (Umleitung wegen ungültiger Sprache) ---`);
+        return false;
     }
 
     // Setze ngx-translate auf die Sprache aus der URL (currentLang).
-    // DIES IST DER EINZIGE ORT, AN DEM translate.use() DIREKT AUFGERUFEN WIRD (für Router-Parameter).
     if (translate.currentLang !== currentLang) {
+        console.log(`[langResolver] Wechsle ngx-translate Sprache von '${translate.currentLang}' zu '${currentLang}'.`);
         await translate.use(currentLang).toPromise();
-        console.log(`[langResolver] ngx-translate Sprache auf '${currentLang}' gesetzt.`);
     } else {
         console.log(`[langResolver] ngx-translate Sprache bereits auf '${currentLang}' gesetzt.`);
     }
-
 
     // Routen mit der AKTUELLEN Sprache dynamisch neu konfigurieren
     const newTranslatedChildren = createLocalizedRoutes(translate);
@@ -81,108 +97,100 @@ const langResolver = async (route: ActivatedRouteSnapshot, state: RouterStateSna
     let updatedRoutes = [...routes];
 
     if (langRouteIndex > -1) {
-        // Überprüfen, ob die Routenkonfiguration wirklich aktualisiert werden muss
-        // Um unnötiges resetConfig zu vermeiden
-        const currentChildren = updatedRoutes[langRouteIndex].children;
-        const needsUpdate = !currentChildren || JSON.stringify(currentChildren) !== JSON.stringify(newTranslatedChildren);
-
-        if (needsUpdate) {
-            updatedRoutes[langRouteIndex] = { ...updatedRoutes[langRouteIndex], children: newTranslatedChildren };
-            router.resetConfig(updatedRoutes);
-            console.log(`[langResolver] Router-Konfiguration erfolgreich für Sprache '${currentLang}' zurückgesetzt.`);
-        } else {
-            console.log(`[langResolver] Router-Konfiguration für Sprache '${currentLang}' ist bereits aktuell.`);
-        }
-
-        console.log(`[langResolver] Generierte Routen-Pfade für '${currentLang}':`);
-        newTranslatedChildren.forEach(childRoute => {
-            if (childRoute.path && childRoute.path !== '**') {
-                console.log(`  - /${currentLang}/${childRoute.path}`);
-            } else if (childRoute.path === '') { // Home Route
-                console.log(`  - /${currentLang}/`);
-            }
-        });
+        updatedRoutes[langRouteIndex] = { ...updatedRoutes[langRouteIndex], children: newTranslatedChildren };
+        router.resetConfig(updatedRoutes);
+        console.log(`[langResolver] Router-Konfiguration erfolgreich für Sprache '${currentLang}' zurückgesetzt.`);
+        console.log(`[langResolver] Konfigurierte Kindrouten für /${currentLang}:`, newTranslatedChildren.map(r => r.path));
     } else {
         console.error(`[langResolver] Fehler: ':lang'-Route nicht in den Hauptrouten gefunden!`);
     }
 
-    // Hier ist state.url die URL, die der Browser *versucht* zu erreichen (z.B. /en/legal-notice).
+    // Extrahiert den Pfadsegment nach der Sprache aus der aktuellen URL, die der Browser versucht zu erreichen.
     const currentUrlSegmentsFromState = state.url.split('/').filter(s => s !== '');
-    let pathSegmentAfterLangInOldUrl = '';
+    let pathSegmentFromUrl = '';
 
     if (currentUrlSegmentsFromState.length > 1) {
-        pathSegmentAfterLangInOldUrl = currentUrlSegmentsFromState.slice(1).join('/');
+        pathSegmentFromUrl = currentUrlSegmentsFromState.slice(1).join('/');
     }
-    console.log(`[langResolver] Ursprünglicher Pfad nach Sprache (aus state.url): '${pathSegmentAfterLangInOldUrl}'`);
+    console.log(`[langResolver] Pfadsegment aus der URL (nach Sprache): '${pathSegmentFromUrl}'`);
 
+    let targetComponentRoute: any = null;
     let targetAppRouteKey: keyof typeof AppRouteKeys | undefined;
 
-    if (pathSegmentAfterLangInOldUrl === '') {
-        targetAppRouteKey = 'home';
-    } else {
-        // Suche den AppRouteKey, dessen ÜBERSETZTER Pfad (in `currentLang`)
-        // mit `pathSegmentAfterLangInOldUrl` übereinstimmt.
-        for (const key of Object.keys(AppRouteKeys) as Array<keyof typeof AppRouteKeys>) {
-            if (key === 'home') continue;
-
-            // translate.instant() ist jetzt in der korrekten currentLang, da translate.use() bereits oben aufgerufen wurde
-            const translatedPathInCurrentLang = translate.instant(AppRouteKeys[key]);
-
-            if (translatedPathInCurrentLang === pathSegmentAfterLangInOldUrl) {
-                targetAppRouteKey = key;
-                console.log(`[langResolver] Gefundener AppRouteKey (via Übersetzung in aktueller Sprache '${currentLang}') für '${pathSegmentAfterLangInOldUrl}': '${targetAppRouteKey}'`);
-                break;
+    // Finde die Komponente, die dieser Route zugeordnet ist, wenn sie existiert
+    // durch Iterieren über die neu konfigurierten Kindrouten (newTranslatedChildren)
+    for (const routeConfig of newTranslatedChildren) {
+        if (routeConfig.path === pathSegmentFromUrl) {
+            targetComponentRoute = routeConfig;
+            // Wir müssen jetzt den AppRouteKey aus den Daten der Route finden
+            const foundTranslationKeyValue = targetComponentRoute.data?.['translationKey'];
+            for (const keyName of Object.keys(AppRouteKeys) as Array<keyof typeof AppRouteKeys>) {
+                if (AppRouteKeys[keyName] === foundTranslationKeyValue) {
+                    targetAppRouteKey = keyName;
+                    break;
+                }
             }
+            break;
         }
     }
 
-    let fullExpectedUrl: string | null = null;
+    // NEUE LOGIK:
+    // Wenn eine Komponente gefunden wurde, aber der Pfad in der URL nicht dem
+    // aktuell übersetzten Pfad für DIESE Komponente in der aktuellen Sprache entspricht,
+    // dann leiten wir auf den korrekten Pfad um.
     if (targetAppRouteKey) {
-        const newTranslatedSegment = translate.instant(AppRouteKeys[targetAppRouteKey]);
+        const correctTranslatedPathForTargetKey = translate.instant(AppRouteKeys[targetAppRouteKey]);
+        const effectiveCorrectPath = (targetAppRouteKey === 'home' && correctTranslatedPathForTargetKey === '') ? '' : correctTranslatedPathForTargetKey;
 
-        if (targetAppRouteKey === 'home' && newTranslatedSegment === '') {
+        let fullExpectedUrl: string;
+        if (effectiveCorrectPath === '') {
             fullExpectedUrl = `/${currentLang}`;
         } else {
-            fullExpectedUrl = `/${currentLang}/${newTranslatedSegment}`;
+            fullExpectedUrl = `/${currentLang}/${effectiveCorrectPath}`;
         }
-        console.log(`[langResolver] Erwarteter URL nach Wechsel für Key '${targetAppRouteKey}': '${fullExpectedUrl}'`);
-    }
 
-    // Nur umleiten, wenn die URL NICHT dem erwarteten Muster entspricht
-    // Dies fängt Fälle ab, wo z.B. /en/impressum eingegeben wurde, aber impressum kein en-Pfad ist.
-    if (fullExpectedUrl && state.url !== fullExpectedUrl) {
-        console.log(`[langResolver] Umleitung erforderlich: von '${state.url}' zu '${fullExpectedUrl}'`);
-        router.navigateByUrl(fullExpectedUrl, { replaceUrl: true });
-        return false; // Resolver stoppt hier und leitet um
-    } else if (!fullExpectedUrl) {
-        // Dieser Fall tritt ein, wenn `pathSegmentAfterLangInOldUrl` nicht '' ist (also nicht Home)
-        // und kein passender AppRouteKey für diesen Pfad in der currentLang gefunden wurde.
-        // Das bedeutet, der Pfad ist in der aktuellen Sprache unbekannt (z.B. /de/unknown-page).
-        console.warn(`[langResolver] Konnte keinen passenden Schlüssel für den Pfad '${pathSegmentAfterLangInOldUrl}' in der Sprache '${currentLang}' finden. Leite zu Home-Seite der neuen Sprache um.`);
+        if (state.url !== fullExpectedUrl) {
+            console.log(`[langResolver] Umleitung erforderlich (Zielkomponente erkannt): von '${state.url}' zu '${fullExpectedUrl}'`);
+            router.navigateByUrl(fullExpectedUrl, { replaceUrl: true });
+            console.log(`[langResolver] --- Ende Resolver (Umleitung zur korrekten URL für bekannte Route) ---`);
+            return false;
+        }
+        console.log(`[langResolver] Pfad '${pathSegmentFromUrl}' ist ein gültiger übersetzter Pfad für '${targetAppRouteKey}' in '${currentLang}'.`);
+    } else {
+        // Wenn kein targetAppRouteKey gefunden wurde, bedeutet das, dass der Pfad
+        // aus der URL keinem unserer bekannten (übersetzbaren) Pfade entspricht.
+        // In diesem Fall leiten wir zur 404-Seite um oder zur Home-Seite.
+        // Dein aktueller Code leitet zur Home-Seite um, was für 404-Fälle ok ist.
+        console.warn(`[langResolver] Der Pfad '${pathSegmentFromUrl}' ist keine gültige übersetzte Route in der Sprache '${currentLang}' oder keine bekannte Route.`);
+        // Dein Original-Fallback zur Home-Seite bleibt hier bestehen:
         const homeTranslatedPath = translate.instant(AppRouteKeys.home);
         const homeUrl = `/${currentLang}${(homeTranslatedPath === '') ? '' : '/' + homeTranslatedPath}`;
+        console.log(`[langResolver] Leite zu Home-Seite um: '${homeUrl}'`);
         router.navigateByUrl(homeUrl, { replaceUrl: true });
-        return false; // Resolver stoppt hier und leitet um
+        console.log(`[langResolver] --- Ende Resolver (Umleitung zu Home-Seite, unbekannter Pfad) ---`);
+        return false;
     }
 
-    return true; // Resolver erlaubt die Navigation fortzusetzen, da URL gültig ist
+    console.log(`[langResolver] --- Ende Resolver (Navigation fortgesetzt) ---`);
+    return true;
 };
 
+// Die Hauptrouten-Konfiguration für die Anwendung
 export const routes: Routes = [
     {
-        path: ':lang',
+        path: ':lang', // Sprachparameter in der URL (z.B. /de, /en)
         resolve: {
-            lang: langResolver
+            lang: langResolver // Der Resolver, der die Sprache setzt und Routen neu konfiguriert
         },
-        children: mainRoutes
+        children: mainRoutes // Die Kindrouten, die lokalisiert werden
     },
     {
-        path: '',
+        path: '', // Standard-Root-Pfad, leitet auf die Standard-Sprache um
         redirectTo: `/de`,
         pathMatch: 'full'
     },
     {
-        path: '**',
+        path: '**', // Wildcard-Route für nicht gefundene Pfade
         component: PageNotFoundComponent
     }
 ];

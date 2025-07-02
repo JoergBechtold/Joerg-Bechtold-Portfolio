@@ -33,5 +33,9 @@
     "TITLE": "404 - Seite nicht gefunden",
     "MESSAGE": "Die angeforderte Seite existiert nicht.",
     "GO_HOME": "Zur Startseite"
-  }
+  },
+  "LEGAL_NOTICE": {
+      "H1": "Impressum"
+    }
+  
 }

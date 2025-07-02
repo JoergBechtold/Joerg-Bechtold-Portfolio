@@ -1,9 +1,9 @@
-// src/app/shared/header/components/navigation/navigation.component.ts
+// navigation.component.ts
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { Router, RouterLink, ActivatedRoute, UrlSegment, NavigationExtras } from '@angular/router'; // NavigationExtras importieren
-import { AppRouteKeys } from '../../../../app.routes';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { AppRouteKeys, mainRoutes } from '../../../../app.routes';
 
 @Component({
   selector: 'app-navigation',
@@ -27,9 +27,12 @@ export class NavigationComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.activeLanguage = this.translate.currentLang || this.translate.getDefaultLang();
     this.translate.onLangChange.subscribe(lang => {
       this.activeLanguage = lang.lang;
+    });
+    this.activatedRoute.paramMap.subscribe(params => {
+      const langParam = params.get('lang');
+      this.activeLanguage = langParam || this.translate.getDefaultLang();
     });
   }
 
@@ -37,99 +40,76 @@ export class NavigationComponent implements OnInit {
     this.closeSidenav.emit();
   }
 
-  setLanguage(lang: string): void {
+  async setLanguage(lang: string): Promise<void> {
     if (this.activeLanguage === lang) {
       return;
     }
 
-    const oldActiveLanguage = this.activeLanguage;
-    console.log(`[NavigationComponent] Sprachwechsel angefordert: von '${oldActiveLanguage}' zu '${lang}'`);
-
-    let currentUrlPathSegment: string = '';
-    const rootSnapshot = this.router.routerState.snapshot.root;
-    const langRouteSnapshot = rootSnapshot.children.find(
-      child => child.url.length > 0 && child.url[0].path === oldActiveLanguage
-    );
-
-    if (langRouteSnapshot && langRouteSnapshot.firstChild) {
-      currentUrlPathSegment = langRouteSnapshot.firstChild.url.map((s: UrlSegment) => s.path).join('/');
-    } else {
-      const urlSegments = this.router.url.split('/').filter(s => s !== '');
-      if (urlSegments.length > 1) {
-        currentUrlPathSegment = urlSegments.slice(1).join('/');
-      } else {
-        currentUrlPathSegment = '';
-      }
-    }
-    console.log(`[NavigationComponent] Aktueller URL-Pfad (robust extrahiert): '${currentUrlPathSegment}'`);
+    console.log(`[NavigationComponent] Sprachwechsel angefordert: von '${this.activeLanguage}' zu '${lang}'`);
 
     let targetAppRouteKey: keyof typeof AppRouteKeys | undefined;
 
-    const currentTranslateServiceLang = this.translate.currentLang;
+    // Hole die aktuell aktive Route vom ActivatedRoute
+    let routeSnapshot = this.activatedRoute.snapshot;
+    while (routeSnapshot.firstChild) {
+      routeSnapshot = routeSnapshot.firstChild;
+    }
 
-    this.translate.use(oldActiveLanguage);
+    // Finde den MainRoute-Eintrag, der zum aktuellen Komponenten-Typ passt.
+    for (const mainRoute of mainRoutes) {
+      if (mainRoute.component === routeSnapshot.component) {
+        const foundTranslationKeyValue = mainRoute.data?.['translationKey'];
 
-    for (const key of Object.keys(AppRouteKeys) as Array<keyof typeof AppRouteKeys>) {
-      const translatedValueInSourceLang = this.translate.instant(AppRouteKeys[key]);
-      const effectiveTranslatedValueInSourceLang = (key === 'home' && translatedValueInSourceLang === '') ? '' : translatedValueInSourceLang;
-
-      console.log(`   [NavigationComponent] Prüfe Key: ${key}, Übersetzter Wert (in URSPRÜNGLICHER URL-Sprache '${oldActiveLanguage}'): '${translatedValueInSourceLang}', Effektiv: '${effectiveTranslatedValueInSourceLang}'`);
-
-      if (effectiveTranslatedValueInSourceLang === currentUrlPathSegment) {
-        targetAppRouteKey = key;
-        console.log(`   [NavigationComponent] Match gefunden für AppRouteKey: ${key}`);
-        break;
+        for (const keyName of Object.keys(AppRouteKeys) as Array<keyof typeof AppRouteKeys>) {
+          if (AppRouteKeys[keyName] === foundTranslationKeyValue) {
+            targetAppRouteKey = keyName;
+            break;
+          }
+        }
+        if (targetAppRouteKey) {
+          console.log(`[NavigationComponent] Gefundener neutraler Pfad (aus mainRoutes): '${mainRoute.path || ''}'`);
+          console.log(`[NavigationComponent] Gefundener AppRouteKey (aus mainRoutes): '${targetAppRouteKey}'`);
+          break;
+        }
       }
     }
 
-    this.translate.use(currentTranslateServiceLang);
-    console.log(`[NavigationComponent] Nach Reverse Lookup: TranslateService wieder auf Originalzustand '${currentTranslateServiceLang}' gesetzt.`);
+    // Wenn kein passender Key gefunden wurde (z.B. auf einer 404-Seite oder anderen dynamischen Routen),
+    // fallback auf die Home-Seite.
+    if (!targetAppRouteKey) {
+      console.warn(`[NavigationComponent] Konnte keinen AppRouteKey für die aktuelle Komponente finden. Führe Fallback zur Home-Seite aus.`);
+      targetAppRouteKey = 'home';
+    }
+
+    // WICHTIG: Die Sprache von ngx-translate muss JETZT auf die NEUE Sprache umgestellt werden,
+    // BEVOR wir `translate.instant` aufrufen, um den ZIEL-Pfad zu erhalten.
+    // Dies stellt sicher, dass `translate.instant` den Pfad in der NEUEN Sprache zurückgibt.
+    await this.translate.use(lang).toPromise();
 
     let navigationPath: string[];
+    // Hole den übersetzten Pfad für den gefundenen AppRouteKey in der NEUEN Sprache.
+    const newTranslatedSegment = this.translate.instant(AppRouteKeys[targetAppRouteKey]);
 
-    if (targetAppRouteKey) {
-      this.translate.use(lang); // Temporärer Wechsel zur Zielsprache für instant()
-      const newTranslatedSegment = this.translate.instant(AppRouteKeys[targetAppRouteKey]);
-      this.translate.use(currentTranslateServiceLang); // Sofort zurück zur ursprünglichen Sprache
-
-      if (targetAppRouteKey === 'home' && newTranslatedSegment === '') {
-        navigationPath = [lang]; // Home-Pfad ist nur /:lang
-      } else {
-        navigationPath = [lang, newTranslatedSegment]; // /:lang/übersetzter-pfad
-      }
-      console.log(`[NavigationComponent] Navigiere zu neu übersetztem Pfad basierend auf Key '${targetAppRouteKey}' (Zielpfad in Sprache ${lang}): /${navigationPath.join('/')}`);
+    if (targetAppRouteKey === 'home' && newTranslatedSegment === '') {
+      navigationPath = [lang];
     } else {
-      console.warn(`[NavigationComponent] KEIN MATCH: Kein passender AppRouteKey für den aktuellen URL-Pfad '${currentUrlPathSegment}' in der Quellsprache gefunden. Leite zur Home-Seite um.`);
-      this.translate.use(lang); // Temporärer Wechsel zur Zielsprache für instant()
-      const homeTranslatedPath = this.translate.instant(AppRouteKeys.home);
-      this.translate.use(currentTranslateServiceLang); // Sofort zurück zur ursprünglichen Sprache
-
-      if (homeTranslatedPath === '') {
-        navigationPath = [lang];
-      } else {
-        navigationPath = [lang, homeTranslatedPath];
-      }
-      console.log(`[NavigationComponent] Fallback-Navigation zur Home-Seite (Zielpfad in Sprache ${lang}): /${navigationPath.join('/')}`);
+      navigationPath = [lang, newTranslatedSegment];
     }
+    console.log(`[NavigationComponent] Navigiere zu neu übersetztem Pfad basierend auf Key '${targetAppRouteKey}' (Zielpfad in Sprache ${lang}): /${navigationPath.join('/')}`);
 
-    // Führe die Navigation aus und deaktiviere das Scrollen für den Sprachwechsel
     this.router.navigate(navigationPath, {
       replaceUrl: true,
-      scrollPositionRestoration: 'disabled' // HIER WURDE ES HINZUGEFÜGT
-    } as NavigationExtras); // HIER WURDE DIE TYPUMWANDLUNG HINZUGEFÜGT
+      scrollPositionRestoration: 'disabled'
+    } as NavigationExtras);
   }
 
-  /**
-   * Hilfsmethode, um RouterLink-Arrays für das HTML-Template zu generieren.
-   * Stellt sicher, dass die Sprache im Pfad korrekt ist.
-   */
   getRouterLink(key: keyof typeof AppRouteKeys): string[] {
     const translatedPath = this.translate.instant(AppRouteKeys[key]);
-    const currentLang = this.activeLanguage; // Nutze die aktuell aktive Sprache
+    const currentLang = this.activeLanguage;
 
     if (key === 'home' && translatedPath === '') {
-      return ['/', currentLang]; // Home-Link ist nur /<sprache>
+      return ['/', currentLang];
     }
-    return ['/', currentLang, translatedPath]; // Andere Links sind /<sprache>/<übersetzter-pfad>
+    return ['/', currentLang, translatedPath];
   }
 }
