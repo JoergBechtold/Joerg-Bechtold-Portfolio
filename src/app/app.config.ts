@@ -29,14 +29,21 @@ const createTranslationProviders = () => importProvidersFrom(
       useFactory: HttpLoaderFactory,
       deps: [HttpClient]
     },
-    defaultLanguage: 'de'
+    defaultLanguage: 'de' // Default-Sprache bleibt hier als Fallback
   })
 );
 
 
 const initTranslations = (translate: TranslateService) => {
   return () => {
-    return translate.use(translate.getDefaultLang()).toPromise();
+    // NEUE LOGIK: Sprache aus der URL extrahieren
+    const pathSegments = window.location.pathname.split('/').filter(s => s);
+    // Überprüfen, ob das erste Segment eine gültige Sprache ist
+    const langFromUrl = translate.getLangs().includes(pathSegments[0]) ? pathSegments[0] : translate.getDefaultLang();
+
+    // Hier stellen wir sicher, dass die Sprache korrekt gesetzt wird,
+    // BEVOR Angular die Komponenten initialisiert.
+    return translate.use(langFromUrl).toPromise();
   };
 };
 

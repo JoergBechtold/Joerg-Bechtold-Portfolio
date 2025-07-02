@@ -49,9 +49,7 @@ function createTranslatedRoute(route: Route, translate: TranslateService): Route
         return { ...route, path: translatedPath };
     }
     return route;
-
 }
-
 
 const langResolver = async (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
     const translate = inject(TranslateService);
@@ -60,6 +58,20 @@ const langResolver = async (route: ActivatedRouteSnapshot, state: RouterStateSna
     const langParam = route.paramMap.get('lang');
     const currentLang = await validateAndSetLanguage(translate, router, langParam);
     if (currentLang === false) return false;
+
+    const newLocalizedRoutes = createLocalizedRoutes(translate);
+    const updatedRoutes = [...routes];
+    const langRouteIndex = updatedRoutes.findIndex(r => r.path === ':lang');
+
+    if (langRouteIndex > -1) {
+        updatedRoutes[langRouteIndex] = {
+            ...updatedRoutes[langRouteIndex],
+            children: newLocalizedRoutes
+        };
+        router.resetConfig(updatedRoutes);
+    } else {
+        console.error(`[langResolver] Fehler: ':lang'-Route nicht in den Hauptrouten gefunden!`);
+    }
 
     return handlePathValidation(state.url, translate, router, currentLang);
 };
@@ -120,7 +132,7 @@ const handlePathValidation = (stateUrl: string, translate: TranslateService, rou
 
     if (fullExpectedUrl && stateUrl !== fullExpectedUrl) {
         router.navigateByUrl(fullExpectedUrl, { replaceUrl: true });
-        return false; // Line 8
+        return false;
     }
 
     return redirectToHome(router, translate, currentLang);
