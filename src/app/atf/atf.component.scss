@@ -22,7 +22,7 @@ main{
   position: absolute;
   // top: 50%;
   // left: 50%;
-  left: 930px;
+  left: clamp(0px, -186px + 58.125vw, 930px);
   bottom: 385px;
   // transform: translate(-10%, -70%);
   z-index: 5;
@@ -74,9 +74,10 @@ main{
 
     > button{
       border-radius: 10px;
-      padding: 15px 30px 15px 30px;
+      padding-block: $padding-block-11-15;
+      padding-inline: $padding-inline-24-30;
       background-color: $primary-bg-green;
-      @include fontSizeWeightColor();
+      @include fontSizeWeightColor($si: $font-size-18-23);
       transition: all 0.3s ease-in-out;
       transform-origin: top center;
       box-shadow: 4px 4px 4px 0px #00000040;
