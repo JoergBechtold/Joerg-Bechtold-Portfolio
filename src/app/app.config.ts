@@ -35,7 +35,9 @@ export const appConfig: ApplicationConfig = {
       }),
       // Optional: Wenn du zu Fragmenten scrollen willst (z.B. #about_me)
       withInMemoryScrolling({
-        scrollPositionRestoration: 'top', // Scrollt beim Navigieren nach oben
+        // scrollPositionRestoration: 'top',
+
+        // Scrollt beim Navigieren nach oben
         anchorScrolling: 'enabled' // Ermöglicht das Scrollen zu Ankern (Fragmenten)
       })
     ),

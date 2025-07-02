@@ -2,9 +2,8 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { Router, RouterLink, ActivatedRoute, UrlSegment } from '@angular/router';
+import { Router, RouterLink, ActivatedRoute, UrlSegment, NavigationExtras } from '@angular/router'; // NavigationExtras importieren
 import { AppRouteKeys } from '../../../../app.routes';
-// firstValueFrom wird hier nicht mehr benötigt, da wir keine asynchronen get-Aufrufe mehr machen
 
 @Component({
   selector: 'app-navigation',
@@ -16,7 +15,6 @@ import { AppRouteKeys } from '../../../../app.routes';
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss']
 })
-
 export class NavigationComponent implements OnInit {
   activeLanguage: string = 'de';
   @Input() isInSidebar: boolean = false;
@@ -67,12 +65,8 @@ export class NavigationComponent implements OnInit {
 
     let targetAppRouteKey: keyof typeof AppRouteKeys | undefined;
 
-    // Speichere die ECHTE aktuelle Sprache des TranslateService.
-    // Diese ist die Sprache, in der die UI gerade angezeigt wird, bevor wir navigieren.
     const currentTranslateServiceLang = this.translate.currentLang;
 
-    // Temporär die TranslateService-Sprache auf die ALTE URL-Sprache setzen (oldActiveLanguage),
-    // um den korrekten AppRouteKey für den aktuellen Pfad zu finden.
     this.translate.use(oldActiveLanguage);
 
     for (const key of Object.keys(AppRouteKeys) as Array<keyof typeof AppRouteKeys>) {
@@ -88,24 +82,12 @@ export class NavigationComponent implements OnInit {
       }
     }
 
-    // **WICHTIG:** ngx-translate-Sprache wieder auf den Zustand setzen, den sie hatte,
-    // bevor wir den Reverse-Lookup gemacht haben. Der langResolver wird die neue Sprache setzen.
     this.translate.use(currentTranslateServiceLang);
     console.log(`[NavigationComponent] Nach Reverse Lookup: TranslateService wieder auf Originalzustand '${currentTranslateServiceLang}' gesetzt.`);
 
     let navigationPath: string[];
 
     if (targetAppRouteKey) {
-      // **NEUER ANSATZ HIER:**
-      // Da der `langResolver` die `translate.use(lang)` ausführt und dann die Routen neu konfiguriert,
-      // müssen wir hier NICHT die Übersetzung für die Zielsprache manuell abrufen.
-      // Stattdessen vertrauen wir darauf, dass der Router nach der Navigation
-      // und dem Auflösen des langResolvers den Pfad in der Zielsprache finden wird.
-
-      // Wir verwenden `translate.instant()` in der *gewünschten Zielsprache* ('lang'),
-      // da wir wissen, dass der `langResolver` diese Sprache als nächstes setzen wird.
-      // Dies erfordert einen kurzen, transiente Sprachwechsel nur für diesen Zweck.
-      // Dies ist ein Kompromiss, um `instant` nutzen zu können.
       this.translate.use(lang); // Temporärer Wechsel zur Zielsprache für instant()
       const newTranslatedSegment = this.translate.instant(AppRouteKeys[targetAppRouteKey]);
       this.translate.use(currentTranslateServiceLang); // Sofort zurück zur ursprünglichen Sprache
@@ -118,7 +100,6 @@ export class NavigationComponent implements OnInit {
       console.log(`[NavigationComponent] Navigiere zu neu übersetztem Pfad basierend auf Key '${targetAppRouteKey}' (Zielpfad in Sprache ${lang}): /${navigationPath.join('/')}`);
     } else {
       console.warn(`[NavigationComponent] KEIN MATCH: Kein passender AppRouteKey für den aktuellen URL-Pfad '${currentUrlPathSegment}' in der Quellsprache gefunden. Leite zur Home-Seite um.`);
-      // Auch hier: Temporärer Wechsel zur Zielsprache für instant()
       this.translate.use(lang); // Temporärer Wechsel zur Zielsprache für instant()
       const homeTranslatedPath = this.translate.instant(AppRouteKeys.home);
       this.translate.use(currentTranslateServiceLang); // Sofort zurück zur ursprünglichen Sprache
@@ -131,8 +112,11 @@ export class NavigationComponent implements OnInit {
       console.log(`[NavigationComponent] Fallback-Navigation zur Home-Seite (Zielpfad in Sprache ${lang}): /${navigationPath.join('/')}`);
     }
 
-    // Führe die Navigation aus. Der langResolver wird dann ausgelöst und die Sprache permanent setzen.
-    this.router.navigate(navigationPath, { replaceUrl: true });
+    // Führe die Navigation aus und deaktiviere das Scrollen für den Sprachwechsel
+    this.router.navigate(navigationPath, {
+      replaceUrl: true,
+      scrollPositionRestoration: 'disabled' // HIER WURDE ES HINZUGEFÜGT
+    } as NavigationExtras); // HIER WURDE DIE TYPUMWANDLUNG HINZUGEFÜGT
   }
 
   /**
