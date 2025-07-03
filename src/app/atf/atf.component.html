@@ -19,8 +19,9 @@
 
         <main>
             <div class="main-content">
-                <div class="vertical-text">
-                    <span [class.lang-de]="activeLanguage === 'de'" [class.lang-en]="activeLanguage === 'en'">
+                <div class="vertical-text" [class.lang-de]="activeLanguage === 'de'"
+                    [class.lang-en]="activeLanguage === 'en'">
+                    <span>
                         {{ 'ATF.I_AM' | translate }}
                     </span>
                 </div>

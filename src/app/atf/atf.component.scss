@@ -109,36 +109,23 @@ main{
 .vertical-text {
     @include fontSizeWeightColor($we:400);
     white-space: nowrap; 
-   position: absolute;
-    // transform: rotate(-90deg) translateY(42px) translateX(-3px);
+    transform: rotate(-90deg) translateY(0px) translateX(-3px);
 
       &.lang-de {
-            font-size: 50px;
-            left: 10px;
-            transform: rotate(-90deg) translateY(42px) translateX(-3px);
-        }
+        @include fontSizeWeightColor($si: 50px, $we:500);
+       
+        transform: rotate(-90deg) translateY(31px) translateX(-3px);
+      }
 
-        &.lang-en {
-            font-size: 70px; // Größer für EN
-            left: 0px;       // Andere Linksposition für EN
-            transform: rotate(-90deg) translateY(90px) translateX(-3px); // Andere Translation für EN
-        }
-
+      &.lang-en {
+        @include fontSizeWeightColor($si: 70px, $we:400);
+          
+        transform: rotate(-90deg) translateY(29px) translateX(-3px); 
+      }
 
     >span{
-      @include fontSizeWeightColor($we:400);
-    white-space: nowrap; 
-
-    
+      white-space: nowrap; 
     }
-      
- 
- 
-    // transform: rotate(-90deg) translateX(-50%);
-    // transform-origin: bottom left;
-    // position: absolute;
-    // left: 0px; 
-    // bottom: 48%;
 }
 
 .scroll-down-box {
