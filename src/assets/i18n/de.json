@@ -5,7 +5,8 @@
     "PORTFOLIO": "Portfolio",
     "CONTACT": "Kontakt",
     "LANG_DE": "DE",
-    "LANG_EN": "EN"
+    "LANG_EN": "EN",
+    "TITLE_IMG": "Startseite"
   },
   "MAIN": {
 
@@ -16,7 +17,8 @@
   },
   "ALT_TEXTS": {
     "ARROW_DOWN_WHITE": "Weißer Pfeil nach unten",
-    "MAIN_SECTION_GRAY": "Grauer Bereich der Hauptsektion"
+    "MAIN_SECTION_GRAY": "Grauer Bereich der Hauptsektion",
+    "FOOTER_IMG": "Fußzeilenbild"
   },
   "ATF": {
     "SCROLL_DOWN": "nach unten scrollen",

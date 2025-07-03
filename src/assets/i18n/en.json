@@ -5,7 +5,8 @@
     "PORTFOLIO": "Portfolio",
     "CONTACT": "Contact",
     "LANG_DE": "DE",
-    "LANG_EN": "EN"
+    "LANG_EN": "EN",
+    "TITLE_IMG": "Home"
   },
   "MAIN": {
 
@@ -16,7 +17,9 @@
   },
   "ALT_TEXTS": {
     "ARROW_DOWN_WHITE": "White arrow down",
-    "MAIN_SECTION_GRAY": "Main Section Gray Area"
+    "MAIN_SECTION_GRAY": "Main Section Gray Area",
+    "FOOTER_IMG": "Footer Image"
+
   },
   "ATF": {
     "SCROLL_DOWN": "scroll down",
