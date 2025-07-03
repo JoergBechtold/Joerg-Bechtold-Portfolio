@@ -13,23 +13,12 @@ section{
 }
 
 .atf-content{
-       max-width: $max-width-1920;
-       width: 100%;
-       height: 100%;
+  max-width: $max-width-1920;
+  width: 100%;
+  height: 100%;
 }
 
-main{
-  display: flex;
-  position: absolute;
-  // top: 50%;
-  // left: 50%;
-  left: 930px;
-  bottom: 385px;
-  // transform: translate(-10%, -70%);
-  z-index: 5;
-}
-
-.main-bg-img{
+.atf-bg-img{
   height: 100%;
   width: 100%;
   position: relative;
@@ -53,45 +42,24 @@ main{
         z-index: 2;   
     }
 
-      > img:nth-child(3) {
-        left: 170px;
-        position: absolute; 
-        width: 537px;                  
-        display: block;    
-        z-index: 3;
+    > img:nth-child(3) {
+      left: 170px;
+      position: absolute; 
+      width: 537px;                  
+      display: block;    
+      z-index: 3;
     }
 }
 
 .main-content{
-    display: flex;
-    flex-direction: center; 
-    align-items: center;
-    // gap: 40px; 
-    // text-align: left; 
-    max-width: 900px;
-    width: 100%;
-    z-index: 2;
-    position: relative; 
-    gap: 5px;
+  position: absolute;
+  flex-direction: column;
+  @include dFlexAllCenter($g: 25px);
+  left: 930px;
+  bottom: 385px;
+  z-index: 5;
 
-   
-}
-
-.intro{
-   display: flex;
-   align-items: center;
-   position: relative; 
-   flex-direction: column; 
-
-   > h1{
-    @include fontSizeWeightColor($si: clamp(44px, 34.8px + 2.875vw, 90px), $we:700);
-   }
-
-   > h2{
-    @include fontSizeWeightColor($si: clamp(28px, 22px + 1.875vw, 58px), $we:400, $co:$primary-bg-purple);
-   }
-
-    > button{
+  > button{
       border-radius: 10px;
       padding: 15px 30px 15px 30px;
       background-color: $primary-bg-green;
@@ -107,6 +75,31 @@ main{
     }
 }
 
+.text-box{
+  display: flex;
+  flex-direction: center; 
+  align-items: center; 
+  max-width: 900px;
+  width: 100%;
+  z-index: 2;
+  position: relative; 
+  gap: 5px; 
+}
+
+.intro-text{
+  display: flex;
+  align-items: center;
+  position: relative; 
+  flex-direction: column; 
+
+  > h1{
+   @include fontSizeWeightColor($si: clamp(44px, 34.8px + 2.875vw, 90px), $we:700);
+  }
+  > h2{
+   @include fontSizeWeightColor($si: clamp(28px, 22px + 1.875vw, 58px), $we:400, $co:$primary-bg-purple);
+  }
+}
+
 .vertical-text {
   display: grid;
   width: 70px;
@@ -115,13 +108,13 @@ main{
   justify-content: center;
   align-items: center;
 
-      &.lang-de {
-        @include fontSizeWeightColor($si: 50px, $we:500);
-      }
+    &.lang-de {
+      @include fontSizeWeightColor($si: 50px, $we:500);
+    }
 
-      &.lang-en {
-        @include fontSizeWeightColor($si: 70px, $we:400);
-      }
+    &.lang-en {
+      @include fontSizeWeightColor($si: 70px, $we:400);
+    }
 
   >span{
     margin: 0;
@@ -131,7 +124,6 @@ main{
     transform: rotate(180deg);
     white-space: nowrap; 
   }
-  
 }
 
 
