@@ -72,6 +72,7 @@ main{
     width: 100%;
     z-index: 2;
     position: relative; 
+    gap: 5px;
 
    
 }
@@ -107,26 +108,32 @@ main{
 }
 
 .vertical-text {
-    @include fontSizeWeightColor($we:400);
-    white-space: nowrap; 
-    transform: rotate(-90deg) translateY(0px) translateX(-3px);
+  display: grid;
+  width: 70px;
+  height: 100%;
+  grid-template-columns: max-content;
+  justify-content: center;
+  align-items: center;
 
       &.lang-de {
         @include fontSizeWeightColor($si: 50px, $we:500);
-       
-        transform: rotate(-90deg) translateY(31px) translateX(-3px);
       }
 
       &.lang-en {
         @include fontSizeWeightColor($si: 70px, $we:400);
-          
-        transform: rotate(-90deg) translateY(29px) translateX(-3px); 
       }
 
-    >span{
-      white-space: nowrap; 
-    }
+  >span{
+    margin: 0;
+    writing-mode: vertical-rl;
+    text-align: center;
+    line-height: 1;
+    transform: rotate(180deg);
+    white-space: nowrap; 
+  }
+  
 }
+
 
 .scroll-down-box {
   position: absolute;
