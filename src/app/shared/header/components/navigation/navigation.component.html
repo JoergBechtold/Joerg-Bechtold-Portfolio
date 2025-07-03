@@ -9,12 +9,12 @@
         </div>
 
         <div class="language-btns">
-            <button translate="HEADER.LANG_DE" [ngClass]="{ 'active-button': activeLanguage === 'de' }"
-                (click)="setLanguage('de')">
+            <button title="{{ 'HEADER.LANGUAGE_DE' | translate }}" translate="HEADER.LANG_DE"
+                [ngClass]="{ 'active-button': activeLanguage === 'de' }" (click)="setLanguage('de')">
 
             </button>
-            <button translate="HEADER.LANG_EN" [ngClass]="{ 'active-button': activeLanguage === 'en' }"
-                (click)="setLanguage('en')">
+            <button title="{{ 'HEADER.LANGUAGE_EN' | translate }}" translate="HEADER.LANG_EN"
+                [ngClass]="{ 'active-button': activeLanguage === 'en' }" (click)="setLanguage('en')">
             </button>
         </div>
     </nav>
