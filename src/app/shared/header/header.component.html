@@ -19,4 +19,6 @@
     </div>
 </div>
 
-<app-sidebar [hidden]="!isMenuOpen" [ngClass]="{'open': isMenuOpen}"></app-sidebar>
+<div class="sidebar-overlay" [ngClass]="{'open': isMenuOpen}" (click)="closeSidebar()">
+    <app-sidebar [ngClass]="{'open': isMenuOpen}" (click)="$event.stopPropagation()"></app-sidebar>
+</div>

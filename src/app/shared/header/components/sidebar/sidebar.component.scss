@@ -1,25 +1,38 @@
 @use '../../../../../assets/styles/variables.scss' as*;
 @use '../../../../../assets/styles/mixins.scss' as*;
 
-:host {
-    position: fixed;
-    top: $header-hight;
-    right: 0;
-    width: 350px; 
-    height: calc(100% - #{$header-hight}); 
-    background-color: $side-nav-bg; 
-    z-index: 9;
+.sidebar-overlay{
     transform: translateX(100%); 
     transition: transform 0.3s ease-in-out; 
-    @include dFlexAllCenter();
-    flex-direction: column; 
-  
+    z-index: 9;
+    position: fixed;
+    top:$header-hight;
+    left: 0;
+    right: 0;
+    background-color: transparent;
+    height: 100dvh;
+
     &.open {
         transform: translateX(0); 
     }
+
+}
+
+app-sidebar{
+    position: absolute;
+    right: 0;
+    width: 350px; 
+    height: 100%;
+    background-color: $side-nav-bg; 
+    @include dFlexAllCenter();
+    flex-direction: column; 
 
     @media screen and (max-width: 500px) {
         width: 100%;
     }
 }
+
+
+
+
 

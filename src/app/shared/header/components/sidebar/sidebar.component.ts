@@ -1,6 +1,8 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { NavigationComponent } from "../navigation/navigation.component";
 import { CommonModule } from '@angular/common';
+
+
 
 
 @Component({
@@ -13,9 +15,14 @@ import { CommonModule } from '@angular/common';
 export class SidebarComponent {
   @Output() closeSidenav = new EventEmitter<void>();
 
+  @Input() isMenuOpen: boolean = false;
+
 
   onClose(): void {
+    console.log('SidebarComponent: closeSidenav event emitted');
     this.closeSidenav.emit();
   }
+
+
 
 }

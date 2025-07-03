@@ -19,17 +19,20 @@
 
         <main>
             <div class="main-content">
-                <div class="intro-text">
-                    <span [ngStyle]="{
-                        'font-size': activeLanguage === 'de' ? '50px' : '70px',
-                        'left':activeLanguage === 'en' ? '7px' : '0px',
-                        'transform': activeLanguage === 'de' ? 'rotate(-90deg) translateX(-52%)' : 'rotate(-90deg) translateX(-50%)'
-                    }" class="vertical-text">{{
-                        'ATF.I_AM' | translate }}</span>
+                <div class="vertical-text">
+                    <span [class.lang-de]="activeLanguage === 'de'" [class.lang-en]="activeLanguage === 'en'">
+                        {{ 'ATF.I_AM' | translate }}
+                    </span>
+                </div>
+
+                <div class="intro">
+
                     <h1>Jörg Bechtold</h1>
                     <h2>FRONTEND DEVELOPER</h2>
+
                 </div>
-                <button class="call-to-action-button">{{ 'ATF.LETS_TALK' | translate }}</button>
+                <!-- <button class="call-to-action-button">{{ 'ATF.LETS_TALK' | translate }}</button> -->
+
             </div>
         </main>
     </div>
