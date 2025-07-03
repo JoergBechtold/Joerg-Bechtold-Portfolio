@@ -22,7 +22,7 @@ app-sidebar{
     position: absolute;
     right: 0;
     width: 350px; 
-    height: 100%;
+    height: calc(100% - $header-hight);
     background-color: $side-nav-bg; 
     @include dFlexAllCenter();
     flex-direction: column; 
