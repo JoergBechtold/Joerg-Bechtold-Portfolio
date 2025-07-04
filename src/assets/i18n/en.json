@@ -15,7 +15,12 @@
   },
   
   "ABOUT_ME": {
-    "H1": "About me"
+    "HEADLINE": "About me",
+    "DESCRIPTION_PART1": "Write some information about yourself that is IT related",
+    "DESCRIPTION_PART2": "Why are you passionate about coding? What is your source of inspiration for improving your programming skills?",
+    "LOCATION": "Where are you located? Are you open to different ways of working, such as working remotely or even relocating?",
+    "LEARNING": "Show that you are open-minded. Are you enthusiastic about learning new technologies and continually improving your skills?",
+    "PROBLEM_SOLVING": "A brief description of your problem-solving approach. Do you learn from each challenge as you search for the most efficient or elegant solution? You can include some keywords like: analytical thinking, creativity, persistence and collaboration."
   },
 
   "LINK": {

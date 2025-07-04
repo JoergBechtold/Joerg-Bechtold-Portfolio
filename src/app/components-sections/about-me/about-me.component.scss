@@ -7,6 +7,14 @@ section {
   background-color: $primary-bg-gray;
 }
 
+p {
+  @include fontSizeWeightColor($si: 16px, $we: 400);
+}
+
+h1 {
+  @include fontSizeWeightColor($si: 90px, $we: 700);
+}
+
 .about-me-content {
   max-width: $max-width-1920;
   width: 100%;
@@ -22,15 +30,33 @@ section {
 }
 
 .content-left {
+  gap: 25px;
+  flex-direction: column;
+  max-width: 475px;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   left: $padding-inline-25-100;
-  @include dFlexAllCenter();
+  @include dFlexAllCenter($ai: flex-start);
+}
 
-  > h1 {
-    @include fontSizeWeightColor($si: 90px, $we: 700);
+.info-block {
+  margin-top: 32px;
+  @include dFlexAllCenter($g: 16px, $ai: flex-start);
+}
+
+.icon-box {
+  display: block;
+  height: 48px;
+  aspect-ratio: 1 / 1;
+
+  > img {
+    height: 100%;
   }
+}
+
+.text-box {
+  flex: 1;
 }
 
 .content-right {

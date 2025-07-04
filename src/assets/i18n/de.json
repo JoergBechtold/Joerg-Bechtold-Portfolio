@@ -14,7 +14,12 @@
   },
 
   "ABOUT_ME": {
-    "H1": "Über mich"
+    "HEADLINE": "Über mich",
+    "DESCRIPTION_PART1": "Schreib etwas über dich, das IT-bezogen ist.",
+    "DESCRIPTION_PART2": "Warum brennst du für das Programmieren?  Was ist deine Inspirationsquelle, um deine Programmierkenntnisse zu verbessern?",
+    "LOCATION": "Wo befindest du dich? Bist du offen für verschiedene Arbeitsweisen, wie z.B. Remote-Arbeit oder sogar einen Umzug?",
+    "LEARNING": "Zeige, dass du aufgeschlossen bist. Bist du enthusiastisch, neue Technologien zu lernen und deine Fähigkeiten kontinuierlich zu verbessern?",
+    "PROBLEM_SOLVING": "Eine kurze Beschreibung deines Problemlösungsansatzes. Lernst du aus jeder Herausforderung, während du nach der effizientesten oder elegantesten Lösung suchst? Du kannst einige Schlüsselwörter wie: analytisches Denken, Kreativität, Ausdauer und Zusammenarbeit verwenden."
   },
 
   "LINK": {
