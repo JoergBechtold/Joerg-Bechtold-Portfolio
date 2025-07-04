@@ -12,31 +12,41 @@
   },
   "MAIN": {
   },
+
+  "ABOUT_ME": {
+    "H1": "Über mich"
+  },
+
   "LINK": {
     "LEGAL_NOTICE": "Impressum",
     "PRIVACY_POLICY": "Datenschutzerklärung"
   },
+
   "ALT_TEXTS": {
     "ARROW_DOWN_WHITE": "Weißer Pfeil nach unten",
     "MAIN_SECTION_GRAY": "Grauer Bereich der Hauptsektion",
     "FOOTER_IMG": "Fußzeilenbild"
   },
+
   "ATF": {
     "SCROLL_DOWN": "nach unten scrollen",
     "I_AM": "Ich bin",
     "LETS_TALK": "Lass uns reden"
   },
+
   "ROUTES": {
     "HOME": "",
     "PRIVACY_POLICY": "datenschutzerklaerung",
     "LEGAL_NOTICE": "impressum",
     "NOT_FOUND": "seite-nicht-gefunden"
   },
+
   "PAGE_NOT_FOUND": {
     "TITLE": "404 - Seite nicht gefunden",
     "MESSAGE": "Die angeforderte Seite existiert nicht.",
     "GO_HOME": "Zur Startseite"
   },
+
   "LEGAL_NOTICE": {
     "H1": "Impressum",
     "PARAGRAPH_5_DDG": "Angaben gemäß § 5 DDG",
@@ -60,6 +70,7 @@
     "IMPRINT_SOURCE_DESCRIPTION": "dem Ratgeber für",
     "IMPRINT_SOURCE_ATTRIBUTION": "nach einem Muster von"
   },
+
   "PRIVACY_POLICY": {
     "H1": "Datenschutzhinweise",
     "RESPONSIBLE_PERSON_TITLE": "Verantwortlicher",

@@ -5,6 +5,7 @@
 html {
   scrollbar-gutter: stable;
   background-color: $primary-bg-gray;
+  overflow-x: hidden;
 }
 
 body {
@@ -60,11 +61,11 @@ button {
 
 ::-webkit-scrollbar {
   width: 4px;
-  scrollbar-color: $primary-bg-green;
+  scrollbar-color: $primary-bg-purple;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: $primary-bg-green;
+  background-color: $primary-bg-purple;
 }
 
 ::-webkit-scrollbar-track {

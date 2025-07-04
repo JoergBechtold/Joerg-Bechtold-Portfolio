@@ -10,33 +10,44 @@
     "LANGUAGE_DE": "German",
     "LANGUAGE_EN": "English"
   },
+
   "MAIN": {
   },
+  
+  "ABOUT_ME": {
+    "H1": "About me"
+  },
+
   "LINK": {
     "LEGAL_NOTICE": "Legal Notice",
     "PRIVACY_POLICY": "Privacy Policy"
   },
+
   "ALT_TEXTS": {
     "ARROW_DOWN_WHITE": "White arrow down",
     "MAIN_SECTION_GRAY": "Main Section Gray Area",
     "FOOTER_IMG": "Footer Image"
   },
+
   "ATF": {
     "SCROLL_DOWN": "scroll down",
     "I_AM": "I am",
     "LETS_TALK": "Let's talk!"
   },
+
   "ROUTES": {
     "HOME": "",
     "PRIVACY_POLICY": "privacy-policy",
     "LEGAL_NOTICE": "legal-notice",
     "NOT_FOUND": "page-not-found"
   },
+
   "PAGE_NOT_FOUND": {
     "TITLE": "404 - Page not found",
     "MESSAGE": "The requested page does not exist.",
     "GO_HOME": "Go to home page"
   },
+
   "LEGAL_NOTICE": {
     "H1": "Legal Notice",
     "PARAGRAPH_5_DDG": "Information according to § 5 DDG",
@@ -59,6 +70,7 @@
     "IMPRINT_SOURCE_DESCRIPTION": "the guide for",
     "IMPRINT_SOURCE_ATTRIBUTION": "based on a template from"
   },
+
   "PRIVACY_POLICY": {
     "H1": "Privacy Policy",
     "RESPONSIBLE_PERSON_TITLE": "Controller",

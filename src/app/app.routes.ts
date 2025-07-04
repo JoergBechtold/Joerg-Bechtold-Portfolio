@@ -3,9 +3,6 @@ import { MainContentComponent } from './main-content/main-content.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-
-
-
 import { inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -31,7 +28,7 @@ export const mainRoutes: Routes = [
         path: 'legal-notice',
         component: LegalNoticeComponent,
         data: { translationKey: AppRouteKeys.legalNotice, titleKey: 'LINK.LEGAL_NOTICE' }
-    }
+    },
 ];
 
 export function createLocalizedRoutes(translate: TranslateService): Routes {
@@ -94,12 +91,8 @@ const validateAndSetLanguage = async (translate: TranslateService, router: Route
 };
 
 
-const extractPathSegment = (stateUrl: string): string => {
-    // Fragment-Teil entfernen, bevor der Pfad segmentiert wird
-    // Beispiel: '/de#about_me' wird zu '/de'
-    const urlWithoutFragment = stateUrl.split('#')[0];
-    return urlWithoutFragment.split('/').filter(s => s !== '').slice(1).join('/');
-};
+const extractPathSegment = (stateUrl: string): string =>
+    stateUrl.split('/').filter(s => s !== '').slice(1).join('/');
 
 const getExpectedUrl = (pathSegment: string, translate: TranslateService, currentLang: string, router: Router): string | undefined => {
     const tempLocalizedRoutes = createLocalizedRoutes(translate);
@@ -130,33 +123,18 @@ const redirectToHome = (router: Router, translate: TranslateService, currentLang
 
 
 const handlePathValidation = (stateUrl: string, translate: TranslateService, router: Router, currentLang: string): boolean => {
-    // Hier ist es wichtig, dass der pathSegment das Fragment bereits ignoriert hat.
-    const pathSegment = extractPathSegment(stateUrl); // <-- Diese Funktion ist jetzt entscheidend.
-
-    // Fragment des aktuellen URLs holen, falls vorhanden
-    const currentFragment = stateUrl.split('#')[1] || ''; // 'about_me' oder ''
-
+    const pathSegment = extractPathSegment(stateUrl);
     const fullExpectedUrl = getExpectedUrl(pathSegment, translate, currentLang, router);
 
-    // Vergleiche die URL OHNE Fragment für die Routen-Validierung
-    // Der Fragment-Teil wird vom Angular Router separat behandelt (wegen anchorScrolling: 'enabled')
-    const stateUrlWithoutFragment = stateUrl.split('#')[0];
-
-
-    if (fullExpectedUrl && stateUrlWithoutFragment === fullExpectedUrl) {
-        // Hier sollte es ankommen, wenn die Basis-URL korrekt ist.
-        // Der Router kümmert sich dann um das Fragment.
+    if (fullExpectedUrl && stateUrl === fullExpectedUrl) {
         return true;
     }
 
-    if (fullExpectedUrl && stateUrlWithoutFragment !== fullExpectedUrl) {
-        // Hier findet ein Redirect statt, wenn der Basis-Pfad nicht stimmt.
-        // Das Fragment geht dabei verloren, wird aber durch die neue Navigation eh neu gesetzt.
+    if (fullExpectedUrl && stateUrl !== fullExpectedUrl) {
         router.navigateByUrl(fullExpectedUrl, { replaceUrl: true });
         return false;
     }
 
-    // Wenn der Pfad überhaupt nicht zu einer Route passt, leite zur Home-Seite um.
     return redirectToHome(router, translate, currentLang);
 };
 
