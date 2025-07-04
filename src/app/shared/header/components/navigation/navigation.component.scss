@@ -1,61 +1,60 @@
-@use '../../../../../assets/styles/variables.scss' as*;
-@use '../../../../../assets/styles/mixins.scss' as*;
+@use "../../../../../assets/styles/variables.scss" as *;
+@use "../../../../../assets/styles/mixins.scss" as *;
 
-  
-  .nav-content-box{
-    width: 100%;
-    height: 100%;
-    max-width: $max-width-1920;
-    @include dFlexAllCenter( $jc: space-between);
+.nav-content-box {
+  width: 100%;
+  height: 100%;
+  max-width: $max-width-1920;
+  @include dFlexAllCenter($jc: space-between);
 
-     >nav{
-       @include dFlexAllCenter( $jc: space-between, $g: 92px);
-     }
+  > nav {
+    @include dFlexAllCenter($jc: space-between, $g: 92px);
+  }
 }
 
-     .links-header{
-    @include dFlexAllCenter( $jc: space-between, $g: 29px);
+.links-header {
+  @include dFlexAllCenter($jc: space-between, $g: 29px);
 
-    >a{
-        @include fontSizeWeightColor();
-        transition:  color 0.3s ease; 
+  > a {
+    @include fontSizeWeightColor();
+    transition: color 0.3s ease;
 
-        &:hover{
-            color: $primary-bg-green;
-        }
+    &:hover {
+      color: $primary-bg-green;
     }
+  }
 }
 
 .sidenav-layout {
-    display: flex;
-    flex-direction: column; 
-    gap: 29px !important; 
+  display: flex;
+  flex-direction: column;
+  gap: 29px !important;
 }
 
 .sidenav-layout .links-header {
-    flex-direction: column; 
-    align-items: center;
+  flex-direction: column;
+  align-items: center;
 }
 
-.language-btns{
-    @include dFlexAllCenter( $jc: space-between, $g: 14px);
+.language-btns {
+  @include dFlexAllCenter($jc: space-between, $g: 14px);
 
-    > button {
-      @include fontSizeWeightColor();
-      background-color: transparent;
-      border: 1px solid $primary-bg-green;
-      border-radius: 10px;
-      padding: 5px 8px 5px 8px;
-      cursor: pointer; 
-      transition: background-color 0.3s ease, color 0.3s ease; 
-  
-      &.active-button {
-        background-color: $primary-bg-green; 
-      }
-  
-      &:hover:not(.active-button) { 
-        background-color: $primary-bg-purple;
-        border: 1px solid $primary-bg-purple; 
-      }
+  > button {
+    @include fontSizeWeightColor();
+    background-color: transparent;
+    border: 1px solid $primary-bg-green;
+    border-radius: 10px;
+    padding: 5px 8px 5px 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    &.active-button {
+      background-color: $primary-bg-green;
+    }
+
+    &:hover:not(.active-button) {
+      background-color: $primary-bg-purple;
+      border: 1px solid $primary-bg-purple;
+    }
   }
 }

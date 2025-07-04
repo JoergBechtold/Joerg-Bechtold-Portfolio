@@ -1,35 +1,33 @@
-@use '../../../assets/styles/variables.scss' as*;
-@use '../../../assets/styles/mixins.scss' as*;
-@use '../../../app/shared/header/components/sidebar/sidebar.component.scss' as*;
+@use "../../../assets/styles/variables.scss" as *;
+@use "../../../assets/styles/mixins.scss" as *;
+@use "../../../app/shared/header/components/sidebar/sidebar.component.scss" as *;
 
-
-
-.header{
-    height: $header-hight;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    @include dFlexAllCenter();
-    background-color: $primary-bg-gray;
-    @include paddingLeftRightHolePage();
-    z-index: 10;
+.header {
+  height: $header-hight;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  @include dFlexAllCenter();
+  background-color: $primary-bg-gray;
+  @include paddingLeftRightHolePage();
+  z-index: 10;
 }
 
-.header-icon-box{
-  @include headerLINKLogoStyle()
+.header-icon-box {
+  @include headerLINKLogoStyle();
 }
 
-.header-content-box{
-    width: 100%;
-    height: 100%;
-    max-width: $max-width-1920;
-    @include dFlexAllCenter( $jc: space-between);
+.header-content-box {
+  width: 100%;
+  height: 100%;
+  max-width: $max-width-1920;
+  @include dFlexAllCenter($jc: space-between);
 }
 
 .hamburger-icon {
-  @include dFlexAllCenter( $jc: space-between);
+  @include dFlexAllCenter($jc: space-between);
   flex-direction: column;
   cursor: pointer;
 }
@@ -43,22 +41,16 @@
   transition: 0.125s ease-in-out;
 }
 
-.bar:nth-child(2){
+.bar:nth-child(2) {
   width: 16px;
 }
 
 .hamburger-menu-show-click .bar:nth-child(1) {
   transform: translateY(13px) rotate(45deg);
- 
 }
 .hamburger-menu-show-click .bar:nth-child(2) {
   opacity: 0;
 }
 .hamburger-menu-show-click .bar:nth-child(3) {
   transform: translateY(-13px) rotate(-45deg);
- 
 }
-
-
-
-

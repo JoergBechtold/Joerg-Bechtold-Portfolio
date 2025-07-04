@@ -1,7 +1,7 @@
-@use "../../assets/styles/variables.scss" as*;
-@use "../../assets/styles/mixins.scss" as*;
+@use "../../assets/styles/variables.scss" as *;
+@use "../../assets/styles/mixins.scss" as *;
 
-section{
+section {
   height: 100dvh;
   width: 100%;
   background-color: $primary-bg-gray;
@@ -10,93 +10,103 @@ section{
   left: 0;
   right: 0;
   overflow: hidden;
+  @include dFlexAllCenter();
 }
 
-.atf-content{
+.atf-content {
+  position: relative;
   max-width: $max-width-1920;
   width: 100%;
   height: 100%;
 }
 
-.atf-bg-img{
+.atf-bg-img {
   height: 100%;
   width: 100%;
   position: relative;
   overflow: hidden;
 
-    > img:nth-child(1) {
-        position: absolute; 
-        left: -58px;
-        bottom: -115px;                
-        width: 983px;    
-        display: block; 
-        z-index: 1;   
-    }
+  > img:nth-child(1) {
+    position: absolute;
+    left: -58px;
+    bottom: -115px;
+    width: 983px;
+    display: block;
+    z-index: 1;
+  }
 
-    > img:nth-child(2) {
-        position: absolute;
-        left: 0; 
-        width: 100%;
-        bottom: -730px;                  
-        display: block; 
-        z-index: 2;   
-    }
+  > img:nth-child(2) {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    bottom: -730px;
+    display: block;
+    z-index: 2;
+  }
 
-    > img:nth-child(3) {
-      left: 170px;
-      position: absolute; 
-      width: 537px;                  
-      display: block;    
-      z-index: 3;
-    }
+  > img:nth-child(3) {
+    left: 170px;
+    bottom: 128px;
+    position: absolute;
+    width: 537px;
+    display: block;
+    z-index: 3;
+  }
 }
 
-.main-content{
+.main-content {
   position: absolute;
   flex-direction: column;
   @include dFlexAllCenter($g: 25px);
-  left: 930px;
+  left: 860px;
   bottom: 385px;
   z-index: 5;
 
-  > button{
-      border-radius: 10px;
-      padding: 15px 30px 15px 30px;
-      background-color: $primary-bg-green;
-      @include fontSizeWeightColor();
-      transition: all 0.3s ease-in-out;
-      transform-origin: top center;
-      box-shadow: 4px 4px 4px 0px #00000040;
+  > button {
+    border-radius: 10px;
+    padding: 15px 30px 15px 30px;
+    background-color: $primary-bg-green;
+    @include fontSizeWeightColor();
+    transition: all 0.3s ease-in-out;
+    transform-origin: top center;
+    box-shadow: 4px 4px 4px 0px #00000040;
 
-       &:hover{
-        background-color: $primary-bg-purple;
-        transform: scale(1.2);
-       }
+    &:hover {
+      background-color: $primary-bg-purple;
+      transform: scale(1.2);
     }
+  }
 }
 
-.text-box{
-  display: flex;
-  flex-direction: center; 
-  align-items: center; 
+.text-box {
+  @include dFlexAllCenter();
   max-width: 900px;
   width: 100%;
   z-index: 2;
-  position: relative; 
-  gap: 5px; 
+  position: relative;
+  gap: 5px;
 }
 
-.intro-text{
+.intro-text {
   display: flex;
   align-items: center;
-  position: relative; 
-  flex-direction: column; 
+  position: relative;
+  flex-direction: column;
 
-  > h1{
-   @include fontSizeWeightColor($si: clamp(44px, 34.8px + 2.875vw, 90px), $we:700);
+  > h1 {
+    white-space: nowrap;
+    @include fontSizeWeightColor(
+      $si: clamp(44px, 34.8px + 2.875vw, 90px),
+      $we: 700
+    );
   }
-  > h2{
-   @include fontSizeWeightColor($si: clamp(28px, 22px + 1.875vw, 58px), $we:400, $co:$primary-bg-purple);
+  > h2 {
+    white-space: nowrap;
+    @include fontSizeWeightColor(
+      $si: clamp(28px, 22px + 1.875vw, 58px),
+      $we: 400,
+      $co: $primary-bg-purple
+    );
   }
 }
 
@@ -109,27 +119,26 @@ section{
   align-items: center;
   transform: translateY(3px);
 
-    &.lang-de {
-      @include fontSizeWeightColor($si: 50px, $we:500);
-      transform: translateY(6px);
+  &.lang-de {
+    @include fontSizeWeightColor($si: 50px, $we: 500);
+    transform: translateY(6px);
+  }
 
-    }
+  &.lang-en {
+    @include fontSizeWeightColor($si: 70px, $we: 400);
+  }
 
-    &.lang-en {
-      @include fontSizeWeightColor($si: 70px, $we:400);
-    }
-
-  >span{
+  > span {
     margin: 0;
     writing-mode: vertical-rl;
     text-align: center;
     line-height: 1;
     transform: rotate(180deg);
-    white-space: nowrap; 
+    white-space: nowrap;
   }
 }
 
-.scroll-down-box{
+.scroll-down-box {
   display: grid;
   width: 34px;
   height: fit-content;
@@ -144,57 +153,57 @@ section{
   text-align: center;
   line-height: 1;
   transform: rotate(0deg);
-  white-space: nowrap;  
+  white-space: nowrap;
   @include dFlexAllCenter($jc: space-between, $g: 4px);
   animation: scrollDownGlow 2.5s infinite alternate;
 
-  >p {
+  > p {
     @include fontSizeWeightColor();
     user-select: none;
-    -webkit-user-select: none; 
-    -moz-user-select: none;    
-    -ms-user-select: none; 
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
   }
 
-  >svg {
-    display: block; 
+  > svg {
+    display: block;
     width: 24px;
     height: 24px;
     animation: svgGlow 2.5s infinite alternate;
     fill: white;
   }
 
-  @media screen and (max-width:920px) {
+  @media screen and (max-width: 920px) {
     display: none;
   }
 }
 
 @keyframes svgGlow {
-  0%, 20%, 40% {
-    filter: drop-shadow(0 0 3px $primary-bg-purple) drop-shadow(0 0 12px $primary-bg-purple); 
+  0%,
+  20%,
+  40% {
+    filter: drop-shadow(0 0 3px $primary-bg-purple)
+      drop-shadow(0 0 12px $primary-bg-purple);
   }
   100% {
-    filter: drop-shadow(0 0 6px $primary-bg-green) drop-shadow(0 0 12px $primary-bg-green); 
+    filter: drop-shadow(0 0 6px $primary-bg-green)
+      drop-shadow(0 0 12px $primary-bg-green);
   }
 }
 
 @keyframes scrollDownGlow {
-  0%, 20%, 40% {
+  0%,
+  20%,
+  40% {
     color: $primary-bg-purple;
-    text-shadow:
-      0 0 10px $primary-bg-purple,
-      0 0 20px $primary-bg-purple,
+    text-shadow: 0 0 10px $primary-bg-purple, 0 0 20px $primary-bg-purple,
       0 0 30px $primary-bg-purple;
     filter: drop-shadow(0 0 6px $primary-bg-purple);
   }
   100% {
     color: $primary-bg-green;
-    text-shadow:
-      0 0 10px $primary-bg-green,
-      0 0 20px $primary-bg-green,
+    text-shadow: 0 0 10px $primary-bg-green, 0 0 20px $primary-bg-green,
       0 0 30px $primary-bg-green;
     filter: drop-shadow(0 0 6px $primary-bg-green);
   }
 }
-
-

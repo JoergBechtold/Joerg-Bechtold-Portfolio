@@ -1,13 +1,13 @@
-@use '../src/assets/styles/fonts.scss' as*;
-@use '../src/assets/styles/variables.scss' as*;
-@use '../src/assets/styles/mixins.scss' as*;
+@use "../src/assets/styles/fonts.scss" as *;
+@use "../src/assets/styles/variables.scss" as *;
+@use "../src/assets/styles/mixins.scss" as *;
 
-html{
+html {
   scrollbar-gutter: stable;
   background-color: $primary-bg-gray;
 }
 
-body{
+body {
   width: 100%;
 }
 
@@ -16,66 +16,57 @@ body{
   scroll-behavior: smooth;
   margin: 0;
   padding: 0;
-  font-family: 'Poppins';
+  font-family: "Poppins";
 }
 
 body.no-scroll {
   overflow: hidden;
 }
 
-a{
+a {
   text-decoration: unset;
 }
 
-button{
+button {
   border: unset;
   cursor: pointer;
 }
 
-@media screen and (max-width: $respons-width-920) {
-  .hide-mobile{
-    display: none;
-  }
+.hide-mobile {
+  display: flex;
+}
 
-   .hamburger-menu {
-    display: flex;
-  }
- }
-
-@media screen and (min-width: $respons-width-920) {
-  .hide-desktop{
+.hamburger-menu {
   display: none;
+}
+
+.hide-desktop {
+  display: block;
+}
+
+@media screen and (max-width: $respons-width-920) {
+  .hide-mobile {
+    display: none;
   }
 
   .hamburger-menu {
+    display: flex;
+  }
+
+  .hide-desktop {
     display: none;
   }
 }
 
-::-webkit-scrollbar{
-  width: 4px;      
-  scrollbar-color: $primary-bg-green ;
+::-webkit-scrollbar {
+  width: 4px;
+  scrollbar-color: $primary-bg-green;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: $primary-bg-green; 
+  background-color: $primary-bg-green;
 }
 
 ::-webkit-scrollbar-track {
-    background-color: $primary-bg-gray;
+  background-color: $primary-bg-gray;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
