@@ -10,43 +10,54 @@
     "LANGUAGE_DE": "Deutsch",
     "LANGUAGE_EN": "Englisch"
   },
-
   "MAIN": {
-
   },
-
   "LINK": {
     "LEGAL_NOTICE": "Impressum",
     "PRIVACY_POLICY_TITLE": "Datenschutzerklärung"
   },
-
   "ALT_TEXTS": {
     "ARROW_DOWN_WHITE": "Weißer Pfeil nach unten",
     "MAIN_SECTION_GRAY": "Grauer Bereich der Hauptsektion",
     "FOOTER_IMG": "Fußzeilenbild"
   },
-
   "ATF": {
     "SCROLL_DOWN": "nach unten scrollen",
     "I_AM": "Ich bin",
     "LETS_TALK": "Lass uns reden"
   },
-
   "ROUTES": {
     "HOME": "",
     "PRIVACY_POLICY": "datenschutzerklaerung",
     "LEGAL_NOTICE": "impressum",
     "NOT_FOUND": "seite-nicht-gefunden"
   },
-
   "PAGE_NOT_FOUND": {
     "TITLE": "404 - Seite nicht gefunden",
     "MESSAGE": "Die angeforderte Seite existiert nicht.",
     "GO_HOME": "Zur Startseite"
   },
-
   "LEGAL_NOTICE": {
-      "H1": "Impressum"
-    }
-  
+    "H1": "Impressum",
+    "PARAGRAPH_5_DDG": "Angaben gemäß § 5 DDG",
+    "REPRESENTED_BY": "Vertreten durch",
+    "CONTACT": "Kontakt",
+    "PHONE": "Telefon",
+    "EMAIL": "E-Mail",
+    "DISCLAIMER_TITLE": "Haftungsausschluss",
+    "LIABILITY_FOR_LINKS_TITLE": "Haftung für Links",
+    "LIABILITY_FOR_LINKS_TEXT_1": "Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben.",
+    "LIABILITY_FOR_LINKS_TEXT_2": "Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten",
+    "LIABILITY_FOR_LINKS_TEXT_3": "Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten",
+    "LIABILITY_FOR_LINKS_TEXT_4": "wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum",
+    "LIABILITY_FOR_LINKS_TEXT_5": "Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.",
+    "PRIVACY_TITLE": "Datenschutz",
+    "PRIVACY_TEXT_1": "Die Nutzung unserer Webseite ist in der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf",
+    "PRIVACY_TEXT_2": "unseren Seiten personenbezogene Daten (beispielsweise Name, Anschrift oder eMail-Adressen) erhoben werden,",
+    "PRIVACY_TEXT_3": "erfolgt dies, soweit möglich, stets auf freiwilliger Basis. Diese Daten werden ohne Ihre ausdrückliche Zustimmung nicht an Dritte weitergegeben.",
+    "PRIVACY_TEXT_4": "Wir weisen darauf hin, dass die Datenübertragung im Internet (z.B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich.",
+    "PRIVACY_TEXT_5": "Der Nutzung von im Rahmen der Impressumspflicht veröffentlichten Kontaktdaten durch Dritte zur Übersendung von nicht ausdrücklich angeforderter Werbung und Informationsmaterialien wird hiermit ausdrücklich widersprochen. Die Betreiber der Seiten behalten sich ausdrücklich rechtliche Schritte im Falle der unverlangten Zusendung von Werbeinformationen, etwa durch Spam-Mails, vor.",
+    "IMPRINT_SOURCE_DESCRIPTION": "dem Ratgeber für",
+    "IMPRINT_SOURCE_ATTRIBUTION": "nach einem Muster von"
+  }
 }
