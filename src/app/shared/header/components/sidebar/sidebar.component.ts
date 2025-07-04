@@ -19,7 +19,6 @@ export class SidebarComponent {
 
 
   onClose(): void {
-    console.log('SidebarComponent: closeSidenav event emitted');
     this.closeSidenav.emit();
   }
 

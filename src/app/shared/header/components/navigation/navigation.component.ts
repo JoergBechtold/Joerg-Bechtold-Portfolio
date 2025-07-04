@@ -44,8 +44,6 @@ export class NavigationComponent implements OnInit {
       return;
     }
 
-    console.log(`[NavigationComponent] Sprachwechsel angefordert: von '${this.activeLanguage}' zu '${lang}'`);
-
     let targetAppRouteKey: keyof typeof AppRouteKeys | undefined;
     let routeSnapshot = this.activatedRoute.snapshot;
     while (routeSnapshot.firstChild) {
@@ -63,8 +61,6 @@ export class NavigationComponent implements OnInit {
           }
         }
         if (targetAppRouteKey) {
-          console.log(`[NavigationComponent] Gefundener neutraler Pfad (aus mainRoutes): '${mainRoute.path || ''}'`);
-          console.log(`[NavigationComponent] Gefundener AppRouteKey (aus mainRoutes): '${targetAppRouteKey}'`);
           break;
         }
       }
@@ -87,8 +83,6 @@ export class NavigationComponent implements OnInit {
         children: newLocalizedRoutes
       };
       this.router.resetConfig(updatedRoutes);
-      console.log(`[NavigationComponent] Router-Konfiguration erfolgreich für Sprache '${lang}' zurückgesetzt.`);
-      console.log(`[NavigationComponent] Konfigurierte Kindrouten für /${lang}:`, newLocalizedRoutes.map(r => r.path));
     } else {
       console.error(`[NavigationComponent] Fehler: ':lang'-Route nicht in den Hauptrouten gefunden!`);
     }
@@ -102,7 +96,6 @@ export class NavigationComponent implements OnInit {
     } else {
       navigationPath = [lang, newTranslatedSegment];
     }
-    console.log(`[NavigationComponent] Navigiere zu neu übersetztem Pfad basierend auf Key '${targetAppRouteKey}' (Zielpfad in Sprache ${lang}): /${navigationPath.join('/')}`);
 
     this.router.navigate(navigationPath, {
       replaceUrl: true,
