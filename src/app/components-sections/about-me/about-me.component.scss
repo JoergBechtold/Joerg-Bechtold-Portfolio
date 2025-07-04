@@ -1,2 +1,9 @@
-@use "../../../assets/styles/variables.scss" as*;
-@use "../../../assets/styles/mixins.scss" as*;
+@use "../../../assets/styles/variables.scss" as *;
+@use "../../../assets/styles/mixins.scss" as *;
+
+section {
+  height: 100dvh;
+  width: 100%;
+  // background-color: $primary-bg-gray;
+  background-color: aqua;
+}
