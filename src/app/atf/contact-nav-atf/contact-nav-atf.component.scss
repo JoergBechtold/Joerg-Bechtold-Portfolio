@@ -1,16 +1,25 @@
-@use "../../../assets/styles/variables.scss" as*;
-@use "../../../assets/styles/mixins.scss" as*;
+@use "../../../assets/styles/variables.scss" as *;
+@use "../../../assets/styles/mixins.scss" as *;
 
 section {
   position: absolute;
   left: clamp(-52px, -62.4px + 3.25vw, 0px);
-  bottom: clamp(25px, calc(67px - 0.021875 * 100vw), 60px);;
-  @include dFlexAllCenter($jc: space-between,$g: 32px);
+  bottom: clamp(25px, calc(67px - 0.021875 * 100vw), 60px);
+  @include dFlexAllCenter($jc: space-between, $g: 32px);
   z-index: 5;
 
   > a {
     @include fontSizeWeightColor();
   }
+
+  @media screen and (max-width: 425px) {
+    width: 100%;
+    @include dFlexAllCenter($jc: center);
+    left: 0px;
+
+    > img {
+      position: absolute;
+      left: clamp(-40px, -161.9048px + 38.0952vw, 0px);
+    }
+  }
 }
-
-
