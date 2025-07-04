@@ -107,9 +107,12 @@ section{
   grid-template-columns: max-content;
   justify-content: center;
   align-items: center;
+  transform: translateY(3px);
 
     &.lang-de {
       @include fontSizeWeightColor($si: 50px, $we:500);
+      transform: translateY(6px);
+
     }
 
     &.lang-en {
