@@ -58,15 +58,16 @@ section {
   position: absolute;
   flex-direction: column;
   @include dFlexAllCenter($g: 25px);
-  left: 860px;
+  left: clamp(350px, -345.1111px + 75.5556vw, 860px);
   bottom: 385px;
   z-index: 5;
 
   > button {
     border-radius: 10px;
-    padding: 15px 30px 15px 30px;
+    padding: $padding-block-11-15 $padding-inline-24-30 $padding-block-11-15
+      $padding-inline-24-30;
     background-color: $primary-bg-green;
-    @include fontSizeWeightColor();
+    @include fontSizeWeightColor($si: clamp(18px, 17px + 0.3125vw, 23px));
     transition: all 0.3s ease-in-out;
     transform-origin: top center;
     box-shadow: 4px 4px 4px 0px #00000040;
@@ -75,6 +76,12 @@ section {
       background-color: $primary-bg-purple;
       transform: scale(1.2);
     }
+  }
+
+  @media screen and (max-width: $respons-width-920) {
+    left: 50%;
+    bottom: 155px;
+    transform: translateX(-50%);
   }
 }
 
@@ -96,14 +103,14 @@ section {
   > h1 {
     white-space: nowrap;
     @include fontSizeWeightColor(
-      $si: clamp(44px, 34.8px + 2.875vw, 90px),
+      $si: clamp(35px, 24px + 3.4375vw, 90px),
       $we: 700
     );
   }
   > h2 {
     white-space: nowrap;
     @include fontSizeWeightColor(
-      $si: clamp(28px, 22px + 1.875vw, 58px),
+      $si: clamp(23px, 16px + 2.1875vw, 58px),
       $we: 400,
       $co: $primary-bg-purple
     );
@@ -112,7 +119,7 @@ section {
 
 .vertical-text {
   display: grid;
-  width: 70px;
+  width: clamp(29px, 20.8px + 2.5625vw, 70px);
   height: 100%;
   grid-template-columns: max-content;
   justify-content: center;
@@ -120,12 +127,18 @@ section {
   transform: translateY(3px);
 
   &.lang-de {
-    @include fontSizeWeightColor($si: 50px, $we: 500);
-    transform: translateY(6px);
+    @include fontSizeWeightColor(
+      $si: clamp(19px, 12.8px + 1.9375vw, 50px),
+      $we: 500
+    );
+    transform: translateY(clamp(3px, 2.4px + 0.1875vw, 6px));
   }
 
   &.lang-en {
-    @include fontSizeWeightColor($si: 70px, $we: 400);
+    @include fontSizeWeightColor(
+      $si: clamp(29px, 20.8px + 2.5625vw, 70px),
+      $we: 400
+    );
   }
 
   > span {
