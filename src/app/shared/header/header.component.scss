@@ -13,10 +13,14 @@
   background-color: $primary-bg-gray;
   @include paddingLeftRightHolePage();
   z-index: 10;
+
+  @media screen and (max-width: $respons-width-920) {
+    height: $header-hight-responsive;
+  }
 }
 
 .header-icon-box {
-  @include headerLINKLogoStyle();
+  @include headerLinkLogoStyle();
 }
 
 .header-content-box {

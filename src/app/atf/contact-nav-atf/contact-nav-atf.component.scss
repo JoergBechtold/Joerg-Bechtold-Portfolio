@@ -4,7 +4,7 @@
 section {
   position: absolute;
   left: clamp(-52px, -62.4px + 3.25vw, 0px);
-  bottom: clamp(25px, calc(67px - 0.021875 * 100vw), 60px);
+  bottom: clamp(20px, 32px + -0.625vw, 30px);
   @include dFlexAllCenter($jc: space-between, $g: 32px);
   z-index: 5;
 

@@ -11,6 +11,10 @@ section {
   right: 0;
   overflow: hidden;
   @include dFlexAllCenter();
+
+  @media screen and (max-width: $respons-width-920) {
+    padding-top: $header-hight-responsive;
+  }
 }
 
 .atf-content {
@@ -28,31 +32,61 @@ section {
 
   > img:nth-child(1) {
     position: absolute;
-    left: -50px;
-    bottom: -115px;
-    width: 995px;
+    left: clamp(-195px, -328.4px + 14.5vw, -50px);
+    bottom: clamp(-115px, -57.4px + -3vw, -85px);
+    width: clamp(855px, 726.2px + 14vw, 995px);
     display: block;
     z-index: 1;
+
+    @media screen and (max-width: $respons-width-920) {
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: clamp(55px, 15px + 12.5vw, 130px);
+    }
+
+    @media screen and (max-height: $responsive-height-667) {
+      width: 595px;
+    }
   }
 
   > img:nth-child(2) {
-    left: 170px;
-    bottom: -18px;
+    left: clamp(0px, -156.4px + 17vw, 170px);
+    bottom: clamp(-17px, 15.64px + -1.7vw, 0px);
     position: absolute;
-    width: 590px;
+    width: clamp(505px, 426.8px + 8.5vw, 590px);
     display: block;
     z-index: 2;
+
+    @media screen and (max-width: $respons-width-920) {
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: clamp(205px, 228px + -2.5vw, 220px);
+      width: clamp(320px, 234.6667px + 26.6667vw, 480px);
+    }
+
+    @media screen and (max-height: $responsive-height-667) {
+      bottom: 168px;
+      width: 283px;
+    }
   }
 
   > img:nth-child(3) {
     position: absolute;
-    left: 0;
+    left: clamp(-260px, -312px + 16.25vw, 0px);
     right: 0;
-    width: 100%;
+    width: 1920px;
     bottom: -730px;
     display: block;
     z-index: 3;
     object-fit: cover;
+
+    @media screen and (max-width: $respons-width-920) {
+      bottom: -550px;
+    }
+
+    @media screen and (max-height: $responsive-height-667) {
+      bottom: -615px;
+    }
   }
 }
 
@@ -60,7 +94,7 @@ section {
   position: absolute;
   flex-direction: column;
   @include dFlexAllCenter($g: 25px);
-  left: clamp(350px, -345.1111px + 75.5556vw, 860px);
+  left: clamp(420px, 15.2px + 44vw, 860px);
   bottom: 385px;
   z-index: 5;
 
@@ -82,8 +116,12 @@ section {
 
   @media screen and (max-width: $respons-width-920) {
     left: 50%;
-    bottom: 155px;
+    bottom: 105px;
     transform: translateX(-50%);
+  }
+
+  @media screen and (max-height: $responsive-height-667) {
+    bottom: 80px;
   }
 }
 

@@ -1,40 +1,43 @@
-@use '../../assets/styles/variables.scss' as*;
-@use '../../assets/styles/mixins.scss' as*;
+@use "../../assets/styles/variables.scss" as *;
+@use "../../assets/styles/mixins.scss" as *;
 
-
-:host{
-    color: white;   
+:host {
+  color: white;
 }
 
-a{
-    color: $primary-bg-green;
-    word-wrap: break-word; 
-    overflow-wrap: break-word;
-}
-     
-h1{
-    font-size: clamp(30px, 26.4px + 1.125vw, 48px);
+a {
+  color: $primary-bg-green;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
-h2{
-    font-size:  clamp(24px, 22.8px + 0.375vw, 30px);
+h1 {
+  font-size: clamp(30px, 26.4px + 1.125vw, 48px);
 }
 
-ul{
-    list-style-type: none;
+h2 {
+  font-size: clamp(24px, 22.8px + 0.375vw, 30px);
 }
 
-section{
-    padding-top: $header-hight;
-    display: flex;
-    justify-content: center;
-    min-height: 100dvh;
+ul {
+  list-style-type: none;
 }
 
-.privacy-policy-content{
-    padding-block: $padding-block-50px;
-    max-width: $max-width-1920;
-    text-align: center;
-    max-width: $max-width-700;
-    width: 90%;
+section {
+  padding-top: $header-hight;
+  display: flex;
+  justify-content: center;
+  min-height: 100dvh;
+
+  @media screen and (max-width: $respons-width-920) {
+    padding-top: $header-hight-responsive;
+  }
+}
+
+.privacy-policy-content {
+  padding-block: $padding-block-50px;
+  max-width: $max-width-1920;
+  text-align: center;
+  max-width: $max-width-700;
+  width: 90%;
 }
