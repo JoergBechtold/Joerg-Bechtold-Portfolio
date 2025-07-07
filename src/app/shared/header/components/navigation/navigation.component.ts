@@ -1,15 +1,17 @@
+// navigation.component.ts
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { AppRouteKeys, mainRoutes, routes, createLocalizedRoutes } from '../../../../app.routes'; // Importiere 'routes' und 'createLocalizedRoutes'
+import { Router, ActivatedRoute, NavigationExtras, RouterModule } from '@angular/router';
+import { AppRouteKeys, mainRoutes, routes, createLocalizedRoutes } from '../../../../app.routes';
 
 @Component({
   selector: 'app-navigation',
   standalone: true,
   imports: [
     CommonModule,
-    TranslateModule
+    TranslateModule,
+    RouterModule
   ],
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss']
@@ -39,16 +41,35 @@ export class NavigationComponent implements OnInit {
     this.closeSidenav.emit();
   }
 
+  scrollToSection(fragment: string): void {
+    console.log('scrollToSection called with fragment:', fragment); // <-- Hinzufügen
+    if (this.isInSidebar) {
+      this.onClose(); // Sidebar schließen, wenn in Sidebar-Modus
+    }
+    this.router.navigate(this.getRouterLink('home'), { fragment: fragment })
+      .then(() => {
+        console.log('Navigation successful, attempting to scroll to fragment:', fragment); // <-- Hinzufügen
+      })
+      .catch(err => {
+        console.error('Navigation failed:', err); // <-- Hinzufügen
+      });
+  }
+
   async setLanguage(lang: string): Promise<void> {
     if (this.activeLanguage === lang) {
       return;
     }
 
     let targetAppRouteKey: keyof typeof AppRouteKeys | undefined;
+    let currentFragment: string | null = null; // Variable zum Speichern des aktuellen Fragments
+
     let routeSnapshot = this.activatedRoute.snapshot;
     while (routeSnapshot.firstChild) {
       routeSnapshot = routeSnapshot.firstChild;
     }
+
+    // Aktuelles Fragment abrufen
+    currentFragment = this.activatedRoute.snapshot.fragment;
 
     for (const mainRoute of mainRoutes) {
       if (mainRoute.component === routeSnapshot.component) {
@@ -97,10 +118,17 @@ export class NavigationComponent implements OnInit {
       navigationPath = [lang, newTranslatedSegment];
     }
 
-    this.router.navigate(navigationPath, {
+    const navigationExtras: NavigationExtras = {
       replaceUrl: true,
       scrollPositionRestoration: 'disabled'
-    } as NavigationExtras);
+    } as NavigationExtras;
+
+    // Wenn ein Fragment vorhanden ist, füge es zu den NavigationExtras hinzu
+    if (currentFragment) {
+      navigationExtras.fragment = currentFragment;
+    }
+
+    this.router.navigate(navigationPath, navigationExtras);
   }
 
   getRouterLink(key: keyof typeof AppRouteKeys): string[] {

@@ -7,7 +7,11 @@ import { inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 export const AppRouteKeys = {
-    home: 'ROUTES.HOME',
+    home: 'ROUTES.HOME', // Dieser wäre dann für die "pure" Startseite
+    aboutMe: 'ROUTES.ABOUT_ME', // Neuer Key
+    skills: 'ROUTES.SKILLS',     // Neuer Key
+    portfolio: 'ROUTES.PORTFOLIO', // Neuer Key
+    contact: 'ROUTES.CONTACT',   // Neuer Key
     privacyPolicy: 'ROUTES.PRIVACY_POLICY',
     legalNotice: 'ROUTES.LEGAL_NOTICE',
     notFound: 'ROUTES.NOT_FOUND'
@@ -15,10 +19,21 @@ export const AppRouteKeys = {
 
 export const mainRoutes: Routes = [
     {
-        path: '',
+        path: '', // Nur für die reine Home-Seite ohne Fragment
         component: MainContentComponent,
         data: { translationKey: AppRouteKeys.home }
     },
+    {
+        path: 'about-me', // Beispiel: Der Standardpfad vor der Übersetzung
+        component: MainContentComponent, // Oder eine spezifische Komponente, wenn du sie aufteilst
+        data: { translationKey: AppRouteKeys.aboutMe }
+    },
+    {
+        path: 'skills',
+        component: MainContentComponent,
+        data: { translationKey: AppRouteKeys.skills }
+    },
+    // ... und so weiter für Portfolio und Contact
     {
         path: 'privacy-policy',
         component: PrivacyPolicyComponent,
@@ -91,11 +106,16 @@ const validateAndSetLanguage = async (translate: TranslateService, router: Route
 };
 
 
-const extractPathSegment = (stateUrl: string): string =>
-    stateUrl.split('/').filter(s => s !== '').slice(1).join('/');
+const extractPathSegment = (stateUrl: string): string => {
+    // Entfernt den Teil nach dem # für die Pfadextraktion
+    const urlWithoutFragment = stateUrl.split('#')[0];
+    // Dann den Pfadsegment extrahieren (alles nach /:lang)
+    return urlWithoutFragment.split('/').filter(s => s !== '').slice(1).join('/');
+};
 
 const getExpectedUrl = (pathSegment: string, translate: TranslateService, currentLang: string, router: Router): string | undefined => {
     const tempLocalizedRoutes = createLocalizedRoutes(translate);
+    // Finde die Route basierend auf dem Path-Segment
     const targetRoute = tempLocalizedRoutes.find(r => r.path === pathSegment);
 
     if (!targetRoute) return undefined;
@@ -109,6 +129,8 @@ const getExpectedUrl = (pathSegment: string, translate: TranslateService, curren
     const correctTranslatedPath = translate.instant(AppRouteKeys[targetAppRouteKey]);
     const effectivePath = (targetAppRouteKey === 'home' && correctTranslatedPath === '') ? '' : correctTranslatedPath;
 
+    // Diese Funktion gibt nur den Pfad zurück, ohne Fragment.
+    // Das Fragment wird vom Router separat gehandhabt.
     return `/${currentLang}${effectivePath ? '/' + effectivePath : ''}`;
 };
 
@@ -117,24 +139,31 @@ const redirectToHome = (router: Router, translate: TranslateService, currentLang
     console.warn(`[langResolver] Path is not a valid translated route in '${currentLang}'.`);
     const homeTranslatedPath = translate.instant(AppRouteKeys.home);
     const homeUrl = `/${currentLang}${homeTranslatedPath === '' ? '' : '/' + homeTranslatedPath}`;
+    // Wichtig: Fragmente hier nicht einfügen, da dies eine Pfad-Umleitung ist.
     router.navigateByUrl(homeUrl, { replaceUrl: true });
     return false;
 };
 
 
 const handlePathValidation = (stateUrl: string, translate: TranslateService, router: Router, currentLang: string): boolean => {
-    const pathSegment = extractPathSegment(stateUrl);
-    const fullExpectedUrl = getExpectedUrl(pathSegment, translate, currentLang, router);
+    // Extrahiere den Pfad ohne Fragment für die Validierung
+    const pathOnlyUrl = stateUrl.split('#')[0];
+    const pathSegment = extractPathSegment(stateUrl); // Nutzt jetzt die angepasste Funktion
 
-    if (fullExpectedUrl && stateUrl === fullExpectedUrl) {
+    const fullExpectedUrlWithoutFragment = getExpectedUrl(pathSegment, translate, currentLang, router);
+
+    if (fullExpectedUrlWithoutFragment && pathOnlyUrl === fullExpectedUrlWithoutFragment) {
+        // Der Pfad ist gültig, lasse den Router das Fragment handhaben
         return true;
     }
 
-    if (fullExpectedUrl && stateUrl !== fullExpectedUrl) {
-        router.navigateByUrl(fullExpectedUrl, { replaceUrl: true });
+    // Wenn der Pfad nicht übereinstimmt, umleiten zum korrekten Pfad (ohne Fragment)
+    if (fullExpectedUrlWithoutFragment && pathOnlyUrl !== fullExpectedUrlWithoutFragment) {
+        router.navigateByUrl(fullExpectedUrlWithoutFragment, { replaceUrl: true });
         return false;
     }
 
+    // Wenn kein erwarteter Pfad gefunden wurde, leite zur Home-Seite um
     return redirectToHome(router, translate, currentLang);
 };
 

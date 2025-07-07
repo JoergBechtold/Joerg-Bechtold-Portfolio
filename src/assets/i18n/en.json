@@ -41,11 +41,15 @@
   },
 
   "ROUTES": {
-    "HOME": "",
-    "PRIVACY_POLICY": "privacy-policy",
-    "LEGAL_NOTICE": "legal-notice",
-    "NOT_FOUND": "page-not-found"
-  },
+  "HOME": "",
+  "ABOUT_ME": "about-me",
+  "SKILLS": "skills",
+  "PORTFOLIO": "portfolio",
+  "CONTACT": "contact",
+  "PRIVACY_POLICY": "privacy-policy",
+  "LEGAL_NOTICE": "legal-notice",
+  "NOT_FOUND": "page-not-found"
+},
 
   "PAGE_NOT_FOUND": {
     "TITLE": "404 - Page not found",
