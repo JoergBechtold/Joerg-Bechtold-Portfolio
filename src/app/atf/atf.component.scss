@@ -36,23 +36,24 @@ section {
   }
 
   > img:nth-child(2) {
+    left: 170px;
+    // bottom: 128px;
+    bottom: -10px;
+    position: absolute;
+    width: 537px;
+    display: block;
+    z-index: 2;
+  }
+
+  > img:nth-child(3) {
     position: absolute;
     left: 0;
     right: 0;
     width: 100%;
     bottom: -730px;
     display: block;
-    z-index: 2;
-    object-fit: cover;
-  }
-
-  > img:nth-child(3) {
-    left: 170px;
-    bottom: 128px;
-    position: absolute;
-    width: 537px;
-    display: block;
     z-index: 3;
+    object-fit: cover;
   }
 }
 
