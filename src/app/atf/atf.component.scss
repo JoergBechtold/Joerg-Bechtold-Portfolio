@@ -38,13 +38,22 @@ section {
     display: block;
     z-index: 1;
 
+    @media screen and (max-height: $responsive-height-814) {
+      width: clamp(775px, 742.8px + 3.5vw, 810px);
+      left: clamp(-153px, -210.96px + 6.3vw, -90px);
+    }
+
     @media screen and (max-width: $respons-width-920) {
       left: 50%;
       transform: translateX(-50%);
       bottom: clamp(55px, 15px + 12.5vw, 130px);
     }
 
-    @media screen and (max-height: $responsive-height-667) {
+    @media screen and (max-width: $respons-width-920) and (max-height: $responsive-height-814) {
+      width: clamp(565px, 543.6667px + 6.6667vw, 605px);
+    }
+
+    @media screen and (max-height: $responsive-height-666) {
       width: 595px;
     }
   }
@@ -57,6 +66,11 @@ section {
     display: block;
     z-index: 2;
 
+    @media screen and (max-height: $responsive-height-814) {
+      width: 445px;
+      bottom: -25px;
+    }
+
     @media screen and (max-width: $respons-width-920) {
       left: 50%;
       transform: translateX(-50%);
@@ -64,7 +78,12 @@ section {
       width: clamp(320px, 234.6667px + 26.6667vw, 480px);
     }
 
-    @media screen and (max-height: $responsive-height-667) {
+    @media screen and (max-width: $respons-width-920) and (max-height: $responsive-height-814) {
+      bottom: clamp(208px, 192px + 5vw, 238px);
+      width: 292px;
+    }
+
+    @media screen and (max-height: $responsive-height-666) {
       bottom: 168px;
       width: 283px;
     }
@@ -80,11 +99,19 @@ section {
     z-index: 3;
     object-fit: cover;
 
+    @media screen and (max-height: $responsive-height-814) {
+      bottom: -770px;
+    }
+
     @media screen and (max-width: $respons-width-920) {
       bottom: -550px;
     }
 
-    @media screen and (max-height: $responsive-height-667) {
+    @media screen and (max-width: $respons-width-920) and (max-height: $responsive-height-814) {
+      bottom: -575px;
+    }
+
+    @media screen and (max-height: $responsive-height-666) {
       bottom: -615px;
     }
   }
@@ -114,13 +141,21 @@ section {
     }
   }
 
+  @media screen and (max-height: $responsive-height-814) {
+    bottom: 280px;
+  }
+
   @media screen and (max-width: $respons-width-920) {
     left: 50%;
     bottom: 105px;
     transform: translateX(-50%);
   }
 
-  @media screen and (max-height: $responsive-height-667) {
+  @media screen and (max-width: $respons-width-920) and (max-height: $responsive-height-814) {
+    bottom: clamp(80px, 118.3333px + -4.1667vw, 105px);
+  }
+
+  @media screen and (max-height: $responsive-height-666) {
     bottom: 80px;
   }
 }
@@ -228,6 +263,14 @@ section {
 
   @media screen and (max-width: 920px) {
     display: none;
+  }
+
+  @media screen and (max-height: $responsive-height-814) {
+    right: 55px;
+
+    > p {
+      @include fontSizeWeightColor($si: 20px);
+    }
   }
 }
 
