@@ -52,7 +52,7 @@ export class MySkillsComponent extends BaseTranslatableComponent implements OnIn
         },
         {
             name: 'Material Design',
-            img: './../../../assets/icons/skills-icons/MATERIEAL-DESIGN-icon.svg',
+            img: './../../../assets/icons/skills-icons/MATERIAL-DESIGN-icon.svg',
         }
     ]
 
