@@ -28,9 +28,9 @@ section {
 
   > img:nth-child(1) {
     position: absolute;
-    left: -58px;
+    left: -84px;
     bottom: -115px;
-    width: 983px;
+    width: 1024px;
     display: block;
     z-index: 1;
   }
@@ -40,7 +40,8 @@ section {
     // bottom: 128px;
     bottom: -10px;
     position: absolute;
-    width: 537px;
+    // width: 537px;
+    width: 590px;
     display: block;
     z-index: 2;
   }
