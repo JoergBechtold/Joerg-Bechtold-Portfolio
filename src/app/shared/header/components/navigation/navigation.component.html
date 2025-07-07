@@ -9,10 +9,6 @@
                 'HEADER.PORTFOLIO' | translate }}</a>
             <a [routerLink]="getRouterLink('home')" fragment="contact" (click)="scrollToSection('contact')"
                 [hidden]="!isInSidebar">{{ 'HEADER.CONTACT' | translate}}</a>
-
-            <a [routerLink]="getRouterLink('legalNotice')" (click)="onClose()">{{ 'LINK.LEGAL_NOTICE' | translate }}</a>
-            <a [routerLink]="getRouterLink('privacyPolicy')" (click)="onClose()">{{ 'LINK.PRIVACY_POLICY' | translate
-                }}</a>
         </div>
 
         <div class="language-btns">
