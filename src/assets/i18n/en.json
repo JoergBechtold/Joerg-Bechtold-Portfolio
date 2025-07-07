@@ -20,7 +20,15 @@
     "DESCRIPTION_PART2": "Why are you passionate about coding? What is your source of inspiration for improving your programming skills?",
     "LOCATION": "Where are you located? Are you open to different ways of working, such as working remotely or even relocating?",
     "LEARNING": "Show that you are open-minded. Are you enthusiastic about learning new technologies and continually improving your skills?",
-    "PROBLEM_SOLVING": "A brief description of your problem-solving approach. Do you learn from each challenge as you search for the most efficient or elegant solution? You can include some keywords like: analytical thinking, creativity, persistence and collaboration."
+    "PROBLEM_SOLVING": "A brief description of your problem-solving approach. Do you learn from each challenge as you search for the most efficient or elegant solution? You can include some keywords like: analytical thinking, creativity, persistence and collaboration.",
+    "ALT_TEXT_IMG": "profile picture",
+    "ALT_TEXT_LOCATION_ICON": "location icon",
+    "ALT_TEXT_BIRNE_ICON": "bulb icon",
+    "ALT_TEXT_PUZZLE_ICON": "puzzle icon"
+  },
+
+  "MY_SKILLS":{
+    "SKILL_ICON_ALT": "Icon for skill: {{ skillName }}"
   },
 
   "LINK": {

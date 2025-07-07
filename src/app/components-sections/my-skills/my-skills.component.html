@@ -1,1 +1,21 @@
-<p>my-skills works!</p>
+<section>
+    <div class="skills-section">
+
+        <div class="content-left">
+            <div class="skills-container">
+                <div *ngFor="let singleSkill of skillsBox" class="skill-item">
+                    <img [src]="singleSkill.img"
+                        [alt]="'MY_SKILLS.SKILL_ICON_ALT' | translate: { skillName: singleSkill.name }">
+                    <p> {{ singleSkill.name }}</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="content-right"></div>
+    </div>
+
+
+
+
+</section>

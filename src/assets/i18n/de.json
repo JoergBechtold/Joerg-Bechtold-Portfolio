@@ -19,7 +19,15 @@
     "DESCRIPTION_PART2": "Warum brennst du für das Programmieren?  Was ist deine Inspirationsquelle, um deine Programmierkenntnisse zu verbessern?",
     "LOCATION": "Wo befindest du dich? Bist du offen für verschiedene Arbeitsweisen, wie z.B. Remote-Arbeit oder sogar einen Umzug?",
     "LEARNING": "Zeige, dass du aufgeschlossen bist. Bist du enthusiastisch, neue Technologien zu lernen und deine Fähigkeiten kontinuierlich zu verbessern?",
-    "PROBLEM_SOLVING": "Eine kurze Beschreibung deines Problemlösungsansatzes. Lernst du aus jeder Herausforderung, während du nach der effizientesten oder elegantesten Lösung suchst? Du kannst einige Schlüsselwörter wie: analytisches Denken, Kreativität, Ausdauer und Zusammenarbeit verwenden."
+    "PROBLEM_SOLVING": "Eine kurze Beschreibung deines Problemlösungsansatzes. Lernst du aus jeder Herausforderung, während du nach der effizientesten oder elegantesten Lösung suchst? Du kannst einige Schlüsselwörter wie: analytisches Denken, Kreativität, Ausdauer und Zusammenarbeit verwenden.",
+    "ALT_TEXT_IMG": "profilbild",
+    "ALT_TEXT_LOCATION_ICON": "standort icon",
+    "ALT_TEXT_BIRNE_ICON": "birne icon",
+    "ALT_TEXT_PUZZLE_ICON": "puzzle icon"
+  },
+
+  "MY_SKILLS":{
+     "SKILL_ICON_ALT": "Icon für die Fähigkeit: {{ skillName }}"
   },
 
   "LINK": {

@@ -7,16 +7,17 @@ import { BaseTranslatableComponent } from '../../shared/base/base.component';
 
 @Component({
     selector: 'app-about-me',
-    imports: [TranslateModule],
+    imports: [TranslateModule, CommonModule],
     templateUrl: './about-me.component.html',
     styleUrl: './about-me.component.scss'
 })
-export class AboutMeComponent extends BaseTranslatableComponent {
+export class AboutMeComponent extends BaseTranslatableComponent implements OnInit {
+
     constructor(protected override translate: TranslateService) {
         super(translate);
     }
+
     override ngOnInit(): void {
         super.ngOnInit();
     }
-
 }
