@@ -80,7 +80,8 @@ h1 {
   place-items: center;
 
   > img {
-    width: 78%;
+    width: 100%;
+    transform: translateY(25px);
   }
 }
 
