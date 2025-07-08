@@ -16,10 +16,9 @@ const createRouterProvider = () => provideRouter(
   withNavigationErrorHandler((error) => {
     console.error('Router Navigation Error:', error);
   }),
-  // *** Wichtig: anchorScrolling und scrollPositionRestoration hier deaktivieren oder nur auf 'top' setzen ***
-  // Wenn du das Scrollen manuell steuerst, kann 'anchorScrolling: "enabled"' zu Konflikten führen.
-  // 'scrollPositionRestoration: "disabled"' ist notwendig, wenn du das Scrollen komplett übernimmst.
-  withInMemoryScrolling({ anchorScrolling: 'disabled', scrollPositionRestoration: 'disabled' })
+  // *** Wichtig: scrollPositionRestoration auf 'top' setzen, damit der Router immer den Seitenanfang ansteuert,
+  // bevor unser setTimeout das eigentliche Scrollen übernimmt.
+  withInMemoryScrolling({ anchorScrolling: 'disabled', scrollPositionRestoration: 'top' })
 );
 
 const createTranslationProviders = () => importProvidersFrom(

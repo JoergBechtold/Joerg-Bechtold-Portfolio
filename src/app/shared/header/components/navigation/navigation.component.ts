@@ -1,7 +1,16 @@
+// navigation.component.ts
 import { Component, OnInit, Input, EventEmitter, Output, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { Router, ActivatedRoute, NavigationExtras, RouterModule, Scroll, Event as RouterEvent } from '@angular/router';
+import {
+  Router,
+  ActivatedRoute,
+  NavigationExtras,
+  RouterModule,
+  Scroll,
+  Event as RouterEvent,
+  NavigationEnd // Importiere NavigationEnd
+} from '@angular/router';
 import { ViewportScroller } from '@angular/common';
 import { filter } from 'rxjs/operators';
 import { AppRouteKeys, mainRoutes, routes, createLocalizedRoutes } from '../../../../app.routes';
@@ -23,6 +32,8 @@ export class NavigationComponent implements OnInit {
   @Output() closeSidenav = new EventEmitter<void>();
 
   private isBrowser: boolean;
+  // Speichern des angeforderten Fragments
+  private requestedFragment: string | null = null;
 
   constructor(
     private translate: TranslateService,
@@ -43,20 +54,33 @@ export class NavigationComponent implements OnInit {
       this.activeLanguage = langParam || this.translate.getDefaultLang();
     });
 
-    // Diesen Teil können wir beibehalten, er ist für die Browser-Zurück/Vorwärts-Navigation nützlich,
-    // falls ein Nutzer direkt zu einer URL mit Fragment navigiert hat.
     if (this.isBrowser) {
+      // Abonnieren von Router-Events für Scroll-Wiederherstellung (z.B. Browser zurück)
       this.router.events.pipe(
         filter((event: RouterEvent): event is Scroll => event instanceof Scroll)
       ).subscribe((event: Scroll) => {
         if (event.position) {
           this.viewportScroller.scrollToPosition(event.position);
         } else if (event.anchor) {
-          // Hier können wir das Scrollen auslösen, wenn der Router ein Fragment findet (z.B. bei einem Browser-Refresh auf einer Fragment-URL)
-          // Wir verwenden unsere scrollToElementById Methode
+          // Dies ist für direkte Navigation zu einer Fragment-URL oder Browser-Back/Forward
           this.scrollToElementById(event.anchor);
         } else {
           this.viewportScroller.scrollToPosition([0, 0]);
+        }
+      });
+
+      // *** NEU: Abonnieren von NavigationEnd-Events für unser manuelles Scrollen ***
+      this.router.events.pipe(
+        filter((event: RouterEvent): event is NavigationEnd => event instanceof NavigationEnd)
+      ).subscribe((event: NavigationEnd) => {
+        // Prüfen, ob wir ein Fragment angefordert haben und es noch nicht gescrollt wurde
+        if (this.requestedFragment) {
+          // Ein kleiner Timeout kann immer noch nützlich sein, um sicherzustellen,
+          // dass die Komponente vollständig gerendert ist, nachdem die Navigation abgeschlossen ist.
+          setTimeout(() => {
+            this.scrollToElementById(this.requestedFragment!);
+            this.requestedFragment = null; // Fragment zurücksetzen, damit es nicht erneut scrollt
+          }, 5); // Kann bei Bedarf angepasst werden, 50ms ist oft ein guter Startwert
         }
       });
     }
@@ -96,34 +120,20 @@ export class NavigationComponent implements OnInit {
 
     const navigationExtras: NavigationExtras = {
       replaceUrl: true,
-      // *** Wichtig: Hier KEIN 'fragment' übergeben! ***
-      // scrollPositionRestoration auf 'disabled' setzen, wenn du die volle Kontrolle übernehmen willst,
-      // oder 'top', wenn du nur das Fragment entfernen willst, aber Angular den Scrolltop selbst verwalten soll.
-      // Da wir manuell scrollen, ist 'disabled' oft sinnvoller.
-      scrollPositionRestoration: 'disabled'
+      scrollPositionRestoration: 'top' // Wir lassen dies auf 'top', damit der Router sauber an den Anfang springt
     } as NavigationExtras;
 
     try {
+      // Speichern des angeforderten Fragments VOR der Navigation
+      // Es wird nach NavigationEnd verwendet
+      this.requestedFragment = fragmentId || null;
+
       await this.router.navigate(navigationPath, navigationExtras);
-      console.log(`Mapsd to ${navigationPath.join('/')}. Fragment '${fragmentId || 'none'}' will be scrolled manually.`);
-
-      // Führe das Scrollen manuell aus, nachdem die Navigation abgeschlossen ist.
-      // Ein kleiner Timeout kann helfen, falls das DOM noch nicht ganz stabil ist.
-      if (fragmentId) {
-        // Option 1: Scrollen direkt nach der Navigation
-        // Dies funktioniert oft, aber bei sehr schnellen Navigationen oder komplexen Komponenten
-        // könnte das Element noch nicht vollständig im DOM sein.
-        // this.scrollToElementById(fragmentId);
-
-        // Option 2 (Empfohlen): Scrollen mit einem kleinen Timeout
-        // Gibt dem Browser etwas Zeit, das DOM zu aktualisieren und das Element zu rendern.
-        setTimeout(() => {
-          this.scrollToElementById(fragmentId);
-        }, 100); // 100ms ist oft ein guter Wert, kann bei Bedarf angepasst werden.
-      }
+      console.log(`Mapsd to ${navigationPath.join('/')}. Fragment '${fragmentId || 'none'}' will be scrolled after NavigationEnd.`);
 
     } catch (err) {
       console.error('Navigation failed:', err);
+      this.requestedFragment = null; // Im Fehlerfall Fragment zurücksetzen
     }
   }
 
@@ -203,7 +213,6 @@ export class NavigationComponent implements OnInit {
 
     const navigationExtras: NavigationExtras = {
       replaceUrl: true,
-      // Bei Sprachwechsel behalten wir das Fragment bei, damit die Seite an derselben Stelle bleibt.
       scrollPositionRestoration: 'disabled'
     } as NavigationExtras;
 
