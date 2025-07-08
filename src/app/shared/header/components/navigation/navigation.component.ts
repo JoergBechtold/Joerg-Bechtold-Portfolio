@@ -1,4 +1,3 @@
-// navigation.component.ts
 import { Component, OnInit, Input, EventEmitter, Output, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
@@ -32,8 +31,8 @@ export class NavigationComponent implements OnInit {
   @Output() closeSidenav = new EventEmitter<void>();
 
   private isBrowser: boolean;
-  // Speichern des angeforderten Fragments
   private requestedFragment: string | null = null;
+  private readonly SCROLL_TIMEOUT_MS = 5; // Dein Wert, der gut funktioniert
 
   constructor(
     private translate: TranslateService,
@@ -69,18 +68,15 @@ export class NavigationComponent implements OnInit {
         }
       });
 
-      // *** NEU: Abonnieren von NavigationEnd-Events für unser manuelles Scrollen ***
+      // Abonnieren von NavigationEnd-Events für unser manuelles Scrollen bei unterschiedlicher Route
       this.router.events.pipe(
         filter((event: RouterEvent): event is NavigationEnd => event instanceof NavigationEnd)
       ).subscribe((event: NavigationEnd) => {
-        // Prüfen, ob wir ein Fragment angefordert haben und es noch nicht gescrollt wurde
         if (this.requestedFragment) {
-          // Ein kleiner Timeout kann immer noch nützlich sein, um sicherzustellen,
-          // dass die Komponente vollständig gerendert ist, nachdem die Navigation abgeschlossen ist.
           setTimeout(() => {
             this.scrollToElementById(this.requestedFragment!);
-            this.requestedFragment = null; // Fragment zurücksetzen, damit es nicht erneut scrollt
-          }, 5); // Kann bei Bedarf angepasst werden, 50ms ist oft ein guter Startwert
+            this.requestedFragment = null;
+          }, this.SCROLL_TIMEOUT_MS);
         }
       });
     }
@@ -106,34 +102,49 @@ export class NavigationComponent implements OnInit {
     const currentLang = this.activeLanguage;
 
     const targetMainRoute = mainRoutes.find(route => route.data?.['translationKey'] === translatedPathKey);
-    const fragmentId = targetMainRoute?.data?.['fragmentId']; // Diesen behalten wir für das manuelle Scrollen
+    const fragmentId = targetMainRoute?.data?.['fragmentId'];
 
     const translatedPath = this.translate.instant(translatedPathKey);
 
-    let navigationPath: string[];
+    let navigationPathSegments: string[]; // Wird für den Router verwendet
+    let targetUrlPath: string; // Wird für den Vergleich verwendet
 
     if (appRouteKey === 'home' && translatedPath === '') {
-      navigationPath = ['/', currentLang];
+      navigationPathSegments = ['/', currentLang];
+      targetUrlPath = `/${currentLang}`; // Beispiel: /de
     } else {
-      navigationPath = ['/', currentLang, translatedPath];
+      navigationPathSegments = ['/', currentLang, translatedPath];
+      targetUrlPath = `/${currentLang}/${translatedPath}`; // Beispiel: /de/faehigkeiten
     }
 
-    const navigationExtras: NavigationExtras = {
-      replaceUrl: true,
-      scrollPositionRestoration: 'top' // Wir lassen dies auf 'top', damit der Router sauber an den Anfang springt
-    } as NavigationExtras;
+    // Aktueller vollständiger Pfad der URL (ohne Fragment)
+    const currentUrlPath = this.router.url.split('#')[0];
 
-    try {
-      // Speichern des angeforderten Fragments VOR der Navigation
-      // Es wird nach NavigationEnd verwendet
-      this.requestedFragment = fragmentId || null;
+    // *** Wichtig: Hier die Logik anpassen ***
+    if (currentUrlPath === targetUrlPath) {
+      // Wir sind bereits auf dem gewünschten Pfad.
+      // Kein Router-Navigate, sondern direkt scrollen.
+      console.log(`Already on path '${targetUrlPath}'. Directly scrolling to '${fragmentId}'.`);
+      if (fragmentId) {
+        setTimeout(() => {
+          this.scrollToElementById(fragmentId);
+        }, this.SCROLL_TIMEOUT_MS);
+      }
+    } else {
+      // Pfade sind unterschiedlich, normale Navigation über den Router
+      const navigationExtras: NavigationExtras = {
+        replaceUrl: true,
+        scrollPositionRestoration: 'top' // Bleibt auf 'top'
+      } as NavigationExtras;
 
-      await this.router.navigate(navigationPath, navigationExtras);
-      console.log(`Mapsd to ${navigationPath.join('/')}. Fragment '${fragmentId || 'none'}' will be scrolled after NavigationEnd.`);
-
-    } catch (err) {
-      console.error('Navigation failed:', err);
-      this.requestedFragment = null; // Im Fehlerfall Fragment zurücksetzen
+      try {
+        this.requestedFragment = fragmentId || null; // Fragment speichern
+        await this.router.navigate(navigationPathSegments, navigationExtras);
+        console.log(`Mapsd to ${navigationPathSegments.join('/')}. Fragment '${fragmentId || 'none'}' will be scrolled after NavigationEnd.`);
+      } catch (err) {
+        console.error('Navigation failed:', err);
+        this.requestedFragment = null; // Im Fehlerfall zurücksetzen
+      }
     }
   }
 
