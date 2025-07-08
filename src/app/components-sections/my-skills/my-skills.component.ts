@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { BaseTranslatableComponent } from '../../shared/base/base.component';
-import { SkillsdataService } from '../../skillsdata.service';
+import { SkillsdataService } from '../../services/skills/skillsdata.service';
 
 @Component({
     selector: 'app-my-skills',
