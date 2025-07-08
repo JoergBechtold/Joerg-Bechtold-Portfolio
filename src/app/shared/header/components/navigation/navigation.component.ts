@@ -27,12 +27,14 @@ import { AppRouteKeys, mainRoutes, routes, createLocalizedRoutes } from '../../.
 })
 export class NavigationComponent implements OnInit {
   activeLanguage: string = 'de';
+
   @Input() isInSidebar: boolean = false;
-  @Output() closeSidenav = new EventEmitter<void>();
+  @Output() closeSidebarRequest = new EventEmitter<void>();
 
   private isBrowser: boolean;
   private requestedFragment: string | null = null;
   private readonly SCROLL_TIMEOUT_MS = 5; // Dein Wert, der gut funktioniert
+  private readonly maxWidthBreakpoint = 920;
 
   constructor(
     private translate: TranslateService,
@@ -42,6 +44,11 @@ export class NavigationComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
+  }
+
+  testEmitClose(): void {
+    console.log('NavigationComponent: testEmitClose called. Manually emitting closeSidebarRequest.');
+    this.closeSidebarRequest.emit();
   }
 
   ngOnInit(): void {
@@ -82,8 +89,9 @@ export class NavigationComponent implements OnInit {
     }
   }
 
-  onClose(): void {
-    this.closeSidenav.emit();
+  onCloseSidebar(): void {
+    console.log('NavigationComponent: onCloseSidebar called. Emitting closeSidebarRequest.'); // Hinzufügen
+    this.closeSidebarRequest.emit();
   }
 
   /**
@@ -92,10 +100,11 @@ export class NavigationComponent implements OnInit {
    * @param appRouteKey Der Schlüssel aus AppRouteKeys, der den Pfad repräsentiert (z.B. 'aboutMe').
    */
   async navigateToSection(appRouteKey: keyof typeof AppRouteKeys): Promise<void> {
-    console.log('navigateToSection called with AppRouteKey:', appRouteKey);
+    console.log('NavigationComponent: navigateToSection called with AppRouteKey:', appRouteKey);
+    console.log('NavigationComponent: isInSidebar is:', this.isInSidebar); // Hinzufügen
 
     if (this.isInSidebar) {
-      this.onClose(); // Sidebar schließen, wenn im Sidebar-Modus
+      this.onCloseSidebar(); // Sidebar schließen, wenn im Sidebar-Modus
     }
 
     const translatedPathKey = AppRouteKeys[appRouteKey];
@@ -156,7 +165,17 @@ export class NavigationComponent implements OnInit {
     if (!this.isBrowser) {
       return;
     }
-    this.viewportScroller.setOffset([0, 60]); // Beispiel: 60px Offset für einen festen Header
+
+    let offset: number;
+
+    // Überprüfe die aktuelle Fensterbreite
+    if (window.innerWidth > this.maxWidthBreakpoint) {
+      offset = 110; // Für breite Bildschirme (z.B. Desktop)
+    } else {
+      offset = 75;  // Für schmale Bildschirme (z.B. Mobile, Tablet)
+    }
+
+    this.viewportScroller.setOffset([0, offset]); // Beispiel: 60px Offset für einen festen Header
     this.viewportScroller.scrollToAnchor(elementId);
     console.log(`ViewportScroller attempted to scroll to anchor: ${elementId}`);
   }

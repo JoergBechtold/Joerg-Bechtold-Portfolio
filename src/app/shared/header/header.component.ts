@@ -1,12 +1,13 @@
+// header.component.ts
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { Component, OnInit, EventEmitter, Output, Inject, Renderer2, OnDestroy } from '@angular/core';
-import { RouterLink, Router, ActivatedRoute } from '@angular/router'; // Router und ActivatedRoute hinzugefügt
+import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
-import { TranslateService, TranslateModule } from '@ngx-translate/core'; // TranslateService und TranslateModule hinzugefügt
-import { AppRouteKeys } from '../../app.routes'; // AppRouteKeys hinzugefügt
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { AppRouteKeys } from '../../app.routes';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +17,7 @@ import { AppRouteKeys } from '../../app.routes'; // AppRouteKeys hinzugefügt
     RouterLink,
     NavigationComponent,
     SidebarComponent,
-    TranslateModule // TranslateModule hinzugefügt
+    TranslateModule
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
@@ -24,46 +25,40 @@ import { AppRouteKeys } from '../../app.routes'; // AppRouteKeys hinzugefügt
 export class HeaderComponent implements OnInit, OnDestroy {
 
   isMenuOpen: boolean = false;
-  @Output() toggleSidebarEvent = new EventEmitter<void>();
+  // @Output() toggleSidebarEvent = new EventEmitter<void>(); // Dieser Output wird für die Kommunikation mit dem NavigationComponent nicht mehr direkt benötigt.
 
   private breakpointSubscription: Subscription = new Subscription();
   private readonly maxWidthBreakpoint = 920;
   private readonly customBreakpointQuery = `(min-width: ${this.maxWidthBreakpoint + 1}px)`;
 
-  // NEU: Für die Übersetzungslogik
   activeLanguage: string = '';
-  // AppRouteKeys direkt verfügbar machen, falls im Template benötigt
   AppRouteKeys = AppRouteKeys;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private renderer: Renderer2,
     private breakpointObserver: BreakpointObserver,
-    private translate: TranslateService, // NEU: TranslateService injizieren
-    private router: Router, // NEU: Router injizieren
-    private activatedRoute: ActivatedRoute // NEU: ActivatedRoute injizieren
+    private translate: TranslateService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    // Bestehende Breakpoint-Logik
     this.breakpointSubscription = this.breakpointObserver
       .observe([this.customBreakpointQuery])
       .subscribe(result => {
         if (result.matches) {
           if (this.isMenuOpen) {
-            this.closeSidebar(); // Sidebar schließen, wenn Breakpoint erreicht wird
+            this.closeSidebar();
           }
         }
       });
 
-    // NEU: Logik zur Bestimmung der aktiven Sprache (ähnlich wie im Footer)
-    // Initialen Sprachparameter aus der URL lesen
     this.activatedRoute.paramMap.subscribe(params => {
       const langParam = params.get('lang');
       this.activeLanguage = langParam || this.translate.getDefaultLang();
     });
 
-    // Auf Sprachwechsel reagieren
     this.translate.onLangChange.subscribe(lang => {
       this.activeLanguage = lang.lang;
     });
@@ -71,30 +66,27 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.breakpointSubscription.unsubscribe();
-    // Optional: Abonnements für translate.onLangChange und activatedRoute.paramMap
-    // könnten hier auch unsubscribed werden, wenn sie nicht von anderen Subscriptions
-    // verwaltet werden (z.B. wenn sie in einem Subscription-Container gesammelt werden).
-    // Für diese einfachen Fälle ist es oft nicht kritisch, da die Komponente zerstört wird.
   }
 
   toggleSidebar(): void {
     const currentWindowWidth = window.innerWidth;
     if (currentWindowWidth <= this.maxWidthBreakpoint) {
       this.isMenuOpen = !this.isMenuOpen;
+      console.log('HeaderComponent: toggleSidebar - isMenuOpen is now:', this.isMenuOpen); // Hinzufügen
       this.applyNoScrollToBody(this.isMenuOpen);
-      this.toggleSidebarEvent.emit();
     } else {
       this.isMenuOpen = false;
+      console.log('HeaderComponent: toggleSidebar - isMenuOpen is now (else branch):', this.isMenuOpen); // Hinzufügen
       this.applyNoScrollToBody(false);
-      this.toggleSidebarEvent.emit();
     }
   }
 
+  // Diese Funktion soll vom Kind aufgerufen werden können
   closeSidebar(): void {
     if (this.isMenuOpen) {
       this.isMenuOpen = false;
+      console.log('HeaderComponent: closeSidebar called - isMenuOpen is now:', this.isMenuOpen); // Hinzufügen
       this.applyNoScrollToBody(false);
-      this.toggleSidebarEvent.emit();
     }
   }
 
@@ -106,19 +98,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-  /**
-   * NEU: Methode zur Generierung von Router-Links mit aktuellem Sprachpräfix.
-   * Ähnlich wie in der FooterComponent.
-   */
   getRouterLink(key: keyof typeof AppRouteKeys): string[] {
     const translatedPath = this.translate.instant(AppRouteKeys[key]);
-    const currentLang = this.activeLanguage; // Nutzt die in ngOnInit gesetzte aktive Sprache
+    const currentLang = this.activeLanguage;
 
-    // Sonderbehandlung für die Home-Route, die einen leeren Pfad haben kann
-    if (key === 'home' && translatedPath === '') { // Beachten Sie 'home' als String-Literal
+    if (key === 'home' && translatedPath === '') {
       return ['/', currentLang];
     }
-    // Für alle anderen Routen: ['/', Sprache, übersetzter_Pfad]
     return ['/', currentLang, translatedPath];
   }
 }

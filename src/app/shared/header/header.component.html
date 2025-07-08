@@ -6,7 +6,8 @@
             </a>
         </div>
 
-        <app-navigation class="main-navigation hide-mobile"></app-navigation>
+        <app-navigation [isInSidebar]="isMenuOpen" (closeSidebarRequest)="closeSidebar()"
+            class="main-navigation hide-mobile"></app-navigation>
 
         <div (click)="toggleSidebar()" class="hamburger-menu show-mobile">
             <div id="hamburger-icon-toggle" class="hamburger-icon "
@@ -20,5 +21,6 @@
 </div>
 
 <div class="sidebar-overlay" [ngClass]="{'open': isMenuOpen}" (click)="closeSidebar()">
-    <app-sidebar [ngClass]="{'open': isMenuOpen}" (click)="$event.stopPropagation()"></app-sidebar>
+    <app-sidebar [isMenuOpen]="isMenuOpen" (closeSidebarEvent)="closeSidebar()"
+        (click)="$event.stopPropagation()"></app-sidebar>
 </div>

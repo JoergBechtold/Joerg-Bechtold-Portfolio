@@ -2,13 +2,21 @@
 @use "../../../assets/styles/mixins.scss" as *;
 
 section {
-  min-height: 100dvh;
+  // min-height: 100dvh;
   height: 100dvh;
   width: 100%;
   background-color: $primary-bg-gray;
 
   @media screen and (max-width: $respons-width-920) {
     padding-block: 50px;
+    height: unset;
+  }
+
+  @media screen and (max-height: $responsive-height-814) {
+    height: calc(100dvh - $header-hight);
+  }
+
+  @media screen and (max-height: $responsive-height-814) and (max-width: $respons-width-920) {
     height: unset;
   }
 }
@@ -39,6 +47,10 @@ h1 {
     height: auto;
   }
 
+  // @media screen and (max-height: $responsive-height-814) {
+  //   padding-block: 15px;
+  // }
+
   > img {
     z-index: 3;
     position: absolute;
@@ -65,6 +77,10 @@ h1 {
     transform: unset;
     width: clamp(315px, 205.6667px + 34.1667vw, 520px);
     padding-inline: 25px;
+  }
+
+  @media screen and (max-height: $responsive-height-814) {
+    max-width: 605px;
   }
 }
 
@@ -122,6 +138,10 @@ h1 {
 .vector-box {
   width: $distance-right-left-about-me;
   display: flex;
+
+  @media screen and (max-height: $responsive-height-814) {
+    width: clamp(60px, -112.96px + 18.8vw, 248px);
+  }
 }
 
 .green-vektor {
