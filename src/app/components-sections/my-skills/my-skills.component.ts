@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Important for *ngFor
+import { Component, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { BaseTranslatableComponent } from '../../shared/base/base.component';
+import { SkillsdataService } from '../../skillsdata.service';
 
 @Component({
     selector: 'app-my-skills',
@@ -11,50 +12,8 @@ import { BaseTranslatableComponent } from '../../shared/base/base.component';
     styleUrl: './my-skills.component.scss'
 })
 export class MySkillsComponent extends BaseTranslatableComponent implements OnInit {
-    skillsBox = [
-        {
-            name: 'HTML',
-            img: './../../../assets/icons/skills-icons/HTML-icon.svg',
-        },
 
-        {
-            name: 'CSS',
-            img: './../../../assets/icons/skills-icons/CSS-icon.svg',
-        },
-
-        {
-            name: 'JavaScript',
-            img: './../../../assets/icons/skills-icons/JAVASCRIPT-icon.svg',
-        },
-        {
-            name: 'TypeScript',
-            img: './../../../assets/icons/skills-icons/TYPESCRIPT-icon.svg',
-        },
-        {
-            name: 'ANGULAR',
-            img: './../../../assets/icons/skills-icons/ANGULAR-icon.svg',
-        },
-        {
-            name: 'Firebase',
-            img: './../../../assets/icons/skills-icons/FIREBASE-icon.svg',
-        },
-        {
-            name: 'Git',
-            img: './../../../assets/icons/skills-icons/GIT-icon.svg',
-        },
-        {
-            name: 'REST-API',
-            img: './../../../assets/icons/skills-icons/API-icon.svg',
-        },
-        {
-            name: 'Scrum',
-            img: './../../../assets/icons/skills-icons/SCRUM-icon.svg',
-        },
-        {
-            name: 'Material Design',
-            img: './../../../assets/icons/skills-icons/MATERIAL-DESIGN-icon.svg',
-        }
-    ]
+    skillsdata = inject(SkillsdataService)
 
     constructor(protected override translate: TranslateService) {
         super(translate);
