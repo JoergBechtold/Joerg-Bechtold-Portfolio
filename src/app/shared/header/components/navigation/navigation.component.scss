@@ -18,6 +18,7 @@
   > a {
     @include fontSizeWeightColor();
     transition: color 0.3s ease;
+    cursor: pointer;
 
     &:hover {
       color: $primary-bg-green;

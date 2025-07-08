@@ -21,19 +21,31 @@ export const mainRoutes: Routes = [
     {
         path: '', // Nur für die reine Home-Seite ohne Fragment
         component: MainContentComponent,
-        data: { translationKey: AppRouteKeys.home }
+        data: { translationKey: AppRouteKeys.home, fragmentId: 'atf-section' }
     },
     {
         path: 'about-me', // Beispiel: Der Standardpfad vor der Übersetzung
         component: MainContentComponent, // Oder eine spezifische Komponente, wenn du sie aufteilst
-        data: { translationKey: AppRouteKeys.aboutMe }
+        data: { translationKey: AppRouteKeys.aboutMe, fragmentId: 'about_me' }
     },
     {
         path: 'skills',
         component: MainContentComponent,
-        data: { translationKey: AppRouteKeys.skills }
+        data: { translationKey: AppRouteKeys.skills, fragmentId: 'skills' }
     },
-    // ... und so weiter für Portfolio und Contact
+
+    {
+        path: 'portfolio',
+        component: MainContentComponent,
+        data: { translationKey: AppRouteKeys.portfolio, fragmentId: 'portfolio' } // Wichtig: Füge fragmentId hinzu
+    },
+
+    {
+        path: 'contact',
+        component: MainContentComponent,
+        data: { translationKey: AppRouteKeys.contact, fragmentId: 'contact' } // Wichtig: Füge fragmentId hinzu
+    },
+
     {
         path: 'privacy-policy',
         component: PrivacyPolicyComponent,

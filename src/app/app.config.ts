@@ -1,3 +1,4 @@
+// app.config.ts
 import { ApplicationConfig, importProvidersFrom, APP_INITIALIZER } from '@angular/core';
 import { provideRouter, withRouterConfig, withNavigationErrorHandler, withInMemoryScrolling } from '@angular/router';
 import { provideHttpClient, withFetch, HttpClient } from '@angular/common/http';
@@ -12,11 +13,12 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 const createRouterProvider = () => provideRouter(
   routes,
-  withRouterConfig({ onSameUrlNavigation: 'reload' }),
+  // withRouterConfig({ onSameUrlNavigation: 'reload' }), // <-- WIEDER ENTFERNEN, da es zu doppelten Ausführungen führen kann
   withNavigationErrorHandler((error) => {
     console.error('Router Navigation Error:', error);
   }),
-  withInMemoryScrolling({ anchorScrolling: 'enabled' })
+  // Dies ist der entscheidende Punkt für das automatische Scrollen
+  withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'top' })
 );
 
 const createTranslationProviders = () => importProvidersFrom(

@@ -1,14 +1,10 @@
 <div class="nav-content-box">
     <nav [ngClass]="{'sidenav-layout': isInSidebar}">
         <div class="links-header">
-            <a [routerLink]="getRouterLink('home')" fragment="about_me" (click)="scrollToSection('about_me')">{{
-                'HEADER.ABOUT_ME' | translate }}</a>
-            <a [routerLink]="getRouterLink('home')" fragment="skills" (click)="scrollToSection('skills')">{{
-                'HEADER.SKILLS' | translate }}</a>
-            <a [routerLink]="getRouterLink('home')" fragment="portfolio" (click)="scrollToSection('portfolio')">{{
-                'HEADER.PORTFOLIO' | translate }}</a>
-            <a [routerLink]="getRouterLink('home')" fragment="contact" (click)="scrollToSection('contact')"
-                [hidden]="!isInSidebar">{{ 'HEADER.CONTACT' | translate}}</a>
+            <a (click)="navigateToSection('aboutMe')">{{ 'HEADER.ABOUT_ME' | translate }}</a>
+            <a (click)="navigateToSection('skills')">{{ 'HEADER.SKILLS' | translate }}</a>
+            <a (click)="navigateToSection('portfolio')">{{ 'HEADER.PORTFOLIO' | translate }}</a>
+            <a (click)="navigateToSection('contact')" [hidden]="!isInSidebar">{{ 'HEADER.CONTACT' | translate}}</a>
         </div>
 
         <div class="language-btns">
