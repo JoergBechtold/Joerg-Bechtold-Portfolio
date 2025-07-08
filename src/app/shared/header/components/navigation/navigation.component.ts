@@ -1,10 +1,9 @@
-// navigation.component.ts
 import { Component, OnInit, Input, EventEmitter, Output, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { Router, ActivatedRoute, NavigationExtras, RouterModule, Scroll, Event as RouterEvent } from '@angular/router'; // Importiere Scroll und Event
-import { ViewportScroller } from '@angular/common'; // Importiere ViewportScroller
-import { filter } from 'rxjs/operators'; // Importiere filter
+import { Router, ActivatedRoute, NavigationExtras, RouterModule, Scroll, Event as RouterEvent } from '@angular/router';
+import { ViewportScroller } from '@angular/common';
+import { filter } from 'rxjs/operators';
 import { AppRouteKeys, mainRoutes, routes, createLocalizedRoutes } from '../../../../app.routes';
 
 @Component({
@@ -29,7 +28,7 @@ export class NavigationComponent implements OnInit {
     private translate: TranslateService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private viewportScroller: ViewportScroller, // Injiziere ViewportScroller
+    private viewportScroller: ViewportScroller,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
@@ -44,7 +43,9 @@ export class NavigationComponent implements OnInit {
       this.activeLanguage = langParam || this.translate.getDefaultLang();
     });
 
-    // **NEU:** Abonniere Router-Events, um nach dem Scroll-Ereignis zu handeln
+    // Abonniere Router-Events, um nach dem Scroll-Ereignis zu handeln
+    // Dies ist hauptsächlich für Browser-Zurück/Vorwärts-Navigation relevant,
+    // da unser navigateToSection den ViewportScroller direkt steuert.
     if (this.isBrowser) {
       this.router.events.pipe(
         filter((event: RouterEvent): event is Scroll => event instanceof Scroll)
@@ -54,8 +55,13 @@ export class NavigationComponent implements OnInit {
           this.viewportScroller.scrollToPosition(event.position);
         } else if (event.anchor) {
           // Forward navigation with anchor (hash fragment)
-          // Hier können wir reagieren, aber wir nutzen es für unsere Pfad-Fragmente
-          this.scrollToElementById(event.anchor);
+          // Der Router ruft hier intern ViewportScroller.scrollToAnchor auf,
+          // wenn anchorScrolling enabled ist. Wir können hier Logik hinzufügen,
+          // wenn wir ein benutzerdefiniertes Verhalten für Router-gesteuertes Scrollen wünschen.
+          // In deinem Fall, da du `scrollToElementById` mit `viewportScroller.scrollToAnchor` nutzt,
+          // ist dieser Teil redundant, da der Router dies bereits tut.
+          // console.log(`Router event scroll to anchor: ${event.anchor}`);
+          // this.scrollToElementById(event.anchor); // Dies würde die Doppelausführung verursachen, wenn anchorScrolling: 'enabled' ist
         } else {
           // Normal navigation to top of the page (if scrollPositionRestoration is 'top')
           this.viewportScroller.scrollToPosition([0, 0]);
@@ -83,7 +89,6 @@ export class NavigationComponent implements OnInit {
     const translatedPathKey = AppRouteKeys[appRouteKey];
     const currentLang = this.activeLanguage;
 
-    // Finde die entsprechende Route, um die fragmentId und den übersetzten Pfad zu erhalten
     const targetMainRoute = mainRoutes.find(route => route.data?.['translationKey'] === translatedPathKey);
     const fragmentId = targetMainRoute?.data?.['fragmentId'];
     const translatedPath = this.translate.instant(translatedPathKey);
@@ -98,32 +103,14 @@ export class NavigationComponent implements OnInit {
 
     const navigationExtras: NavigationExtras = {
       replaceUrl: true,
-      // HINWEIS: Hier KEIN 'fragment' angeben!
-      // 'onSameUrlNavigation: "reload"' in app.config.ts hilft, Navigationen zur gleichen Komponente zu behandeln.
-      // Der ViewportScroller kümmert sich um das Scrollen über die fragmentId.
+      // Das Fragment wird hier direkt übergeben. Der Router wird es dann mit
+      // `anchorScrolling: 'enabled'` im Zusammenspiel mit dem ViewportScroller verarbeiten.
+      fragment: fragmentId || undefined
     };
 
     try {
-      // Wenn wir bereits auf dem korrekten Pfad sind, aber zu einer anderen Sektion wollen,
-      // müssen wir den Router "zwingen" neu zu navigieren oder das Scrollen direkt auslösen.
-      const currentUrlSegments = this.router.url.split('/').filter(s => s !== '' && s !== currentLang);
-      const targetUrlSegments = navigationPath.slice(2); // ['ueber-mich']
-
-      // Prüfen, ob der Zielpfad (ohne Sprache) bereits der aktuelle Pfad ist
-      const isSamePath = currentUrlSegments.join('/') === targetUrlSegments.join('/');
-
-      if (isSamePath && fragmentId) {
-        // Wir sind bereits auf der richtigen URL, aber wir wollen zu einem Fragment scrollen.
-        // Der Router wird keine neue Navigation auslösen, also scrollen wir manuell.
-        console.log(`Already on path '${navigationPath.join('/')}', directly scrolling to '${fragmentId}'.`);
-        this.scrollToElementById(fragmentId);
-      } else {
-        // Navigiere zur neuen URL. Der ViewportScroller wird im Idealfall das Scrollen übernehmen.
-        // Wir übergeben das Fragment als Teil der Navigation, damit der Router es verarbeiten kann.
-        // Dies funktioniert im Zusammenspiel mit `anchorScrolling: 'enabled'` in app.config.ts.
-        await this.router.navigate(navigationPath, { ...navigationExtras, fragment: fragmentId || undefined });
-        console.log(`Mapsd to ${navigationPath.join('/')} with fragment ${fragmentId || 'none'}.`);
-      }
+      await this.router.navigate(navigationPath, navigationExtras);
+      console.log(`Mapsd to ${navigationPath.join('/')} with fragment ${fragmentId || 'none'}.`);
     } catch (err) {
       console.error('Navigation failed:', err);
     }
@@ -131,30 +118,20 @@ export class NavigationComponent implements OnInit {
 
   /**
    * Hilfsfunktion zum Scrollen zu einem Element anhand seiner ID unter Verwendung von ViewportScroller.
+   * Diese Funktion wird jetzt primär vom Router über `anchorScrolling` aufgerufen,
+   * oder falls du sie für andere Zwecke benötigst. Der `setTimeout`-Fallback wird entfernt.
    * @param elementId Die ID des HTML-Elements, zu dem gescrollt werden soll.
    */
   private scrollToElementById(elementId: string): void {
     if (!this.isBrowser) {
       return;
     }
-    // Verwende ViewportScroller für reibungsloses Scrollen.
-    // setOffset sorgt dafür, dass ein fester Header (falls vorhanden) nicht überdeckt.
     this.viewportScroller.setOffset([0, 60]); // Beispiel: 60px Offset für einen festen Header
     this.viewportScroller.scrollToAnchor(elementId);
     console.log(`ViewportScroller attempted to scroll to anchor: ${elementId}`);
 
-    // Fallback, falls ViewportScroller aus irgendeinem Grund nicht funktioniert
-    // (z.B. wenn das Element nicht sofort im DOM ist).
-    // Diese setTimeout-Variante ist dein bestehender Code.
-    setTimeout(() => {
-      const element = document.getElementById(elementId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        console.log(`Fallback: Manually scrolled to element with ID: ${elementId}`);
-      } else {
-        console.warn(`Element with ID '${elementId}' not found for manual fallback scrolling.`);
-      }
-    }, 300); // Etwas höherer Timeout für den Fallback
+    // Der setTimeout-Fallback wurde entfernt, da der ViewportScroller zuverlässiger ist
+    // und doppelte Scroll-Aktionen vermieden werden sollen.
   }
 
   async setLanguage(lang: string): Promise<void> {
@@ -165,7 +142,7 @@ export class NavigationComponent implements OnInit {
     let targetAppRouteKey: keyof typeof AppRouteKeys | undefined;
     let currentFragment: string | null = null;
 
-    currentFragment = this.activatedRoute.snapshot.fragment; // Holen des aktuellen Fragments
+    currentFragment = this.activatedRoute.snapshot.fragment;
 
     let routeSnapshot = this.activatedRoute.snapshot;
     while (routeSnapshot.firstChild) {
@@ -220,7 +197,7 @@ export class NavigationComponent implements OnInit {
 
     const navigationExtras: NavigationExtras = {
       replaceUrl: true,
-      scrollPositionRestoration: 'disabled' // Hier disabled, da wir nur die URL aktualisieren und Fragment beibehalten
+      scrollPositionRestoration: 'disabled'
     } as NavigationExtras;
 
     if (currentFragment) {
