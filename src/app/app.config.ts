@@ -13,12 +13,13 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 const createRouterProvider = () => provideRouter(
   routes,
-  // withRouterConfig({ onSameUrlNavigation: 'reload' }), // <-- WIEDER ENTFERNEN, da es zu doppelten Ausführungen führen kann
   withNavigationErrorHandler((error) => {
     console.error('Router Navigation Error:', error);
   }),
-  // Dies ist der entscheidende Punkt für das automatische Scrollen
-  withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'top' })
+  // *** Wichtig: anchorScrolling und scrollPositionRestoration hier deaktivieren oder nur auf 'top' setzen ***
+  // Wenn du das Scrollen manuell steuerst, kann 'anchorScrolling: "enabled"' zu Konflikten führen.
+  // 'scrollPositionRestoration: "disabled"' ist notwendig, wenn du das Scrollen komplett übernimmst.
+  withInMemoryScrolling({ anchorScrolling: 'disabled', scrollPositionRestoration: 'disabled' })
 );
 
 const createTranslationProviders = () => importProvidersFrom(
@@ -38,7 +39,6 @@ const initTranslations = (translate: TranslateService) => {
     const availableLangs = translate.getLangs();
     const defaultLang = translate.getDefaultLang();
     let langToUse: string = defaultLang;
-
 
     if (pathSegments.length > 0 && availableLangs.includes(pathSegments[0])) {
       langToUse = pathSegments[0];
