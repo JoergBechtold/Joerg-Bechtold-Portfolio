@@ -32,6 +32,7 @@ export class NavigationComponent implements OnInit {
   @Input() windowWidth: number = window.innerWidth;
   @Input() isInSidebar: boolean = false;
   @Output() closeSidebarRequest = new EventEmitter<void>();
+  @Output() navigateRequest = new EventEmitter<keyof typeof AppRouteKeys>();
 
   private isBrowser: boolean;
   private requestedFragment: string | null = null;
@@ -82,7 +83,7 @@ export class NavigationComponent implements OnInit {
         filter((event: RouterEvent): event is NavigationEnd => event instanceof NavigationEnd)
       ).subscribe((event: NavigationEnd) => {
         if (this.requestedFragment) {
-          console.log(`NavigationEnd detected. Attempting to scroll to stored fragment: ${this.requestedFragment}`);
+
           setTimeout(() => {
             this.scrollToElementById(this.requestedFragment!);
             this.requestedFragment = null; // Fragment zurücksetzen, nachdem gescrollt wurde
@@ -93,21 +94,14 @@ export class NavigationComponent implements OnInit {
   }
 
   onCloseSidebar(): void {
-    console.log('NavigationComponent: onCloseSidebar called. Emitting closeSidebarRequest.');
     this.closeSidebarRequest.emit();
   }
 
-  /**
-   * Navigiert zum übersetzten Pfad, der zu einer Section gehört, und scrollt dann manuell.
-   * Das Fragment wird NICHT in die URL aufgenommen.
-   * @param appRouteKey Der Schlüssel aus AppRouteKeys, der den Pfad repräsentiert (z.B. 'aboutMe').
-   */
+
   async navigateToSection(appRouteKey: keyof typeof AppRouteKeys): Promise<void> {
-    console.log('NavigationComponent: navigateToSection called with AppRouteKey:', appRouteKey);
-    console.log('NavigationComponent: isInSidebar is:', this.isInSidebar);
 
     if (this.isInSidebar) {
-      this.onCloseSidebar(); // Sidebar schließen, wenn im Sidebar-Modus
+      this.onCloseSidebar();
     }
 
     const translatedPathKey = AppRouteKeys[appRouteKey];
@@ -119,7 +113,7 @@ export class NavigationComponent implements OnInit {
     const translatedPathSegment = this.translate.instant(translatedPathKey);
 
     let navigationPathSegments: string[];
-    let targetUrlPath: string; // Die vollständige Ziel-URL (ohne Fragment)
+    let targetUrlPath: string;
 
     if (appRouteKey === 'home' && translatedPathSegment === '') {
       navigationPathSegments = ['/', currentLang];
@@ -132,28 +126,28 @@ export class NavigationComponent implements OnInit {
     const currentRouterUrl = this.router.url.split('#')[0];
 
     if (currentRouterUrl !== targetUrlPath) {
-      console.log(`Paths are different. Performing Router Navigation.`);
+
       const navigationExtras: NavigationExtras = {
         replaceUrl: true,
-        scrollPositionRestoration: 'disabled' // Ganz wichtig: Router soll NICHT automatisch scrollen
+        scrollPositionRestoration: 'disabled'
       } as NavigationExtras;
 
       try {
-        this.requestedFragment = fragmentId || null; // Fragment für NavigationEnd speichern
+        this.requestedFragment = fragmentId || null;
         await this.router.navigate(navigationPathSegments, navigationExtras);
-        console.log(`Router navigated to: ${navigationPathSegments.join('/')}. Fragment '${fragmentId || 'none'}' will be scrolled after NavigationEnd.`);
+
       } catch (err) {
         console.error('Navigation failed:', err);
-        this.requestedFragment = null; // Im Fehlerfall zurücksetzen
+        this.requestedFragment = null;
       }
     } else {
 
       if (fragmentId) {
         setTimeout(() => {
           this.scrollToElementById(fragmentId);
-        }, this.SCROLL_TIMEOUT_MS); // Verwende hier auch den erhöhten Timeout
+        }, this.SCROLL_TIMEOUT_MS);
       } else {
-        // Fallback: Wenn keine Fragment-ID, aber gleiche URL, scrolle zum Seitenanfang
+
         this.viewportScroller.scrollToPosition([0, 0]);
       }
     }

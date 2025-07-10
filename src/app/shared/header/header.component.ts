@@ -1,6 +1,6 @@
 // header.component.ts
 import { CommonModule, DOCUMENT } from '@angular/common';
-import { Component, OnInit, EventEmitter, Output, Inject, Renderer2, OnDestroy } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Inject, Renderer2, OnDestroy, ViewChild } from '@angular/core';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -14,7 +14,6 @@ import { AppRouteKeys } from '../../app.routes';
   standalone: true,
   imports: [
     CommonModule,
-    RouterLink,
     NavigationComponent,
     SidebarComponent,
     TranslateModule
@@ -25,7 +24,7 @@ import { AppRouteKeys } from '../../app.routes';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   isMenuOpen: boolean = false;
-  // @Output() toggleSidebarEvent = new EventEmitter<void>(); // Dieser Output wird für die Kommunikation mit dem NavigationComponent nicht mehr direkt benötigt.
+  @ViewChild(NavigationComponent) navigationComponent!: NavigationComponent;
 
   private breakpointSubscription: Subscription = new Subscription();
   private readonly maxWidthBreakpoint = 920;
@@ -64,6 +63,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
   }
 
+  onLogoClick(): void {
+    if (this.navigationComponent) {
+      this.navigationComponent.navigateToSection('home');
+    } else {
+      console.warn('NavigationComponent not found for logo click.');
+
+    }
+  }
+
   ngOnDestroy(): void {
     this.breakpointSubscription.unsubscribe();
   }
@@ -72,20 +80,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const currentWindowWidth = window.innerWidth;
     if (currentWindowWidth <= this.maxWidthBreakpoint) {
       this.isMenuOpen = !this.isMenuOpen;
-      console.log('HeaderComponent: toggleSidebar - isMenuOpen is now:', this.isMenuOpen); // Hinzufügen
       this.applyNoScrollToBody(this.isMenuOpen);
     } else {
       this.isMenuOpen = false;
-      console.log('HeaderComponent: toggleSidebar - isMenuOpen is now (else branch):', this.isMenuOpen); // Hinzufügen
       this.applyNoScrollToBody(false);
     }
   }
 
-  // Diese Funktion soll vom Kind aufgerufen werden können
+
   closeSidebar(): void {
     if (this.isMenuOpen) {
       this.isMenuOpen = false;
-      console.log('HeaderComponent: closeSidebar called - isMenuOpen is now:', this.isMenuOpen); // Hinzufügen
       this.applyNoScrollToBody(false);
     }
   }
