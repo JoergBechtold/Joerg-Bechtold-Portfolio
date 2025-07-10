@@ -7,7 +7,7 @@ import { Directive, ElementRef, OnInit, OnDestroy, Input, Renderer2 } from '@ang
 export class AnimateOnScrollDirective implements OnInit, OnDestroy {
   // @Input, um den Schwellenwert (threshold) für den Observer anzupassen
   // Standardwert ist jetzt 0.5, kann aber immer noch überschrieben werden
-  @Input() animationThreshold: number = 0.5; // Hier wird der globale Standardwert festgelegt
+  @Input() animationThreshold: number = 0.2; // Hier wird der globale Standardwert festgelegt
 
   // @Input, um die Animation als "onetime" zu markieren (spielt nur einmal ab)
   @Input() animationOnetime: boolean = true;
