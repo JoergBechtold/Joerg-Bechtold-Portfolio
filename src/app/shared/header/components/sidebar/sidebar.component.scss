@@ -16,7 +16,7 @@
     transform: translateX(0);
   }
 
-  @media screen and (max-width: $respons-width-920) {
+  @media screen and (max-width: $breakpoint-width-920) {
     top: $header-hight-responsive;
   }
 }
@@ -30,7 +30,7 @@ app-sidebar {
   @include dFlexAllCenter();
   flex-direction: column;
 
-  @media screen and (max-width: $respons-width-920) {
+  @media screen and (max-width: $breakpoint-width-920) {
     height: calc(100% - $header-hight-responsive);
   }
 

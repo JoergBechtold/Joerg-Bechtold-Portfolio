@@ -28,7 +28,7 @@ $max-width-1920: 1920px;
 $max-width-700: 700px;
 
 //responsive max-width
-$respons-width-920: 920px;
+$breakpoint-width-920: 920px;
 
 //responsive max-height
 $responsive-height-814: 814px;
@@ -36,3 +36,9 @@ $responsive-height-666: 666px;
 
 //about me left right
 $distance-right-left-about-me: clamp(53px, -238.64px + 31.7vw, 370px);
+
+:root {
+  --header-hight: #{$header-hight};
+  --header-hight-responsive: #{$header-hight-responsive};
+  --breakpoint-width-920: #{$breakpoint-width-920};
+}

@@ -14,7 +14,7 @@
   @include paddingLeftRightHolePage();
   z-index: 10;
 
-  @media screen and (max-width: $respons-width-920) {
+  @media screen and (max-width: $breakpoint-width-920) {
     height: $header-hight-responsive;
   }
 }

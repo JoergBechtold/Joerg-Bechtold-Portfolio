@@ -12,7 +12,7 @@ section {
   overflow: hidden;
   @include dFlexAllCenter();
 
-  @media screen and (max-width: $respons-width-920) {
+  @media screen and (max-width: $breakpoint-width-920) {
     padding-top: $header-hight-responsive;
   }
 }
@@ -43,13 +43,13 @@ section {
       left: clamp(-153px, -210.96px + 6.3vw, -90px);
     }
 
-    @media screen and (max-width: $respons-width-920) {
+    @media screen and (max-width: $breakpoint-width-920) {
       left: 50%;
       transform: translateX(-50%);
       bottom: clamp(55px, 15px + 12.5vw, 130px);
     }
 
-    @media screen and (max-width: $respons-width-920) and (max-height: $responsive-height-814) {
+    @media screen and (max-width: $breakpoint-width-920) and (max-height: $responsive-height-814) {
       width: clamp(565px, 543.6667px + 6.6667vw, 605px);
     }
 
@@ -71,14 +71,14 @@ section {
       bottom: -25px;
     }
 
-    @media screen and (max-width: $respons-width-920) {
+    @media screen and (max-width: $breakpoint-width-920) {
       left: 50%;
       transform: translateX(-50%);
       bottom: clamp(205px, 228px + -2.5vw, 220px);
       width: clamp(320px, 234.6667px + 26.6667vw, 480px);
     }
 
-    @media screen and (max-width: $respons-width-920) and (max-height: $responsive-height-814) {
+    @media screen and (max-width: $breakpoint-width-920) and (max-height: $responsive-height-814) {
       bottom: clamp(208px, 192px + 5vw, 238px);
       width: 292px;
     }
@@ -103,11 +103,11 @@ section {
       bottom: -770px;
     }
 
-    @media screen and (max-width: $respons-width-920) {
+    @media screen and (max-width: $breakpoint-width-920) {
       bottom: -550px;
     }
 
-    @media screen and (max-width: $respons-width-920) and (max-height: $responsive-height-814) {
+    @media screen and (max-width: $breakpoint-width-920) and (max-height: $responsive-height-814) {
       bottom: -575px;
     }
 
@@ -145,13 +145,13 @@ section {
     bottom: 280px;
   }
 
-  @media screen and (max-width: $respons-width-920) {
+  @media screen and (max-width: $breakpoint-width-920) {
     left: 50%;
     bottom: 105px;
     transform: translateX(-50%);
   }
 
-  @media screen and (max-width: $respons-width-920) and (max-height: $responsive-height-814) {
+  @media screen and (max-width: $breakpoint-width-920) and (max-height: $responsive-height-814) {
     bottom: clamp(80px, 118.3333px + -4.1667vw, 105px);
   }
 

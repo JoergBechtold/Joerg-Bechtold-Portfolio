@@ -27,7 +27,7 @@
     }
   }
 
-  @media screen and (max-width: $respons-width-920) {
+  @media screen and (max-width: $breakpoint-width-920) {
     width: 80px;
   }
 }

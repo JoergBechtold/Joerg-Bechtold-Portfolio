@@ -23,7 +23,7 @@ section {
   justify-content: center;
   min-height: 100dvh;
 
-  @media screen and (max-width: $respons-width-920) {
+  @media screen and (max-width: $breakpoint-width-920) {
     padding-top: $header-hight-responsive;
   }
 }

@@ -12,7 +12,7 @@ import {
 } from '@angular/router';
 import { ViewportScroller } from '@angular/common';
 import { filter } from 'rxjs/operators';
-import { AppRouteKeys, mainRoutes, routes, createLocalizedRoutes } from '../../../../app.routes';
+import { AppRouteKeys, mainRoutes, routes, createLocalizedRoutes } from '../../../../app.routes'; // Stellen Sie sicher, dass diese Pfade stimmen
 
 @Component({
   selector: 'app-navigation',
@@ -25,6 +25,7 @@ import { AppRouteKeys, mainRoutes, routes, createLocalizedRoutes } from '../../.
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss']
 })
+
 export class NavigationComponent implements OnInit {
   activeLanguage: string = 'de';
 
@@ -33,8 +34,10 @@ export class NavigationComponent implements OnInit {
 
   private isBrowser: boolean;
   private requestedFragment: string | null = null;
-  private readonly SCROLL_TIMEOUT_MS = 5; // Dein Wert, der gut funktioniert
-  private readonly maxWidthBreakpoint = 920;
+  // Der Timeout muss groß genug sein, damit Angular das DOM gerendert hat.
+  // 5ms ist oft zu kurz, besonders auf langsameren Geräten oder bei Bild-Last.
+  private readonly SCROLL_TIMEOUT_MS = 5; // Erhöht auf 100ms für Zuverlässigkeit
+
 
   constructor(
     private translate: TranslateService,
@@ -62,6 +65,7 @@ export class NavigationComponent implements OnInit {
 
     if (this.isBrowser) {
       // Abonnieren von Router-Events für Scroll-Wiederherstellung (z.B. Browser zurück)
+      // Dies ist für die normale Browser-Funktionalität (Back/Forward-Button)
       this.router.events.pipe(
         filter((event: RouterEvent): event is Scroll => event instanceof Scroll)
       ).subscribe((event: Scroll) => {
@@ -69,20 +73,24 @@ export class NavigationComponent implements OnInit {
           this.viewportScroller.scrollToPosition(event.position);
         } else if (event.anchor) {
           // Dies ist für direkte Navigation zu einer Fragment-URL oder Browser-Back/Forward
+          // Hier wird event.anchor direkt verwendet, was für den Browser-Verlauf gut ist.
           this.scrollToElementById(event.anchor);
         } else {
+          // Standardverhalten: Scrolle zum Seitenanfang, wenn keine Position/Anchor vorhanden
           this.viewportScroller.scrollToPosition([0, 0]);
         }
       });
 
-      // Abonnieren von NavigationEnd-Events für unser manuelles Scrollen bei unterschiedlicher Route
+      // Abonnieren von NavigationEnd-Events für unser manuelles Scrollen nach einer Router-Navigation.
+      // DIESER Teil ist entscheidend für das Scrollen NACHDEM wir über `this.router.navigate` eine neue URL gesetzt haben.
       this.router.events.pipe(
         filter((event: RouterEvent): event is NavigationEnd => event instanceof NavigationEnd)
       ).subscribe((event: NavigationEnd) => {
         if (this.requestedFragment) {
+          console.log(`NavigationEnd detected. Attempting to scroll to stored fragment: ${this.requestedFragment}`);
           setTimeout(() => {
             this.scrollToElementById(this.requestedFragment!);
-            this.requestedFragment = null;
+            this.requestedFragment = null; // Fragment zurücksetzen, nachdem gescrollt wurde
           }, this.SCROLL_TIMEOUT_MS);
         }
       });
@@ -90,7 +98,7 @@ export class NavigationComponent implements OnInit {
   }
 
   onCloseSidebar(): void {
-    console.log('NavigationComponent: onCloseSidebar called. Emitting closeSidebarRequest.'); // Hinzufügen
+    console.log('NavigationComponent: onCloseSidebar called. Emitting closeSidebarRequest.');
     this.closeSidebarRequest.emit();
   }
 
@@ -101,7 +109,7 @@ export class NavigationComponent implements OnInit {
    */
   async navigateToSection(appRouteKey: keyof typeof AppRouteKeys): Promise<void> {
     console.log('NavigationComponent: navigateToSection called with AppRouteKey:', appRouteKey);
-    console.log('NavigationComponent: isInSidebar is:', this.isInSidebar); // Hinzufügen
+    console.log('NavigationComponent: isInSidebar is:', this.isInSidebar);
 
     if (this.isInSidebar) {
       this.onCloseSidebar(); // Sidebar schließen, wenn im Sidebar-Modus
@@ -113,48 +121,70 @@ export class NavigationComponent implements OnInit {
     const targetMainRoute = mainRoutes.find(route => route.data?.['translationKey'] === translatedPathKey);
     const fragmentId = targetMainRoute?.data?.['fragmentId'];
 
-    const translatedPath = this.translate.instant(translatedPathKey);
+    const translatedPathSegment = this.translate.instant(translatedPathKey);
 
-    let navigationPathSegments: string[]; // Wird für den Router verwendet
-    let targetUrlPath: string; // Wird für den Vergleich verwendet
+    let navigationPathSegments: string[];
+    let targetUrlPath: string; // Die vollständige Ziel-URL (ohne Fragment)
 
-    if (appRouteKey === 'home' && translatedPath === '') {
+    if (appRouteKey === 'home' && translatedPathSegment === '') {
       navigationPathSegments = ['/', currentLang];
-      targetUrlPath = `/${currentLang}`; // Beispiel: /de
+      targetUrlPath = `/${currentLang}`;
     } else {
-      navigationPathSegments = ['/', currentLang, translatedPath];
-      targetUrlPath = `/${currentLang}/${translatedPath}`; // Beispiel: /de/faehigkeiten
+      navigationPathSegments = ['/', currentLang, translatedPathSegment];
+      targetUrlPath = `/${currentLang}/${translatedPathSegment}`;
     }
 
-    // Aktueller vollständiger Pfad der URL (ohne Fragment)
-    const currentUrlPath = this.router.url.split('#')[0];
+    const currentRouterUrl = this.router.url.split('#')[0]; // Aktueller Pfad ohne Fragment
 
-    // *** Wichtig: Hier die Logik anpassen ***
-    if (currentUrlPath === targetUrlPath) {
-      // Wir sind bereits auf dem gewünschten Pfad.
-      // Kein Router-Navigate, sondern direkt scrollen.
-      console.log(`Already on path '${targetUrlPath}'. Directly scrolling to '${fragmentId}'.`);
-      if (fragmentId) {
-        setTimeout(() => {
-          this.scrollToElementById(fragmentId);
-        }, this.SCROLL_TIMEOUT_MS);
-      }
-    } else {
-      // Pfade sind unterschiedlich, normale Navigation über den Router
+    console.log('--- Debugging navigateToSection ---');
+    console.log('targetAppRouteKey:', appRouteKey);
+    console.log('translatedPathKey (from AppRouteKeys):', translatedPathKey);
+    console.log('translatedPathSegment (translated):', translatedPathSegment);
+    console.log('fragmentId:', fragmentId);
+    console.log('targetUrlPath (calculated target):', targetUrlPath);
+    console.log('currentRouterUrl (Router.url without fragment):', currentRouterUrl);
+
+    // KERNLOGIK: Wenn der aktuelle Pfad NICHT dem Zielpfad entspricht, navigieren wir.
+    // Wenn er entspricht, scrollen wir direkt.
+    if (currentRouterUrl !== targetUrlPath) {
+      console.log(`Paths are different. Performing Router Navigation.`);
       const navigationExtras: NavigationExtras = {
         replaceUrl: true,
-        scrollPositionRestoration: 'top' // Bleibt auf 'top'
+        scrollPositionRestoration: 'disabled' // Ganz wichtig: Router soll NICHT automatisch scrollen
       } as NavigationExtras;
 
       try {
-        this.requestedFragment = fragmentId || null; // Fragment speichern
+        this.requestedFragment = fragmentId || null; // Fragment für NavigationEnd speichern
         await this.router.navigate(navigationPathSegments, navigationExtras);
-        console.log(`Mapsd to ${navigationPathSegments.join('/')}. Fragment '${fragmentId || 'none'}' will be scrolled after NavigationEnd.`);
+        console.log(`Router navigated to: ${navigationPathSegments.join('/')}. Fragment '${fragmentId || 'none'}' will be scrolled after NavigationEnd.`);
       } catch (err) {
         console.error('Navigation failed:', err);
         this.requestedFragment = null; // Im Fehlerfall zurücksetzen
       }
+    } else {
+      // Wir sind bereits auf dem gewünschten Pfad (z.B. von /de/ueber-mich zu /de/ueber-mich#skills)
+      console.log(`Already on path '${targetUrlPath}'. Directly scrolling to '${fragmentId}'.`);
+      if (fragmentId) {
+        setTimeout(() => {
+          this.scrollToElementById(fragmentId);
+        }, this.SCROLL_TIMEOUT_MS); // Verwende hier auch den erhöhten Timeout
+      } else {
+        // Fallback: Wenn keine Fragment-ID, aber gleiche URL, scrolle zum Seitenanfang
+        this.viewportScroller.scrollToPosition([0, 0]);
+      }
     }
+    console.log('--- End Debugging navigateToSection ---');
+  }
+
+  // Hilfsfunktion zum Auslesen einer CSS Custom Property
+  private getCssVariable(variableName: string): number {
+    if (!this.isBrowser) {
+      return 0; // Standardwert für SSR
+    }
+    const rootStyles = getComputedStyle(document.documentElement);
+    const value = rootStyles.getPropertyValue(variableName).trim();
+    const parsedValue = parseFloat(value.replace('px', ''));
+    return isNaN(parsedValue) ? 0 : parsedValue; // Sicherstellen, dass es eine Zahl ist
   }
 
   /**
@@ -166,18 +196,27 @@ export class NavigationComponent implements OnInit {
       return;
     }
 
+    const headerHeightDesktop = this.getCssVariable('--header-hight');
+    const headerHeightMobile = this.getCssVariable('--header-hight-responsive');
+    const breakpoint = this.getCssVariable('--breakpoint-width-920');
+
     let offset: number;
 
-    // Überprüfe die aktuelle Fensterbreite
-    if (window.innerWidth > this.maxWidthBreakpoint) {
-      offset = 110; // Für breite Bildschirme (z.B. Desktop)
+    if (window.innerWidth > breakpoint) {
+      offset = headerHeightDesktop;
     } else {
-      offset = 75;  // Für schmale Bildschirme (z.B. Mobile, Tablet)
+      offset = headerHeightMobile;
     }
 
-    this.viewportScroller.setOffset([0, offset]); // Beispiel: 60px Offset für einen festen Header
-    this.viewportScroller.scrollToAnchor(elementId);
-    console.log(`ViewportScroller attempted to scroll to anchor: ${elementId}`);
+    // ACHTUNG: setOffset erwartet ein Array [x, y], wobei y der vertikale Offset ist.
+    // Der Offset sollte negativ sein, um Platz für den Header zu lassen.
+    // D.h. wir wollen *über* das Element scrollen, nicht das Element *unter* den Header schieben.
+    this.viewportScroller.setOffset([0, offset]); // setOffset legt den *Abstand* vom oberen Rand fest, nicht den Scroll-Punkt selbst.
+    // Die Funktion scrollt dann zu `element.offsetTop - offset`.
+
+    this.viewportScroller.scrollToAnchor(elementId); // scrollToAnchor ist die korrekte Methode, um mit dem Offset zu scrollen.
+
+    console.log(`ViewportScroller attempted to scroll to anchor: ${elementId} with offset: ${offset} (D: ${headerHeightDesktop}, M: ${headerHeightMobile}, B: ${breakpoint})`);
   }
 
   async setLanguage(lang: string): Promise<void> {
@@ -243,7 +282,7 @@ export class NavigationComponent implements OnInit {
 
     const navigationExtras: NavigationExtras = {
       replaceUrl: true,
-      scrollPositionRestoration: 'disabled'
+      scrollPositionRestoration: 'disabled' // WICHTIG: Hier auch auf 'disabled' setzen!
     } as NavigationExtras;
 
     if (currentFragment) {

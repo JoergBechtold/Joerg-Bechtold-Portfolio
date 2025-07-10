@@ -5,7 +5,7 @@
 html {
   scrollbar-gutter: stable;
   background-color: $primary-bg-gray;
-  overflow-x: hidden;
+  // overflow-x: hidden;
 }
 
 body {
@@ -45,7 +45,7 @@ button {
   display: block;
 }
 
-@media screen and (max-width: $respons-width-920) {
+@media screen and (max-width: $breakpoint-width-920) {
   .hide-mobile {
     display: none;
   }
