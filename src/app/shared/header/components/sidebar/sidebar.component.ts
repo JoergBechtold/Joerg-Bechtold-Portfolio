@@ -19,7 +19,7 @@ export class SidebarComponent {
 
   // Methode, die aufgerufen wird, wenn die NavigationComponent ein Schließ-Event sendet
   handleNavigationCloseRequest(): void {
-    console.log('SidebarComponent: Received close request from NavigationComponent. Emitting to HeaderComponent.');
+
     this.closeSidebarEvent.emit(); // Emittiert das Event an den Header
   }
 }

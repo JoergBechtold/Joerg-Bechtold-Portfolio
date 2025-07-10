@@ -3,7 +3,7 @@
 @use "../../../app/shared/header/components/sidebar/sidebar.component.scss" as *;
 
 .header {
-  height: $header-hight;
+  height: var(--header-height);
   position: fixed;
   top: 0;
   left: 0;
@@ -15,7 +15,7 @@
   z-index: 10;
 
   @media screen and (max-width: $breakpoint-width-920) {
-    height: $header-hight-responsive;
+    height: var(--header-height-responsive);
   }
 }
 

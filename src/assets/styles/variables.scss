@@ -16,8 +16,8 @@ $padding-block-11-15: clamp(11px, calc(0.0025 * 100vw + 10.2px), 15px);
 $padding-inline-24-30: clamp(24px, 22.8px + 0.375vw, 30px);
 
 //header-hight
-$header-hight: 110px;
-$header-hight-responsive: 75px;
+// $header-hight: 110px;
+// $--header-height-responsive: 75px;
 
 //font-sizes
 $font-size-23: 23px;
@@ -38,9 +38,9 @@ $responsive-height-666: 666px;
 $distance-right-left-about-me: clamp(53px, -238.64px + 31.7vw, 370px);
 
 :root {
-  --header-hight: #{$header-hight};
-  --header-hight-responsive: #{$header-hight-responsive};
-  --breakpoint-width-920: #{$breakpoint-width-920};
+  --header-height: 110px;
+  --header-height-responsive: 75px;
+  --breakpoint-width-920: 920px;
 
   //animation time
   --animation-time-about-me: 0.7s;

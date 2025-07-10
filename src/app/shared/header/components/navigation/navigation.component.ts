@@ -158,8 +158,8 @@ export class NavigationComponent implements OnInit {
       return;
     }
 
-    const headerHeightDesktop = this.getCssVariable('--header-hight');
-    const headerHeightMobile = this.getCssVariable('--header-hight-responsive');
+    const headerHeightDesktop = this.getCssVariable('var(header-height)');
+    const headerHeightMobile = this.getCssVariable('var(header-height)-responsive');
     const breakpoint = this.getCssVariable('--breakpoint-width-920');
 
     let offset: number;

@@ -5,7 +5,7 @@ section {
   height: 100dvh;
   width: 100%;
   background-color: $primary-bg-gray;
-  padding-top: $header-hight;
+  padding-top: var(--header-height);
   position: relative;
   left: 0;
   right: 0;
@@ -13,7 +13,7 @@ section {
   @include dFlexAllCenter();
 
   @media screen and (max-width: $breakpoint-width-920) {
-    padding-top: $header-hight-responsive;
+    padding-top: var(--header-height-responsive);
   }
 }
 

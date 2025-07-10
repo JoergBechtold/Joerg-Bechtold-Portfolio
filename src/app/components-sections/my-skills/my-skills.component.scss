@@ -2,9 +2,7 @@
 @use "../../../assets/styles/mixins.scss" as *;
 
 section {
-  min-height: 100dvh;
-  width: 100%;
-  background-color: $primary-bg-gray;
+  @include commonSectionStyles();
 }
 
 .skills-section {

@@ -2,24 +2,7 @@
 @use "../../../assets/styles/mixins.scss" as *;
 
 section {
-  height: calc(100dvh - $header-hight);
-  width: 100%;
-  background-color: $primary-bg-gray;
-  @include dFlexAllCenter();
-
-  @media screen and (max-width: $breakpoint-width-920) {
-    padding-block: 50px;
-    height: unset;
-    padding-top: $header-hight-responsive;
-  }
-
-  @media screen and (max-height: $responsive-height-814) {
-    height: calc(100dvh - $header-hight-responsive);
-  }
-
-  @media screen and (max-height: $responsive-height-814) and (max-width: $breakpoint-width-920) {
-    height: unset;
-  }
+  @include commonSectionStyles();
 }
 
 p {
@@ -34,17 +17,16 @@ h1 {
 }
 
 .about-me-content {
-  max-width: $max-width-1920;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  overflow-x: clip;
-  @include dFlexAllCenter($jc: space-between);
+  @include commonContentStyle();
+  // max-width: $max-width-1920;
+  // width: 100%;
+  // height: 100%;
+  // position: relative;
+  // overflow-x: clip;
+  // @include dFlexAllCenter($jc: space-between);
 
   @media screen and (max-width: $breakpoint-width-920) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include dFlexAllCenter();
     height: auto;
   }
 
