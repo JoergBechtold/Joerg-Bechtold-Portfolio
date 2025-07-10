@@ -48,10 +48,6 @@ h1 {
     height: auto;
   }
 
-  // @media screen and (max-height: $responsive-height-814) {
-  //   padding-block: 15px;
-  // }
-
   > img {
     z-index: 3;
     position: absolute;
@@ -68,10 +64,6 @@ h1 {
   max-width: 475px;
   margin-left: clamp(0px, -50px + 15.625vw, 250px);
   margin-right: 20px;
-
-  // position: absolute;
-  // top: 50%;
-  // transform: translateY(-50%);
   left: $distance-right-left-about-me;
   @include dFlexAllCenter($ai: flex-start);
 
@@ -111,13 +103,7 @@ h1 {
 
 .content-right {
   z-index: 4;
-
-  // position: absolute;
-  // right: 0;
-  // top: 50%;
-  // transform: translateY(-50%);
-  display: flex;
-  align-items: center;
+  @include dFlexAllCenter();
   height: clamp(307px, 172.68px + 14.6vw, 453px);
 
   @media screen and (max-width: $breakpoint-width-920) {
