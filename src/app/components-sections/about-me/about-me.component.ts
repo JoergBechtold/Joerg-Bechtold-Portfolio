@@ -10,14 +10,13 @@ import { AnimateOnScrollDirective } from '../../shared/animation-on-scroll/anima
     imports: [
         TranslateModule,
         CommonModule,
-        AnimateOnScrollDirective // Füge die Direktive zu den Imports hinzu
+        AnimateOnScrollDirective
     ],
     templateUrl: './about-me.component.html',
     styleUrl: './about-me.component.scss'
 })
 export class AboutMeComponent extends BaseTranslatableComponent implements OnInit {
-    // Alle @ViewChild, animateLeft/Right Booleans und Observer-Logik können jetzt entfernt werden!
-    // Die Direktive übernimmt diese Aufgabe.
+
 
     constructor(protected override translate: TranslateService) {
         super(translate);

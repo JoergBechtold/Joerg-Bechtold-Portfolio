@@ -18,12 +18,6 @@ h1 {
 
 .about-me-content {
   @include commonContentStyle();
-  // max-width: $max-width-1920;
-  // width: 100%;
-  // height: 100%;
-  // position: relative;
-  // overflow-x: clip;
-  // @include dFlexAllCenter($jc: space-between);
 
   @media screen and (max-width: $breakpoint-width-920) {
     @include dFlexAllCenter();

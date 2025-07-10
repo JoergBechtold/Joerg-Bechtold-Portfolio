@@ -5,9 +5,94 @@ section {
   @include commonSectionStyles();
 }
 
-.skills-section {
-  max-width: $max-width-1920;
-  width: 100%;
-  height: 100%;
-  position: relative;
+.skills-content {
+  @include commonContentStyle();
+
+  > img {
+    z-index: 3;
+    position: absolute;
+    left: -565px;
+    bottom: -560px;
+    width: 870px;
+  }
+}
+
+.content-left {
+  width: 665px;
+  height: auto;
+  margin-left: clamp(0px, -50px + 15.625vw, 250px);
+}
+
+.skills-container {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(90px, 1fr));
+  gap: 88px;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.skill-item {
+  @include dFlexAllCenter($g: 10px);
+  flex-direction: column;
+  cursor: pointer;
+
+  > img {
+    width: 60px;
+    transition: transform 0.1s ease-out;
+  }
+
+  > p {
+    text-align: center;
+    @include fontSizeWeightColor($si: 16px, $we: 700);
+  }
+
+  &:hover {
+    > img {
+      transform: translateY(-10px);
+    }
+  }
+}
+
+.h1-vector-box {
+  @include dFlexAllCenter($jc: flex-end, $g: 32px);
+  width: 650px;
+
+  > h1 {
+    @include fontSizeWeightColor(
+      $si: clamp(45px, 36px + 2.8125vw, 90px),
+      $we: 700
+    );
+  }
+}
+
+.purple-vektor {
+  height: 4px;
+  width: 158px;
+  background-color: $primary-bg-purple;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.text-content {
+  margin-right: 150px;
+  @include dFlexAllCenter($ai: flex-end, $g: 24px);
+  flex-direction: column;
+
+  > p {
+    @include fontSizeWeightColor($si: 16px);
+  }
+
+  > h2 {
+    @include fontSizeWeightColor($si: 32px, $we: 700);
+
+    > span {
+      @include fontSizeWeightColor(
+        $si: 32px,
+        $we: 700,
+        $co: $primary-bg-purple
+      );
+    }
+  }
 }
