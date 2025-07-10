@@ -36,7 +36,7 @@ export class NavigationComponent implements OnInit {
 
   private isBrowser: boolean;
   private requestedFragment: string | null = null;
-  private savedScrollPosition: [number, number] | null = null; // Speichert die Scrollposition
+  private savedScrollPosition: [number, number] | null = null;
   private readonly SCROLL_TIMEOUT_MS = 5;
 
   constructor(
@@ -62,40 +62,26 @@ export class NavigationComponent implements OnInit {
       this.router.events.pipe(
         filter((event: RouterEvent): event is Scroll => event instanceof Scroll)
       ).subscribe((event: Scroll) => {
-        // Dieses Event wird ausgelöst, wenn Angular versucht, die Scroll-Position wiederherzustellen
-        // (z.B. bei Browser-Back/Forward). Wir lassen dies hier, da es für diesen Zweck nützlich ist.
         if (event.position) {
           this.viewportScroller.scrollToPosition(event.position);
         } else if (event.anchor) {
           this.scrollToElementById(event.anchor);
         }
-        // Wir wollen NICHT hier scrollToPosition([0,0]) aufrufen,
-        // da dies das "Nach-oben-Scrollen" verursachen würde, wenn keine explizite Position/Anchor vorhanden ist.
-        // Das manuelle Scrollen wird im NavigationEnd-Event gehandhabt.
       });
 
       this.router.events.pipe(
         filter((event: RouterEvent): event is NavigationEnd => event instanceof NavigationEnd)
       ).subscribe((event: NavigationEnd) => {
         if (this.requestedFragment) {
-          // Wenn ein Fragment angefragt wurde, scrolle dorthin
           setTimeout(() => {
             this.scrollToElementById(this.requestedFragment!);
-            this.requestedFragment = null; // Fragment zurücksetzen
+            this.requestedFragment = null;
           }, this.SCROLL_TIMEOUT_MS);
         } else if (this.savedScrollPosition) {
-          // Wenn eine gespeicherte Scroll-Position vorhanden ist (z.B. nach Sprachwechsel)
           setTimeout(() => {
             this.viewportScroller.scrollToPosition(this.savedScrollPosition!);
-            this.savedScrollPosition = null; // Position zurücksetzen
+            this.savedScrollPosition = null;
           }, this.SCROLL_TIMEOUT_MS);
-        } else {
-          // Wenn weder Fragment noch gespeicherte Position vorhanden sind,
-          // scrolle nach oben. Dies ist das Standardverhalten, wenn keine andere
-          // Scroll-Wiederherstellung gewünscht ist (z.B. bei erster Navigation).
-          // Sie können dies entfernen, wenn Sie *niemals* nach oben scrollen möchten,
-          // es sei denn, es ist ein Fragment oder eine gespeicherte Position vorhanden.
-          // this.viewportScroller.scrollToPosition([0, 0]);
         }
       });
     }
@@ -132,7 +118,6 @@ export class NavigationComponent implements OnInit {
     const currentRouterUrl = this.router.url.split('#')[0];
 
     if (currentRouterUrl !== targetUrlPath) {
-      // **Wichtig:** Speichern Sie die aktuelle Scrollposition, BEVOR Sie navigieren.
       if (this.isBrowser) {
         this.savedScrollPosition = this.viewportScroller.getScrollPosition();
       }
@@ -148,19 +133,13 @@ export class NavigationComponent implements OnInit {
       } catch (err) {
         console.error('Navigation failed:', err);
         this.requestedFragment = null;
-        this.savedScrollPosition = null; // Zurücksetzen bei Fehler
+        this.savedScrollPosition = null;
       }
     } else {
-      // Wenn wir auf der gleichen Seite sind, aber zu einem Fragment scrollen müssen
       if (fragmentId) {
         setTimeout(() => {
           this.scrollToElementById(fragmentId);
         }, this.SCROLL_TIMEOUT_MS);
-      } else {
-        // Wenn wir auf der gleichen Seite sind und kein Fragment haben,
-        // und wir wollen *nicht* nach oben scrollen, können Sie diese Zeile entfernen.
-        // Wenn Sie möchten, dass in diesem spezifischen Fall nach oben gescrollt wird, lassen Sie es.
-        // this.viewportScroller.scrollToPosition([0, 0]);
       }
     }
   }
@@ -201,43 +180,57 @@ export class NavigationComponent implements OnInit {
       return;
     }
 
-    // **Wichtig:** Speichern Sie die aktuelle Scrollposition, BEVOR Sie die Sprache ändern.
     if (this.isBrowser) {
       this.savedScrollPosition = this.viewportScroller.getScrollPosition();
     }
 
     let targetAppRouteKey: keyof typeof AppRouteKeys | undefined;
-    let currentFragment: string | null = null;
+    const currentFragment: string | null = this.activatedRoute.snapshot.fragment;
 
-    currentFragment = this.activatedRoute.snapshot.fragment;
+    const currentUrlParts = this.router.url.split('/');
+    const currentTranslatedSegment = currentUrlParts.length > 2 ? currentUrlParts[2].split('#')[0] : '';
 
-    let routeSnapshot = this.activatedRoute.snapshot;
-    while (routeSnapshot.firstChild) {
-      routeSnapshot = routeSnapshot.firstChild;
-    }
+    // NEU & KORRIGIERT: Abrufen der Übersetzungsdaten für die aktive Sprache
+    // Wir rufen die Übersetzungen für die *aktuelle* Sprache ab, um den Pfad zu identifizieren.
+    // Dies muss asynchron geschehen, da die Übersetzungen möglicherweise noch nicht geladen sind.
+    const currentTranslations = await this.translate.getTranslation(this.activeLanguage).toPromise();
 
-    for (const mainRoute of mainRoutes) {
-      if (mainRoute.component === routeSnapshot.component) {
-        const foundTranslationKeyValue = mainRoute.data?.['translationKey'];
 
-        for (const keyName of Object.keys(AppRouteKeys) as Array<keyof typeof AppRouteKeys>) {
-          if (AppRouteKeys[keyName] === foundTranslationKeyValue) {
-            targetAppRouteKey = keyName;
-            break;
-          }
-        }
-        if (targetAppRouteKey) {
+    for (const keyName of Object.keys(AppRouteKeys) as Array<keyof typeof AppRouteKeys>) {
+      const translationKeyForRoute = AppRouteKeys[keyName];
+
+      let currentTranslationValue: string | undefined = undefined;
+      const translationKeys = translationKeyForRoute.split('.');
+
+      let currentObj: any = currentTranslations;
+      for (const tKey of translationKeys) {
+        if (currentObj && typeof currentObj === 'object' && tKey in currentObj) {
+          currentObj = currentObj[tKey];
+        } else {
+          currentObj = undefined;
           break;
         }
+      }
+      if (typeof currentObj === 'string') {
+        currentTranslationValue = currentObj;
+      }
+
+      if (currentTranslationValue === currentTranslatedSegment) {
+        targetAppRouteKey = keyName;
+        break;
       }
     }
 
     if (!targetAppRouteKey) {
-      console.warn(`[NavigationComponent] Konnte keinen AppRouteKey für die aktuelle Komponente finden. Führe Fallback zur Home-Seite aus.`);
-      targetAppRouteKey = 'home';
+      if (currentTranslatedSegment === '') {
+        targetAppRouteKey = 'home';
+      } else {
+        console.warn(`[NavigationComponent] Konnte keinen AppRouteKey für den aktuellen URL-Pfad '${currentTranslatedSegment}' finden. Führe Fallback zur Home-Seite aus.`);
+        targetAppRouteKey = 'home';
+      }
     }
 
-    await this.translate.use(lang).toPromise();
+    await this.translate.use(lang).toPromise(); // Sprache wechseln
 
     const newLocalizedRoutes = createLocalizedRoutes(this.translate);
     const updatedRoutes = [...routes];
@@ -264,14 +257,10 @@ export class NavigationComponent implements OnInit {
 
     const navigationExtras: NavigationExtras = {
       replaceUrl: true,
-      scrollPositionRestoration: 'disabled'
+      scrollPositionRestoration: 'disabled',
+      fragment: currentFragment || undefined
     } as NavigationExtras;
 
-    if (currentFragment) {
-      navigationExtras.fragment = currentFragment;
-    }
-
-    // Hier navigieren wir. Die Wiederherstellung der Scrollposition wird dann im NavigationEnd-Abonnement ausgelöst.
     this.router.navigate(navigationPath, navigationExtras);
   }
 
