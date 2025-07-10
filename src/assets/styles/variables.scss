@@ -41,4 +41,8 @@ $distance-right-left-about-me: clamp(53px, -238.64px + 31.7vw, 370px);
   --header-hight: #{$header-hight};
   --header-hight-responsive: #{$header-hight-responsive};
   --breakpoint-width-920: #{$breakpoint-width-920};
+
+  //animation time
+  --animation-time-about-me: 0.8s;
+  --animation-delay-about-me: 0.2s;
 }

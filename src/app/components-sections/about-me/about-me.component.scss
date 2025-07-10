@@ -67,6 +67,14 @@ h1 {
   left: $distance-right-left-about-me;
   @include dFlexAllCenter($ai: flex-start);
 
+  opacity: 0;
+  transform: translateX(-100%);
+
+  &.animate {
+    animation: slideInLeft var(--animation-time-about-me) ease-out forwards;
+    animation-delay: var(--animation-delay-about-me);
+  }
+
   @media screen and (max-width: $breakpoint-width-920) {
     position: unset;
     transform: unset;
@@ -74,6 +82,12 @@ h1 {
     padding-inline: 25px;
     margin-left: unset;
     margin-right: unset;
+
+    // &.animate {
+    //   animation: none;
+    //   opacity: 1;
+    //   transform: none;
+    // }
   }
 
   @media screen and (max-height: $responsive-height-814) {
@@ -105,6 +119,14 @@ h1 {
   z-index: 4;
   @include dFlexAllCenter();
   height: clamp(307px, 172.68px + 14.6vw, 453px);
+
+  opacity: 0;
+  transform: translateX(100%);
+
+  &.animate {
+    animation: slideInRight var(--animation-time-about-me) forwards;
+    animation-delay: var(--animation-delay-about-me);
+  }
 
   @media screen and (max-width: $breakpoint-width-920) {
     display: none;
@@ -140,4 +162,48 @@ h1 {
   height: 4px;
   background-color: $primary-bg-green;
   flex: 1;
+}
+
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.1;
+  }
+
+  40% {
+    opacity: 0.2;
+  }
+
+  60% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.1;
+  }
+
+  40% {
+    opacity: 0.2;
+  }
+
+  60% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }

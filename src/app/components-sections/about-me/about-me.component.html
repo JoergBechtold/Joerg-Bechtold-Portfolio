@@ -1,7 +1,8 @@
-<section>
+<section #sectionElement>
     <div class="about-me-content">
         <img src="../../../assets/img/background/PURPLE-SHADOW-ABOUT-ME.svg" alt="">
-        <div class="content-left">
+
+        <div class="content-left" #contentLeftElement [class.animate]="animateLeft">
             <h1>{{ 'ABOUT_ME.HEADLINE' | translate }}</h1>
             <p> {{ 'ABOUT_ME.DESCRIPTION_PART1' | translate }}</p>
             <p> {{ 'ABOUT_ME.DESCRIPTION_PART2' | translate }}</p>
@@ -14,7 +15,6 @@
                 <div class="text-box">
                     <p> {{ 'ABOUT_ME.LOCATION' | translate }}</p>
                 </div>
-
             </div>
 
             <div class="info-block">
@@ -25,7 +25,6 @@
                 <div class="text-box">
                     <p> {{ 'ABOUT_ME.LEARNING' | translate }}</p>
                 </div>
-
             </div>
 
             <div class="info-block">
@@ -36,11 +35,10 @@
                 <div class="text-box">
                     <p> {{ 'ABOUT_ME.PROBLEM_SOLVING' | translate }}</p>
                 </div>
-
             </div>
         </div>
 
-        <div class="content-right">
+        <div class="content-right" #contentRightElement [class.animate]="animateRight">
             <div class="img-box">
                 <img src="../../../assets/img/profile-pictures/PROFILE_IMG_ABOUT_ME.png"
                     alt=" {{ 'ABOUT_ME.ALT_TEXT_IMG' | translate}}">
@@ -50,7 +48,6 @@
                 <div class="green-vektor">
                 </div>
             </div>
-
         </div>
     </div>
 </section>
