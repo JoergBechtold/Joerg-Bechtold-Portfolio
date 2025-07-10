@@ -41,3 +41,10 @@
   font-weight: $we;
   color: $co;
 }
+
+@mixin aboutMeAnimation($slideDirection: "", $transformStart: "") {
+  opacity: 0;
+  transform: $transformStart;
+  animation: $slideDirection var(--animation-time-about-me) ease-out forwards;
+  animation-delay: var(--animation-delay-about-me);
+}

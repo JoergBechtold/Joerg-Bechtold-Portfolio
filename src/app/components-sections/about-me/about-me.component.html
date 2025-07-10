@@ -1,8 +1,8 @@
-<section #sectionElement>
+<section appAnimateOnScroll>
     <div class="about-me-content">
         <img src="../../../assets/img/background/PURPLE-SHADOW-ABOUT-ME.svg" alt="">
 
-        <div class="content-left" #contentLeftElement [class.animate]="animateLeft">
+        <div class="content-left">
             <h1>{{ 'ABOUT_ME.HEADLINE' | translate }}</h1>
             <p> {{ 'ABOUT_ME.DESCRIPTION_PART1' | translate }}</p>
             <p> {{ 'ABOUT_ME.DESCRIPTION_PART2' | translate }}</p>
@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        <div class="content-right" #contentRightElement [class.animate]="animateRight">
+        <div class="content-right">
             <div class="img-box">
                 <img src="../../../assets/img/profile-pictures/PROFILE_IMG_ABOUT_ME.png"
                     alt=" {{ 'ABOUT_ME.ALT_TEXT_IMG' | translate}}">

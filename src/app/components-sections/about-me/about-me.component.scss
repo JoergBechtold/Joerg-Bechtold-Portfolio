@@ -70,11 +70,6 @@ h1 {
   opacity: 0;
   transform: translateX(-100%);
 
-  &.animate {
-    animation: slideInLeft var(--animation-time-about-me) ease-out forwards;
-    animation-delay: var(--animation-delay-about-me);
-  }
-
   @media screen and (max-width: $breakpoint-width-920) {
     position: unset;
     transform: unset;
@@ -82,12 +77,6 @@ h1 {
     padding-inline: 25px;
     margin-left: unset;
     margin-right: unset;
-
-    // &.animate {
-    //   animation: none;
-    //   opacity: 1;
-    //   transform: none;
-    // }
   }
 
   @media screen and (max-height: $responsive-height-814) {
@@ -123,11 +112,6 @@ h1 {
   opacity: 0;
   transform: translateX(100%);
 
-  &.animate {
-    animation: slideInRight var(--animation-time-about-me) forwards;
-    animation-delay: var(--animation-delay-about-me);
-  }
-
   @media screen and (max-width: $breakpoint-width-920) {
     display: none;
   }
@@ -162,6 +146,22 @@ h1 {
   height: 4px;
   background-color: $primary-bg-green;
   flex: 1;
+}
+
+section.animate {
+  .content-left {
+    @include aboutMeAnimation(
+      $slideDirection: "slideInLeft",
+      $transformStart: "translateX(-100%)"
+    );
+  }
+
+  .content-right {
+    @include aboutMeAnimation(
+      $slideDirection: "slideInRight",
+      $transformStart: "translateX(100%)"
+    );
+  }
 }
 
 @keyframes slideInLeft {
