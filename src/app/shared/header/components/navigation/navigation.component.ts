@@ -29,7 +29,6 @@ import { AppRouteKeys, mainRoutes, routes, createLocalizedRoutes } from '../../.
 export class NavigationComponent implements OnInit {
   activeLanguage: string = 'de';
 
-  @Input() windowWidth: number = window.innerWidth;
   @Input() isInSidebar: boolean = false;
   @Output() closeSidebarRequest = new EventEmitter<void>();
   @Output() navigateRequest = new EventEmitter<keyof typeof AppRouteKeys>();
@@ -165,7 +164,7 @@ export class NavigationComponent implements OnInit {
 
     let offset: number;
 
-    if (this.windowWidth > breakpoint) {
+    if (window.innerWidth > breakpoint) {
       offset = headerHeightDesktop;
     } else {
       offset = headerHeightMobile;
