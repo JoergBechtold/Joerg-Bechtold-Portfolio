@@ -9,11 +9,22 @@
 
   > nav {
     @include dFlexAllCenter($jc: space-between, $g: 92px);
+
+    @media screen and (max-width: $breakpoint-width-920) {
+      flex-direction: column;
+      // gap: 29px ;
+      @include dFlexAllCenter($g: 29px);
+    }
   }
 }
 
 .links-header {
   @include dFlexAllCenter($jc: space-between, $g: 29px);
+
+  @media screen and (max-width: $breakpoint-width-920) {
+    flex-direction: column;
+    align-items: center;
+  }
 
   > a {
     @include fontSizeWeightColor();
@@ -23,18 +34,15 @@
     &:hover {
       color: $primary-bg-green;
     }
+
+    &:nth-child(4) {
+      display: none;
+
+      @media screen and (max-width: $breakpoint-width-920) {
+        display: flex;
+      }
+    }
   }
-}
-
-.sidenav-layout {
-  display: flex;
-  flex-direction: column;
-  gap: 29px !important;
-}
-
-.sidenav-layout .links-header {
-  flex-direction: column;
-  align-items: center;
 }
 
 .language-btns {

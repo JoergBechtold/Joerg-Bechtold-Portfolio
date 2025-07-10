@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, Inject, PLATFORM_ID, output } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import {
@@ -29,14 +29,14 @@ import { AppRouteKeys, mainRoutes, routes, createLocalizedRoutes } from '../../.
 export class NavigationComponent implements OnInit {
   activeLanguage: string = 'de';
 
+  @Input() windowWidth: number = window.innerWidth;
   @Input() isInSidebar: boolean = false;
   @Output() closeSidebarRequest = new EventEmitter<void>();
 
   private isBrowser: boolean;
   private requestedFragment: string | null = null;
-  // Der Timeout muss groß genug sein, damit Angular das DOM gerendert hat.
-  // 5ms ist oft zu kurz, besonders auf langsameren Geräten oder bei Bild-Last.
-  private readonly SCROLL_TIMEOUT_MS = 5; // Erhöht auf 100ms für Zuverlässigkeit
+  private readonly SCROLL_TIMEOUT_MS = 5;
+
 
 
   constructor(
@@ -44,14 +44,9 @@ export class NavigationComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private viewportScroller: ViewportScroller,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
-  }
-
-  testEmitClose(): void {
-    console.log('NavigationComponent: testEmitClose called. Manually emitting closeSidebarRequest.');
-    this.closeSidebarRequest.emit();
   }
 
   ngOnInit(): void {
@@ -134,18 +129,8 @@ export class NavigationComponent implements OnInit {
       targetUrlPath = `/${currentLang}/${translatedPathSegment}`;
     }
 
-    const currentRouterUrl = this.router.url.split('#')[0]; // Aktueller Pfad ohne Fragment
+    const currentRouterUrl = this.router.url.split('#')[0];
 
-    console.log('--- Debugging navigateToSection ---');
-    console.log('targetAppRouteKey:', appRouteKey);
-    console.log('translatedPathKey (from AppRouteKeys):', translatedPathKey);
-    console.log('translatedPathSegment (translated):', translatedPathSegment);
-    console.log('fragmentId:', fragmentId);
-    console.log('targetUrlPath (calculated target):', targetUrlPath);
-    console.log('currentRouterUrl (Router.url without fragment):', currentRouterUrl);
-
-    // KERNLOGIK: Wenn der aktuelle Pfad NICHT dem Zielpfad entspricht, navigieren wir.
-    // Wenn er entspricht, scrollen wir direkt.
     if (currentRouterUrl !== targetUrlPath) {
       console.log(`Paths are different. Performing Router Navigation.`);
       const navigationExtras: NavigationExtras = {
@@ -162,8 +147,7 @@ export class NavigationComponent implements OnInit {
         this.requestedFragment = null; // Im Fehlerfall zurücksetzen
       }
     } else {
-      // Wir sind bereits auf dem gewünschten Pfad (z.B. von /de/ueber-mich zu /de/ueber-mich#skills)
-      console.log(`Already on path '${targetUrlPath}'. Directly scrolling to '${fragmentId}'.`);
+
       if (fragmentId) {
         setTimeout(() => {
           this.scrollToElementById(fragmentId);
@@ -173,24 +157,21 @@ export class NavigationComponent implements OnInit {
         this.viewportScroller.scrollToPosition([0, 0]);
       }
     }
-    console.log('--- End Debugging navigateToSection ---');
+
   }
 
-  // Hilfsfunktion zum Auslesen einer CSS Custom Property
+
   private getCssVariable(variableName: string): number {
     if (!this.isBrowser) {
-      return 0; // Standardwert für SSR
+      return 0;
     }
     const rootStyles = getComputedStyle(document.documentElement);
     const value = rootStyles.getPropertyValue(variableName).trim();
     const parsedValue = parseFloat(value.replace('px', ''));
-    return isNaN(parsedValue) ? 0 : parsedValue; // Sicherstellen, dass es eine Zahl ist
+    return isNaN(parsedValue) ? 0 : parsedValue;
   }
 
-  /**
-   * Hilfsfunktion zum Scrollen zu einem Element anhand seiner ID unter Verwendung von ViewportScroller.
-   * @param elementId Die ID des HTML-Elements, zu dem gescrollt werden soll.
-   */
+
   private scrollToElementById(elementId: string): void {
     if (!this.isBrowser) {
       return;
@@ -202,21 +183,14 @@ export class NavigationComponent implements OnInit {
 
     let offset: number;
 
-    if (window.innerWidth > breakpoint) {
+    if (this.windowWidth > breakpoint) {
       offset = headerHeightDesktop;
     } else {
       offset = headerHeightMobile;
     }
 
-    // ACHTUNG: setOffset erwartet ein Array [x, y], wobei y der vertikale Offset ist.
-    // Der Offset sollte negativ sein, um Platz für den Header zu lassen.
-    // D.h. wir wollen *über* das Element scrollen, nicht das Element *unter* den Header schieben.
-    this.viewportScroller.setOffset([0, offset]); // setOffset legt den *Abstand* vom oberen Rand fest, nicht den Scroll-Punkt selbst.
-    // Die Funktion scrollt dann zu `element.offsetTop - offset`.
-
-    this.viewportScroller.scrollToAnchor(elementId); // scrollToAnchor ist die korrekte Methode, um mit dem Offset zu scrollen.
-
-    console.log(`ViewportScroller attempted to scroll to anchor: ${elementId} with offset: ${offset} (D: ${headerHeightDesktop}, M: ${headerHeightMobile}, B: ${breakpoint})`);
+    this.viewportScroller.setOffset([0, offset]);
+    this.viewportScroller.scrollToAnchor(elementId);
   }
 
   async setLanguage(lang: string): Promise<void> {

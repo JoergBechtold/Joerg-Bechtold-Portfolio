@@ -1,10 +1,10 @@
 <div class="nav-content-box">
-    <nav [ngClass]="{'sidenav-layout': isInSidebar}">
+    <nav>
         <div class="links-header">
             <a (click)="navigateToSection('aboutMe')">{{ 'HEADER.ABOUT_ME' | translate }}</a>
             <a (click)="navigateToSection('skills')">{{ 'HEADER.SKILLS' | translate }}</a>
             <a (click)="navigateToSection('portfolio')">{{ 'HEADER.PORTFOLIO' | translate }}</a>
-            <a (click)="navigateToSection('contact')" [hidden]="!isInSidebar">{{ 'HEADER.CONTACT' | translate}}</a>
+            <a (click)="navigateToSection('contact')">{{ 'HEADER.CONTACT' | translate}}</a>
         </div>
 
         <div class="language-btns">
