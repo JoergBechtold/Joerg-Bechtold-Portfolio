@@ -3,7 +3,6 @@
 
         <img src="../../../assets/img/background/GREEN-SHADOW-SKILLS.png" alt="">
 
-
         <div class="content-left">
             <div class="skills-container">
                 <div *ngFor="let singleSkill of skillsdata.skillsBox" class="skill-item">
@@ -14,30 +13,32 @@
             </div>
         </div>
 
-        <div class="content-right">
-            <div class="h1-box">
+        <div class="headline-box-grid-item">
+            <div class="h1-p">
                 <h1 [ngClass]="{ 'font-size-de': activeLanguage === 'de' }">{{ 'MY_SKILLS.HEADLINE' | translate }}</h1>
                 <p>{{ 'MY_SKILLS.DESCRIPTION_SKILLS' | translate }}</p>
             </div>
 
-            <div class="purple-vector-grid-item">
+            <div [ngClass]="{ 'translate-up': activeLanguage === 'de' }" class="purple-vector-grid-item">
                 <div class="purple-vektor"></div>
             </div>
 
-            <div class="text-box-grid-item">
-                <div class="text-content">
-                    <h2>
-                        {{ 'MY_SKILLS.UNDERHEADLINE_PART_1' | translate }}
-                        <span>{{ 'MY_SKILLS.UNDERHEADLINE_PART_2' | translate }}</span>?
-                    </h2>
+            <div class="placeholder-headline-box"></div>
+        </div>
 
-                    <p>{{ 'MY_SKILLS.DESCRIPTION_LEARNING_ENTHUSIASM' | translate }}</p>
+        <div class="text-box-grid-item">
+            <div class="text-content">
+                <h2>
+                    {{ 'MY_SKILLS.UNDERHEADLINE_PART_1' | translate }}
+                    <span>{{ 'MY_SKILLS.UNDERHEADLINE_PART_2' | translate }}</span>?
+                </h2>
 
-                    <button>{{ 'MY_SKILLS.BUTTON' | translate }}</button>
-                </div>
+                <p>{{ 'MY_SKILLS.DESCRIPTION_LEARNING_ENTHUSIASM' | translate }}</p>
+
+                <button>{{ 'MY_SKILLS.BUTTON' | translate }}</button>
             </div>
 
-            <div class="placeholder-box"></div>
+            <div class="placeholder-text-content"></div>
         </div>
     </div>
 </section>
