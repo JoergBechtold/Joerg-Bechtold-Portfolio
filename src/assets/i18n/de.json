@@ -10,8 +10,7 @@
     "LANGUAGE_DE": "Deutsch",
     "LANGUAGE_EN": "Englisch"
   },
-  "MAIN": {
-  },
+  "MAIN": {},
 
   "ABOUT_ME": {
     "HEADLINE": "Über mich",
@@ -26,8 +25,14 @@
     "ALT_TEXT_PUZZLE_ICON": "puzzle icon"
   },
 
-  "MY_SKILLS":{
-     "SKILL_ICON_ALT": "Icon für die Fähigkeit: {{ skillName }}"
+  "MY_SKILLS": {
+    "SKILL_ICON_ALT": "Icon für die Fähigkeit: {{ skillName }}",
+    "HEADLINE": "Meine Fähigkeiten",
+    "UNDERHEADLINE_PART_1": "Auf der Suche nach ",
+    "UNDERHEADLINE_PART_2": "weiteren Fähigkeiten",
+    "DESCRIPTION_SKILLS": "Zeigen Sie, dass Sie eine Vielzahl von Frontend-Technologien in Ihren Projekten eingesetzt haben.",
+    "DESCRIPTION_LEARNING_ENTHUSIASM": "Zeigen Sie Begeisterung für das Erlernen neuer Technologien und Frameworks.",
+    "BUTTON": "Kontakt aufnehmen"
   },
 
   "LINK": {
@@ -48,15 +53,15 @@
   },
 
   "ROUTES": {
-  "HOME": "",
-  "ABOUT_ME": "ueber-mich", 
-  "SKILLS": "faehigkeiten",   
-  "PORTFOLIO": "portfolio", 
-  "CONTACT": "kontakt",    
-  "PRIVACY_POLICY": "datenschutzerklaerung",
-  "LEGAL_NOTICE": "impressum",
-  "NOT_FOUND": "seite-nicht-gefunden"
-},
+    "HOME": "",
+    "ABOUT_ME": "ueber-mich",
+    "SKILLS": "faehigkeiten",
+    "PORTFOLIO": "portfolio",
+    "CONTACT": "kontakt",
+    "PRIVACY_POLICY": "datenschutzerklaerung",
+    "LEGAL_NOTICE": "impressum",
+    "NOT_FOUND": "seite-nicht-gefunden"
+  },
 
   "PAGE_NOT_FOUND": {
     "TITLE": "404 - Seite nicht gefunden",

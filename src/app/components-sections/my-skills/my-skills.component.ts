@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { BaseTranslatableComponent } from '../../shared/base/base.component';
 import { SkillsdataService } from '../../services/skills/skillsdata.service';
+import { AnimateOnScrollDirective } from '../../shared/animation-on-scroll/animate-on-scroll.directive';
 
 @Component({
     selector: 'app-my-skills',
     standalone: true,
-    imports: [CommonModule, TranslateModule],
+    imports: [CommonModule, TranslateModule, AnimateOnScrollDirective],
     templateUrl: './my-skills.component.html',
     styleUrl: './my-skills.component.scss'
 })

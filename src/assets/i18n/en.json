@@ -11,9 +11,8 @@
     "LANGUAGE_EN": "English"
   },
 
-  "MAIN": {
-  },
-  
+  "MAIN": {},
+
   "ABOUT_ME": {
     "HEADLINE": "About me",
     "DESCRIPTION_PART1": "Write some information about yourself that is IT related",
@@ -27,8 +26,14 @@
     "ALT_TEXT_PUZZLE_ICON": "puzzle icon"
   },
 
-  "MY_SKILLS":{
-    "SKILL_ICON_ALT": "Icon for skill: {{ skillName }}"
+  "MY_SKILLS": {
+    "SKILL_ICON_ALT": "Icon for skill: {{ skillName }}",
+    "HEADLINE": "My skills",
+    "UNDERHEADLINE_PART_1": "Looking for ",
+    "UNDERHEADLINE_PART_2": "another skill",
+    "DESCRIPTION_SKILLS": "Show that you have used a variety of front-end technologies in your projects.",
+    "DESCRIPTION_LEARNING_ENTHUSIASM": "Reveal enthusiasm for learning new technologies and frameworks.",
+    "BUTTON": "Get in touch"
   },
 
   "LINK": {
@@ -49,15 +54,15 @@
   },
 
   "ROUTES": {
-  "HOME": "",
-  "ABOUT_ME": "about-me",
-  "SKILLS": "skills",
-  "PORTFOLIO": "portfolio",
-  "CONTACT": "contact",
-  "PRIVACY_POLICY": "privacy-policy",
-  "LEGAL_NOTICE": "legal-notice",
-  "NOT_FOUND": "page-not-found"
-},
+    "HOME": "",
+    "ABOUT_ME": "about-me",
+    "SKILLS": "skills",
+    "PORTFOLIO": "portfolio",
+    "CONTACT": "contact",
+    "PRIVACY_POLICY": "privacy-policy",
+    "LEGAL_NOTICE": "legal-notice",
+    "NOT_FOUND": "page-not-found"
+  },
 
   "PAGE_NOT_FOUND": {
     "TITLE": "404 - Page not found",
