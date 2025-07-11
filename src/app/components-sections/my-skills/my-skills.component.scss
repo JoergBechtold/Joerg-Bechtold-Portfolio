@@ -27,6 +27,7 @@ section {
   display: grid;
   grid-template-columns: repeat(4, minmax(90px, 1fr));
   gap: 88px;
+  overflow-x: clip;
   justify-content: center;
   align-items: center;
   max-width: 100%;
@@ -57,13 +58,18 @@ section {
 
 .h1-vector-box {
   @include dFlexAllCenter($jc: flex-end, $g: 32px);
-  width: 650px;
+  // width: 650px;
 
   > h1 {
+    white-space: nowrap;
     @include fontSizeWeightColor(
       $si: clamp(45px, 36px + 2.8125vw, 90px),
       $we: 700
     );
+  }
+
+  > h1.font-size-de {
+    font-size: clamp(32px, 23.4px + 2.6875vw, 75px);
   }
 }
 
@@ -75,8 +81,14 @@ section {
   border-bottom-left-radius: 4px;
 }
 
+.text-box {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 32px;
+}
+
 .text-content {
-  margin-right: 150px;
   @include dFlexAllCenter($ai: flex-end, $g: 24px);
   flex-direction: column;
 
@@ -86,8 +98,10 @@ section {
 
   > h2 {
     @include fontSizeWeightColor($si: 32px, $we: 700);
+    white-space: nowrap;
 
     > span {
+      white-space: nowrap;
       @include fontSizeWeightColor(
         $si: 32px,
         $we: 700,
@@ -95,4 +109,13 @@ section {
       );
     }
   }
+
+  > button {
+    @include primaryButton(top, right);
+  }
+}
+
+.placeholder-box {
+  width: 158px;
+  height: -webkit-fill-available;
 }

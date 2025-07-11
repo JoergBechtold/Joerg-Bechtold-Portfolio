@@ -126,19 +126,7 @@ section {
   z-index: 5;
 
   > button {
-    border-radius: 10px;
-    padding: $padding-block-11-15 $padding-inline-24-30 $padding-block-11-15
-      $padding-inline-24-30;
-    background-color: $primary-bg-green;
-    @include fontSizeWeightColor($si: clamp(18px, 17px + 0.3125vw, 23px));
-    transition: all 0.3s ease-in-out;
-    transform-origin: top center;
-    box-shadow: 4px 4px 4px 0px #00000040;
-
-    &:hover {
-      background-color: $primary-bg-purple;
-      transform: scale(1.2);
-    }
+    @include primaryButton(top, center);
   }
 
   @media screen and (max-height: $responsive-height-814) {

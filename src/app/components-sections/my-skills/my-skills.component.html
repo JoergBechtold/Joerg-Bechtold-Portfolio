@@ -16,14 +16,14 @@
 
 
         <div class="content-right">
-            <div class="text-box">
 
-                <div class="h1-vector-box">
-                    <h1>{{ 'MY_SKILLS.HEADLINE' | translate }}</h1>
-                    <div class="purple-vektor">
-                    </div>
+            <div class="h1-vector-box">
+                <h1 [ngClass]="{ 'font-size-de': activeLanguage === 'de' }">{{ 'MY_SKILLS.HEADLINE' | translate }}</h1>
+                <div class="purple-vektor">
                 </div>
+            </div>
 
+            <div class="text-box">
                 <div class="text-content">
                     <p>{{ 'MY_SKILLS.DESCRIPTION_SKILLS' | translate }}</p>
 
@@ -36,14 +36,8 @@
                     <button>{{ 'MY_SKILLS.BUTTON' | translate }}</button>
                 </div>
 
-
+                <div class="placeholder-box"></div>
             </div>
-
-
         </div>
     </div>
-
-
-
-
 </section>
