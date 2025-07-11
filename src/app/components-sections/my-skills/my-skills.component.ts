@@ -8,7 +8,7 @@ import { AnimateOnScrollDirective } from '../../shared/animation-on-scroll/anima
 @Component({
     selector: 'app-my-skills',
     standalone: true,
-    imports: [CommonModule, TranslateModule],
+    imports: [CommonModule, TranslateModule, AnimateOnScrollDirective],
     templateUrl: './my-skills.component.html',
     styleUrl: './my-skills.component.scss'
 })

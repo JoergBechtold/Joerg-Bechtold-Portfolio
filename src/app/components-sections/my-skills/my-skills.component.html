@@ -1,17 +1,25 @@
-<section>
+<section appAnimateOnScroll>
     <div class="skills-content">
 
         <img src="../../../assets/img/background/GREEN-SHADOW-SKILLS.png" alt="">
 
         <div class="content-left">
             <div class="skills-items-container">
-                <div *ngFor="let singleSkill of skillsdata.skillsBox" class="skill-item">
+                <div *ngFor="let singleSkill of skillsdata.skillsBox; let i = index"
+                    [style.--animation-delay]="i * 0.1 + 's'" class=" skill-item">
                     <img [src]="singleSkill.img"
                         [alt]="'MY_SKILLS.SKILL_ICON_ALT' | translate: { skillName: singleSkill.name }">
                     <p> {{ singleSkill.name }}</p>
                 </div>
             </div>
         </div>
+
+
+
+
+
+
+
 
         <div class="headline-box-grid-item">
             <div class="h1-p">

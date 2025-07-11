@@ -49,6 +49,13 @@
   animation-delay: var(--animation-delay-about-me);
 }
 
+@mixin skillItemAnimation($startTransform) {
+  opacity: 0;
+  transform: $startTransform; // Startposition für die Animation
+  animation: slideInDiagonal var(--animation-time-about-me) ease-out forwards; // animation: Name Dauer Timing Function Füllmodus
+  animation-delay: var(--animation-delay);
+}
+
 @mixin commonSectionStyles() {
   height: calc(100dvh - var(--header-height));
   width: 100%;

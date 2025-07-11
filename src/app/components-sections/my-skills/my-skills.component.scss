@@ -40,7 +40,7 @@ section {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
   gap: clamp(0px, -46.9333px + 14.6667vw, 88px);
-  overflow-x: clip;
+  // overflow-x: clip;
   justify-content: center;
   align-items: center;
   max-width: 100%;
@@ -52,6 +52,8 @@ section {
   @include dFlexAllCenter($g: 10px);
   flex-direction: column;
   cursor: pointer;
+  opacity: 0;
+  transform: translate(-100%, 100%);
 
   > img {
     width: clamp(48px, 41.6px + 2vw, 60px);
@@ -68,6 +70,33 @@ section {
       transform: translateY(-10px);
     }
   }
+
+  @keyframes slideInDiagonal {
+    0% {
+      opacity: 0;
+      transform: translate(-100%, 100%);
+    }
+    20% {
+      opacity: 0.1;
+    }
+
+    40% {
+      opacity: 0.2;
+    }
+
+    60% {
+      opacity: 0.3;
+    }
+
+    100% {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+  }
+}
+
+section.animate .skill-item {
+  @include skillItemAnimation(translate(-100%, 100%));
 }
 
 .headline-box-grid-item {
