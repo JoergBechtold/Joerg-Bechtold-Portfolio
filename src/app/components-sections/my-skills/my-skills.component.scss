@@ -71,32 +71,65 @@ section {
     }
   }
 
-  @keyframes slideInDiagonal {
-    0% {
-      opacity: 0;
-      transform: translate(-100%, 100%);
-    }
-    20% {
-      opacity: 0.1;
-    }
+  // @keyframes slideInDiagonal {
+  //   0% {
+  //     opacity: 0;
+  //     transform: translate(-100%, 100%);
+  //   }
+  //   20% {
+  //     opacity: 0.1;
+  //   }
 
-    40% {
-      opacity: 0.2;
-    }
+  //   40% {
+  //     opacity: 0.2;
+  //   }
 
-    60% {
-      opacity: 0.3;
-    }
+  //   60% {
+  //     opacity: 0.3;
+  //   }
 
-    100% {
-      opacity: 1;
-      transform: translate(0, 0);
-    }
+  //   100% {
+  //     opacity: 1;
+  //     transform: translate(0, 0);
+  //   }
+  // }
+}
+
+section.animate {
+  .skill-item {
+    // Rufe das allgemeine Animations-Mixin auf und gib die Startposition mit
+    @include applySlideAnimation(translate(-100%, 100%));
+    // Die animation-delay wird hier vom Angular-Template ([style.--animation-delay]) überschrieben
+  }
+
+  .headline-box-grid-item,
+  .text-box-grid-item {
+    // Rufe das allgemeine Animations-Mixin auf und gib die andere Startposition mit
+    @include applySlideAnimation(translate(100%, -100%));
+    // animation-delay wird hier standardmäßig von --animation-delay-about-me kommen
+    // oder dem Fallback im Mixin
   }
 }
 
-section.animate .skill-item {
-  @include skillItemAnimation(translate(-100%, 100%));
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    // Nutze die CSS-Variable, die von @mixin applySlideAnimation gesetzt wird
+    transform: var(--animation-start-transform);
+  }
+  20% {
+    opacity: 0.1;
+  }
+  40% {
+    opacity: 0.2;
+  }
+  60% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0); // Endposition ist immer 0,0
+  }
 }
 
 .headline-box-grid-item {
@@ -111,6 +144,8 @@ section.animate .skill-item {
   gap: 20px;
   align-items: flex-end;
   justify-content: flex-end;
+  opacity: 0;
+  transform: translate(100%, -100%);
 }
 
 .h1-p {
@@ -166,6 +201,8 @@ section.animate .skill-item {
   align-items: flex-start;
   height: 100%;
   gap: 20px;
+  opacity: 0;
+  transform: translate(100%, -100%);
 }
 
 .text-content {

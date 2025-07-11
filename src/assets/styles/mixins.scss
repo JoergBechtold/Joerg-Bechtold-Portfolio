@@ -49,12 +49,59 @@
   animation-delay: var(--animation-delay-about-me);
 }
 
-@mixin skillItemAnimation($startTransform) {
-  opacity: 0;
-  transform: $startTransform; // Startposition für die Animation
-  animation: slideInDiagonal var(--animation-time-about-me) ease-out forwards; // animation: Name Dauer Timing Function Füllmodus
-  animation-delay: var(--animation-delay);
+@mixin applySlideAnimation($animationStartTransform) {
+  opacity: 0; // Initial unsichtbar
+
+  // Setze eine CSS-Variable auf dem Element für die Start-Transformation
+  // Wichtig: #{$animationStartTransform} für Interpolation der Funktion
+  --animation-start-transform: #{$animationStartTransform};
+
+  // Nutze die Animation, die global definiert wird (siehe unten)
+  animation: slideIn var(--animation-time-skills) ease-out forwards;
+
+  // Die animation-delay kommt entweder von Angular (skill-item) oder von einer globalen Variable
+  animation-delay: var(--animation-delay, var(--animation-delay-about-me, 0s));
+  // Der erste Fallback ist für Angular-spezifisches Delay, der zweite für einen generellen Fallback
 }
+
+// @mixin skillItemAnimation($startTransform) {
+//   opacity: 0;
+//   transform: $startTransform; // Startposition für die Animation
+//   animation: slideInDiagonal var(--animation-time-about-me) ease-out forwards; // animation: Name Dauer Timing Function Füllmodus
+//   animation-delay: var(--animation-delay);
+// }
+
+// @mixin skillRightContentAnimation($startTransform) {
+//   opacity: 0;
+//   transform: $startTransform; // Startposition für die Animation
+//   animation: slideInDiagonal var(--animation-time-about-me) ease-out forwards; // animation: Name Dauer Timing Function Füllmodus
+//   animation-delay: var(--animation-delay-about-me);
+// }
+
+// @mixin slideInDiagonal($startTransform) {
+//   @keyframes slideInDiagonal {
+//     0% {
+//       opacity: 0;
+//       transform: $startTransform;
+//     }
+//     20% {
+//       opacity: 0.1;
+//     }
+
+//     40% {
+//       opacity: 0.2;
+//     }
+
+//     60% {
+//       opacity: 0.3;
+//     }
+
+//     100% {
+//       opacity: 1;
+//       transform: translate(0, 0);
+//     }
+//   }
+// }
 
 @mixin commonSectionStyles() {
   height: calc(100dvh - var(--header-height));
