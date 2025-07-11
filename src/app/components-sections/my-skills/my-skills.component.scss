@@ -35,7 +35,7 @@ section {
 }
 
 .skill-item {
-  @include dFlexAllCenter($g: 10px);
+  @include dFlexAllCenter($g: 10);
   flex-direction: column;
   cursor: pointer;
 
@@ -56,21 +56,70 @@ section {
   }
 }
 
-.h1-vector-box {
-  @include dFlexAllCenter($jc: flex-end, $g: 32px);
-  // width: 650px;
+.content-right {
+  display: grid;
+  // Definiere die Bereiche für das Grid
+  grid-template-areas:
+    "headline vector"
+    "text-area placeholder";
+  grid-template-columns: 1fr auto; // headline/text-area nimmt verfügbaren Platz, vector/placeholder passt sich dem Inhalt an
+  grid-template-rows: auto auto; // Zeilen passen sich dem Inhalt an
+  gap: 20px; // Optional: Abstand zwischen den Grid-Items anpassen
+  align-items: center; // Vertikale Ausrichtung der Grid-Items (Headline und Vector) wird zentriert
+}
 
-  > h1 {
-    white-space: nowrap;
-    @include fontSizeWeightColor(
-      $si: clamp(45px, 36px + 2.8125vw, 90px),
-      $we: 700
-    );
-  }
+// Zuweisung der Grid-Bereiche zu den HTML-Elementen
+.h1-box {
+  grid-area: headline; // Platziert die H1 und den neuen P-Text im Bereich "headline"
+  @include dFlexAllCenter(
+    $ai: flex-end,
+    $g: 24px
+  ); // Flex-Container für H1 und P
+  flex-direction: column; // Damit H1 und P untereinander stehen
+  justify-content: flex-end; // Schiebt den gesamten Box-Inhalt nach rechts
+  // Kein `align-items: center;` hier, da dies jetzt ein Flex-Container ist
+  // und wir die Elemente innerhalb des `h1-box` anders ausrichten.
+}
 
-  > h1.font-size-de {
-    font-size: clamp(32px, 23.4px + 2.6875vw, 75px);
-  }
+.purple-vector-grid-item {
+  grid-area: vector; // Platziert den Vektor im Bereich "vector"
+  display: flex;
+  align-items: center; // Zentriert den Vektor vertikal zur Headline-Box
+  justify-content: flex-start;
+  height: 100%; // Stellt sicher, dass es die volle Höhe der Zelle einnimmt für align-items
+}
+
+.text-box-grid-item {
+  grid-area: text-area; // Platziert den Text im Bereich "text-area"
+  display: flex;
+  justify-content: flex-end; // Ausrichtung an der rechten Seite der Zelle
+  align-items: center;
+}
+
+.placeholder-box {
+  grid-area: placeholder; // Platziert den Platzhalter im Bereich "placeholder"
+  width: 158px; // Behält die Breite bei
+  // height: -webkit-fill-available; // Kann beibehalten werden oder flexibel sein
+}
+
+.h1-box > h1 {
+  white-space: nowrap;
+  @include fontSizeWeightColor(
+    $si: clamp(45px, 36px + 2.8125vw, 90px),
+    $we: 700
+  );
+  // Wenn du einen Abstand zwischen H1 und P im h1-box willst, kannst du hier margin-bottom hinzufügen
+  // margin-bottom: 16px;
+}
+
+.h1-box > h1.font-size-de {
+  font-size: clamp(32px, 23.4px + 2.6875vw, 75px);
+}
+
+.h1-box > p {
+  // Neue Regel für das P-Element im h1-box
+  @include fontSizeWeightColor($si: 16px);
+  text-align: right; // Passend zur Ausrichtung des h1-box
 }
 
 .purple-vektor {
@@ -79,13 +128,6 @@ section {
   background-color: $primary-bg-purple;
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
-}
-
-.text-box {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 32px;
 }
 
 .text-content {
@@ -113,9 +155,4 @@ section {
   > button {
     @include primaryButton(top, right);
   }
-}
-
-.placeholder-box {
-  width: 158px;
-  height: -webkit-fill-available;
 }
