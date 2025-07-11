@@ -40,7 +40,6 @@ section {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
   gap: clamp(0px, -46.9333px + 14.6667vw, 88px);
-  // overflow-x: clip;
   justify-content: center;
   align-items: center;
   max-width: 100%;
@@ -70,51 +69,22 @@ section {
       transform: translateY(-10px);
     }
   }
-
-  // @keyframes slideInDiagonal {
-  //   0% {
-  //     opacity: 0;
-  //     transform: translate(-100%, 100%);
-  //   }
-  //   20% {
-  //     opacity: 0.1;
-  //   }
-
-  //   40% {
-  //     opacity: 0.2;
-  //   }
-
-  //   60% {
-  //     opacity: 0.3;
-  //   }
-
-  //   100% {
-  //     opacity: 1;
-  //     transform: translate(0, 0);
-  //   }
-  // }
 }
 
 section.animate {
   .skill-item {
-    // Rufe das allgemeine Animations-Mixin auf und gib die Startposition mit
     @include applySlideAnimation(translate(-100%, 100%));
-    // Die animation-delay wird hier vom Angular-Template ([style.--animation-delay]) überschrieben
   }
 
   .headline-box-grid-item,
   .text-box-grid-item {
-    // Rufe das allgemeine Animations-Mixin auf und gib die andere Startposition mit
     @include applySlideAnimation(translate(100%, -100%));
-    // animation-delay wird hier standardmäßig von --animation-delay-about-me kommen
-    // oder dem Fallback im Mixin
   }
 }
 
 @keyframes slideIn {
   0% {
     opacity: 0;
-    // Nutze die CSS-Variable, die von @mixin applySlideAnimation gesetzt wird
     transform: var(--animation-start-transform);
   }
   20% {
@@ -128,7 +98,7 @@ section.animate {
   }
   100% {
     opacity: 1;
-    transform: translate(0, 0); // Endposition ist immer 0,0
+    transform: translate(0, 0);
   }
 }
 
