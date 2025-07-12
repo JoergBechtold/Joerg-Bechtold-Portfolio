@@ -25,7 +25,6 @@ import { AppRouteKeys, mainRoutes, routes, createLocalizedRoutes } from '../../.
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss']
 })
-
 export class NavigationComponent implements OnInit {
   activeLanguage: string = 'de';
 
@@ -34,7 +33,6 @@ export class NavigationComponent implements OnInit {
   @Output() navigateRequest = new EventEmitter<keyof typeof AppRouteKeys>();
 
   private isBrowser: boolean;
-  private requestedFragment: string | null = null;
   private savedScrollPosition: [number, number] | null = null;
   private readonly SCROLL_TIMEOUT_MS = 5;
 
@@ -67,22 +65,6 @@ export class NavigationComponent implements OnInit {
           this.scrollToElementById(event.anchor);
         }
       });
-
-      this.router.events.pipe(
-        filter((event: RouterEvent): event is NavigationEnd => event instanceof NavigationEnd)
-      ).subscribe((event: NavigationEnd) => {
-        if (this.requestedFragment) {
-          setTimeout(() => {
-            this.scrollToElementById(this.requestedFragment!);
-            this.requestedFragment = null;
-          }, this.SCROLL_TIMEOUT_MS);
-        } else if (this.savedScrollPosition) {
-          setTimeout(() => {
-            this.viewportScroller.scrollToPosition(this.savedScrollPosition!);
-            this.savedScrollPosition = null;
-          }, this.SCROLL_TIMEOUT_MS);
-        }
-      });
     }
   }
 
@@ -101,41 +83,69 @@ export class NavigationComponent implements OnInit {
     const targetMainRoute = mainRoutes.find(route => route.data?.['translationKey'] === translatedPathKey);
     const fragmentId = targetMainRoute?.data?.['fragmentId'];
 
-    const translatedPathSegment = this.translate.instant(translatedPathKey);
+    const isMainContentSection = ['home', 'aboutMe', 'skills', 'portfolio', 'contact'].includes(appRouteKey);
 
-    let navigationPathSegments: string[];
-    let targetUrlPath: string;
+    let navigationPathSegments: string[] = ['/', currentLang];
 
-    if (appRouteKey === 'home' && translatedPathSegment === '') {
-      navigationPathSegments = ['/', currentLang];
-      targetUrlPath = `/${currentLang}`;
-    } else {
-      navigationPathSegments = ['/', currentLang, translatedPathSegment];
-      targetUrlPath = `/${currentLang}/${translatedPathSegment}`;
-    }
+    const currentUrlWithoutFragment = this.router.url.split('#')[0];
+    const targetUrlPathWithoutFragment = navigationPathSegments.join('/');
 
-    const currentRouterUrl = this.router.url.split('#')[0];
-
-    if (currentRouterUrl !== targetUrlPath) {
+    if (currentUrlWithoutFragment !== targetUrlPathWithoutFragment) {
       if (this.isBrowser) {
         this.savedScrollPosition = this.viewportScroller.getScrollPosition();
       }
 
       const navigationExtras: NavigationExtras = {
         replaceUrl: true,
-        scrollPositionRestoration: 'disabled'
+        scrollPositionRestoration: 'disabled', // Hier bleibt es, wenn zu einem neuen Pfad navigiert wird
+        fragment: fragmentId || undefined
       } as NavigationExtras;
 
       try {
-        this.requestedFragment = fragmentId || null;
         await this.router.navigate(navigationPathSegments, navigationExtras);
+        if (appRouteKey === 'home' && this.isBrowser) {
+          setTimeout(() => {
+            this.viewportScroller.scrollToPosition([0, 0]);
+          }, this.SCROLL_TIMEOUT_MS);
+        } else if (fragmentId && this.isBrowser) {
+          setTimeout(() => {
+            this.scrollToElementById(fragmentId);
+          }, this.SCROLL_TIMEOUT_MS);
+        }
       } catch (err) {
         console.error('Navigation failed:', err);
-        this.requestedFragment = null;
         this.savedScrollPosition = null;
       }
     } else {
-      if (fragmentId) {
+      // Wenn wir bereits auf dem richtigen Pfad sind (z.B. /en)
+      if (appRouteKey === 'home') {
+        if (this.isBrowser) {
+          setTimeout(() => {
+            this.viewportScroller.scrollToPosition([0, 0]);
+          }, this.SCROLL_TIMEOUT_MS);
+        }
+        // Wichtig: Keine Fragment-Navigation hier, um die URL sauber zu halten.
+        // Falls ein Fragment in der URL ist und auf Home geklickt wird, muss es entfernt werden.
+        if (this.router.url.includes('#') && this.isBrowser) {
+          const currentPathSegments = this.router.url.split('?')[0].split('/').filter(s => s);
+          const pathWithoutFragment = ['/', ...currentPathSegments];
+          this.router.navigate(pathWithoutFragment, { replaceUrl: true }); // *** HIER WIRD scrollPositionRestoration ENTFERNT ***
+        }
+      } else if (fragmentId) {
+        const currentPathSegments = this.router.url.split('?')[0].split('/').filter(s => s);
+        const pathForFragmentNavigation = ['/', ...currentPathSegments];
+
+        const navigationExtras: NavigationExtras = {
+          replaceUrl: true,
+          fragment: fragmentId,
+          scrollPositionRestoration: 'disabled' // Hier bleibt es, da wir das Fragment explizit setzen und den Scroller manuell steuern
+        } as NavigationExtras;
+
+        try {
+          await this.router.navigate(pathForFragmentNavigation, navigationExtras);
+        } catch (err) {
+          console.error('Fragment-only navigation failed:', err);
+        }
         setTimeout(() => {
           this.scrollToElementById(fragmentId);
         }, this.SCROLL_TIMEOUT_MS);
@@ -187,13 +197,9 @@ export class NavigationComponent implements OnInit {
     const currentFragment: string | null = this.activatedRoute.snapshot.fragment;
 
     const currentUrlParts = this.router.url.split('/');
-    const currentTranslatedSegment = currentUrlParts.length > 2 ? currentUrlParts[2].split('#')[0] : '';
+    const currentTranslatedSegment = currentUrlParts.length > 2 ? currentUrlParts[2].split('?')[0].split('#')[0] : '';
 
-    // NEU & KORRIGIERT: Abrufen der Übersetzungsdaten für die aktive Sprache
-    // Wir rufen die Übersetzungen für die *aktuelle* Sprache ab, um den Pfad zu identifizieren.
-    // Dies muss asynchron geschehen, da die Übersetzungen möglicherweise noch nicht geladen sind.
     const currentTranslations = await this.translate.getTranslation(this.activeLanguage).toPromise();
-
 
     for (const keyName of Object.keys(AppRouteKeys) as Array<keyof typeof AppRouteKeys>) {
       const translationKeyForRoute = AppRouteKeys[keyName];
@@ -229,7 +235,7 @@ export class NavigationComponent implements OnInit {
       }
     }
 
-    await this.translate.use(lang).toPromise(); // Sprache wechseln
+    await this.translate.use(lang).toPromise();
 
     const newLocalizedRoutes = createLocalizedRoutes(this.translate);
     const updatedRoutes = [...routes];
@@ -248,7 +254,8 @@ export class NavigationComponent implements OnInit {
     const newTranslatedSegment = this.translate.instant(AppRouteKeys[targetAppRouteKey]);
 
     let navigationPath: string[];
-    if (targetAppRouteKey === 'home' && newTranslatedSegment === '') {
+    const isMainContentSection = ['home', 'aboutMe', 'skills', 'portfolio', 'contact'].includes(targetAppRouteKey);
+    if (isMainContentSection) {
       navigationPath = [lang];
     } else {
       navigationPath = [lang, newTranslatedSegment];
@@ -267,7 +274,9 @@ export class NavigationComponent implements OnInit {
     const translatedPath = this.translate.instant(AppRouteKeys[key]);
     const currentLang = this.activeLanguage;
 
-    if (key === 'home' && translatedPath === '') {
+    const isMainContentSection = ['home', 'aboutMe', 'skills', 'portfolio', 'contact'].includes(key);
+
+    if (isMainContentSection) {
       return ['/', currentLang];
     }
     return ['/', currentLang, translatedPath];
