@@ -7,11 +7,11 @@ import { inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 export const AppRouteKeys = {
-    home: 'ROUTES.HOME', // Dieser wäre dann für die "pure" Startseite
-    aboutMe: 'ROUTES.ABOUT_ME', // Neuer Key
-    skills: 'ROUTES.SKILLS',     // Neuer Key
-    portfolio: 'ROUTES.PORTFOLIO', // Neuer Key
-    contact: 'ROUTES.CONTACT',   // Neuer Key
+    home: 'ROUTES.HOME',
+    aboutMe: 'ROUTES.ABOUT_ME',
+    skills: 'ROUTES.SKILLS',
+    portfolio: 'ROUTES.PORTFOLIO',
+    contact: 'ROUTES.CONTACT',
     privacyPolicy: 'ROUTES.PRIVACY_POLICY',
     legalNotice: 'ROUTES.LEGAL_NOTICE',
     notFound: 'ROUTES.NOT_FOUND'
@@ -19,10 +19,9 @@ export const AppRouteKeys = {
 
 export const mainRoutes: Routes = [
     {
-        path: '', // Nur für die reine Home-Seite ohne Fragment
+        path: '',
         component: MainContentComponent,
-        // *** HIER WIRD 'fragmentId: 'atf-section'' ENTFERNT ***
-        data: { translationKey: AppRouteKeys.home } // Keine fragmentId mehr hier
+        data: { translationKey: AppRouteKeys.home }
     },
     {
         path: 'about-me',
@@ -80,10 +79,39 @@ const langResolver = async (route: ActivatedRouteSnapshot, state: RouterStateSna
     const translate = inject(TranslateService);
     const router = inject(Router);
 
-    const langParam = route.paramMap.get('lang');
-    const currentLang = await validateAndSetLanguage(translate, router, langParam);
-    if (currentLang === false) return false;
+    // *** WICHTIG: Sicherstellen, dass die Sprachen geladen sind ***
+    // Normalerweise sollte der Loader in Ihrer App-Initialisierung das erledigen.
+    // Wenn nicht, stellen Sie sicher, dass TranslateService.getLangs() die erwarteten Werte hat.
+    // Prüfen Sie Ihre ngx-translate-Konfiguration in app.config.ts oder app.module.ts
 
+    const langParam = route.paramMap.get('lang');
+    const defaultLang = translate.getDefaultLang(); // Dies sollte 'de' sein
+    const availableLangs = translate.getLangs();    // Prüfen Sie, was hier tatsächlich drin ist!
+
+    const currentLang = langParam || defaultLang;
+
+    // Loggen Sie die Werte zur Fehlersuche
+    console.log(`[langResolver] URL langParam: '${langParam}'`);
+    console.log(`[langResolver] Default lang: '${defaultLang}'`);
+    console.log(`[langResolver] Available langs: ${availableLangs.join(', ')}`);
+    console.log(`[langResolver] Current lang to validate: '${currentLang}'`);
+
+    if (!availableLangs.includes(currentLang)) {
+        console.warn(`[langResolver] Invalid language in URL: '${langParam}'. Redirecting to '${defaultLang}'.`);
+        // Leiten Sie nur um, wenn die URL-Sprache nicht in den verfügbaren Sprachen ist.
+        // Dies sollte nur passieren, wenn jemand z.B. /xyz eingibt.
+        // Wenn /en nicht in availableLangs ist, liegt das Problem bei Ihrer ngx-translate-Konfiguration.
+        router.navigateByUrl(`/${defaultLang}`, { replaceUrl: true });
+        return false;
+    }
+
+    // Wenn die aktuelle Sprache des TranslateService nicht der gewünschten Sprache entspricht, setze sie.
+    if (translate.currentLang !== currentLang) {
+        // WICHTIG: Verwenden Sie .toPromise() oder await, um sicherzustellen, dass die Sprache geladen wird.
+        await translate.use(currentLang).toPromise();
+    }
+
+    // Routen neu konfigurieren nach Sprachwechsel
     const newLocalizedRoutes = createLocalizedRoutes(translate);
     const updatedRoutes = [...routes];
     const langRouteIndex = updatedRoutes.findIndex(r => r.path === ':lang');
@@ -102,10 +130,15 @@ const langResolver = async (route: ActivatedRouteSnapshot, state: RouterStateSna
 };
 
 const validateAndSetLanguage = async (translate: TranslateService, router: Router, langParam: string | null): Promise<string | false> => {
+    // Diese Funktion wird jetzt von langResolver aufgerufen und ist nicht mehr direkt der Resolver.
+    // Die Validierungs- und Setzlogik wurde in langResolver verschoben, um die Kontrolle zu zentralisieren.
+    // Sie können diese Funktion entfernen, wenn sie nicht mehr direkt als Resolver verwendet wird.
+    // Falls doch, stellen Sie sicher, dass sie die neuen Konsolenlogs und die Prüfung für availableLangs enthält.
     const defaultLang = translate.getDefaultLang();
+    const availableLangs = translate.getLangs(); // Wieder wichtig zu prüfen, was hier ist.
     const currentLang = langParam || defaultLang;
 
-    if (!translate.getLangs().includes(currentLang)) {
+    if (!availableLangs.includes(currentLang)) {
         console.warn(`[langResolver] Invalid language in URL: '${langParam}'. Redirecting to '${defaultLang}'.`);
         router.navigateByUrl(`/${defaultLang}`, { replaceUrl: true });
         return false;
@@ -114,12 +147,14 @@ const validateAndSetLanguage = async (translate: TranslateService, router: Route
     return currentLang;
 };
 
+// ... (restlicher Code bleibt unverändert) ...
+
 const extractPathSegment = (stateUrl: string): string => {
     const urlWithoutFragment = stateUrl.split('#')[0];
     return urlWithoutFragment.split('/').filter(s => s !== '').slice(1).join('/');
 };
 
-const getExpectedUrl = (pathSegment: string, translate: TranslateService, currentLang: string, router: Router): string | undefined => {
+const getExpectedUrl = (pathSegment: string, translate: TranslateService, currentLang: string): string | undefined => {
     const tempLocalizedRoutes = createLocalizedRoutes(translate);
     const targetRoute = tempLocalizedRoutes.find(r => r.path === pathSegment);
 
@@ -149,7 +184,7 @@ const handlePathValidation = (stateUrl: string, translate: TranslateService, rou
     const pathOnlyUrl = stateUrl.split('#')[0];
     const pathSegment = extractPathSegment(stateUrl);
 
-    const fullExpectedUrlWithoutFragment = getExpectedUrl(pathSegment, translate, currentLang, router);
+    const fullExpectedUrlWithoutFragment = getExpectedUrl(pathSegment, translate, currentLang); // Router-Parameter entfernt
 
     if (fullExpectedUrlWithoutFragment && pathOnlyUrl === fullExpectedUrlWithoutFragment) {
         return true;
