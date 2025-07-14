@@ -14,34 +14,39 @@ export const AppRouteKeys = {
     contact: 'ROUTES.CONTACT',
     privacyPolicy: 'ROUTES.PRIVACY_POLICY',
     legalNotice: 'ROUTES.LEGAL_NOTICE',
-    notFound: 'ROUTES.NOT_FOUND'
+    notFound: 'ROUTES.NOT_FOUND',
+
+    aboutMeFragment: 'FRAGMENTS.ABOUT_ME_ID',
+    skillsFragment: 'FRAGMENTS.SKILLS_ID',
+    portfolioFragment: 'FRAGMENTS.PORTFOLIO_ID',
+    contactFragment: 'FRAGMENTS.CONTACT_ID'
 };
 
 export const mainRoutes: Routes = [
     {
         path: '',
         component: MainContentComponent,
-        data: { translationKey: AppRouteKeys.home }
+        data: { translationKey: AppRouteKeys.home, fragmentKey: AppRouteKeys.home } // Auch Home kann einen Fragment-Key haben, falls du es für den Top-Bereich brauchst
     },
     {
-        path: 'about-me',
+        path: 'about-me', // Dieser Pfad wird später dynamisch übersetzt
         component: MainContentComponent,
-        data: { translationKey: AppRouteKeys.aboutMe, fragmentId: 'about_me' }
+        data: { translationKey: AppRouteKeys.aboutMe, fragmentKey: AppRouteKeys.aboutMeFragment } // Hier den Fragment-Key verwenden
     },
     {
-        path: 'skills',
+        path: 'skills', // Dieser Pfad wird später dynamisch übersetzt
         component: MainContentComponent,
-        data: { translationKey: AppRouteKeys.skills, fragmentId: 'skills' }
+        data: { translationKey: AppRouteKeys.skills, fragmentKey: AppRouteKeys.skillsFragment } // Hier den Fragment-Key verwenden
     },
     {
-        path: 'portfolio',
+        path: 'portfolio', // Dieser Pfad wird später dynamisch übersetzt
         component: MainContentComponent,
-        data: { translationKey: AppRouteKeys.portfolio, fragmentId: 'portfolio' }
+        data: { translationKey: AppRouteKeys.portfolio, fragmentKey: AppRouteKeys.portfolioFragment } // Hier den Fragment-Key verwenden
     },
     {
-        path: 'contact',
+        path: 'contact', // Dieser Pfad wird später dynamisch übersetzt
         component: MainContentComponent,
-        data: { translationKey: AppRouteKeys.contact, fragmentId: 'contact' }
+        data: { translationKey: AppRouteKeys.contact, fragmentKey: AppRouteKeys.contactFragment } // Hier den Fragment-Key verwenden
     },
     {
         path: 'privacy-policy',
@@ -79,18 +84,12 @@ const langResolver = async (route: ActivatedRouteSnapshot, state: RouterStateSna
     const translate = inject(TranslateService);
     const router = inject(Router);
 
-    // *** WICHTIG: Sicherstellen, dass die Sprachen geladen sind ***
-    // Normalerweise sollte der Loader in Ihrer App-Initialisierung das erledigen.
-    // Wenn nicht, stellen Sie sicher, dass TranslateService.getLangs() die erwarteten Werte hat.
-    // Prüfen Sie Ihre ngx-translate-Konfiguration in app.config.ts oder app.module.ts
-
     const langParam = route.paramMap.get('lang');
-    const defaultLang = translate.getDefaultLang(); // Dies sollte 'de' sein
-    const availableLangs = translate.getLangs();    // Prüfen Sie, was hier tatsächlich drin ist!
+    const defaultLang = translate.getDefaultLang();
+    const availableLangs = translate.getLangs();
 
     const currentLang = langParam || defaultLang;
 
-    // Loggen Sie die Werte zur Fehlersuche
     console.log(`[langResolver] URL langParam: '${langParam}'`);
     console.log(`[langResolver] Default lang: '${defaultLang}'`);
     console.log(`[langResolver] Available langs: ${availableLangs.join(', ')}`);
@@ -98,20 +97,14 @@ const langResolver = async (route: ActivatedRouteSnapshot, state: RouterStateSna
 
     if (!availableLangs.includes(currentLang)) {
         console.warn(`[langResolver] Invalid language in URL: '${langParam}'. Redirecting to '${defaultLang}'.`);
-        // Leiten Sie nur um, wenn die URL-Sprache nicht in den verfügbaren Sprachen ist.
-        // Dies sollte nur passieren, wenn jemand z.B. /xyz eingibt.
-        // Wenn /en nicht in availableLangs ist, liegt das Problem bei Ihrer ngx-translate-Konfiguration.
         router.navigateByUrl(`/${defaultLang}`, { replaceUrl: true });
         return false;
     }
 
-    // Wenn die aktuelle Sprache des TranslateService nicht der gewünschten Sprache entspricht, setze sie.
     if (translate.currentLang !== currentLang) {
-        // WICHTIG: Verwenden Sie .toPromise() oder await, um sicherzustellen, dass die Sprache geladen wird.
         await translate.use(currentLang).toPromise();
     }
 
-    // Routen neu konfigurieren nach Sprachwechsel
     const newLocalizedRoutes = createLocalizedRoutes(translate);
     const updatedRoutes = [...routes];
     const langRouteIndex = updatedRoutes.findIndex(r => r.path === ':lang');
@@ -126,7 +119,50 @@ const langResolver = async (route: ActivatedRouteSnapshot, state: RouterStateSna
         console.error(`[langResolver] Fehler: ':lang'-Route nicht in den Hauptrouten gefunden!`);
     }
 
-    return handlePathValidation(state.url, translate, router, currentLang);
+    // --- NEUE LOGIK FÜR FRAGMENT-ID ---
+    const currentFragment = route.fragment;
+    let newTranslatedFragment: string | undefined;
+
+    if (currentFragment) {
+        // Versuche, den AppRouteKey vom *alten* Fragment zu finden
+        const currentFragmentTranslations = await translate.getTranslation(route.paramMap.get('lang') || defaultLang).toPromise();
+        let targetAppRouteKeyForFragment: keyof typeof AppRouteKeys | undefined;
+
+        for (const keyName of Object.keys(AppRouteKeys) as Array<keyof typeof AppRouteKeys>) {
+            if (keyName.endsWith('Fragment')) {
+                const fragmentTranslationKey = AppRouteKeys[keyName];
+                let currentObj: any = currentFragmentTranslations;
+                const translationKeys = fragmentTranslationKey.split('.');
+                for (const tKey of translationKeys) {
+                    if (currentObj && typeof currentObj === 'object' && tKey in currentObj) {
+                        currentObj = currentObj[tKey];
+                    } else {
+                        currentObj = undefined;
+                        break;
+                    }
+                }
+                if (typeof currentObj === 'string' && currentObj === currentFragment) {
+                    const routeKeyPart = keyName.replace('Fragment', '');
+                    if (AppRouteKeys[routeKeyPart as keyof typeof AppRouteKeys]) {
+                        targetAppRouteKeyForFragment = routeKeyPart as keyof typeof AppRouteKeys;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (targetAppRouteKeyForFragment) {
+            // Finde den zugehörigen Fragment-Key für die *neue* Sprache
+            const foundMainRoute = mainRoutes.find(r => r.data?.['translationKey'] === AppRouteKeys[targetAppRouteKeyForFragment!]);
+            const newFragmentTranslationKey = foundMainRoute?.data?.['fragmentKey'] as keyof typeof AppRouteKeys | undefined;
+            if (newFragmentTranslationKey) {
+                newTranslatedFragment = translate.instant(newFragmentTranslationKey);
+            }
+        }
+    }
+    // --- ENDE NEUE LOGIK FÜR FRAGMENT-ID ---
+
+    return handlePathValidation(state.url, translate, router, currentLang, newTranslatedFragment); // Übergebe das neue Fragment
 };
 
 const validateAndSetLanguage = async (translate: TranslateService, router: Router, langParam: string | null): Promise<string | false> => {
@@ -180,24 +216,30 @@ const redirectToHome = (router: Router, translate: TranslateService, currentLang
     return false;
 };
 
-const handlePathValidation = (stateUrl: string, translate: TranslateService, router: Router, currentLang: string): boolean => {
+const handlePathValidation = (stateUrl: string, translate: TranslateService, router: Router, currentLang: string, translatedFragment?: string): boolean => {
     const pathOnlyUrl = stateUrl.split('#')[0];
     const pathSegment = extractPathSegment(stateUrl);
 
-    const fullExpectedUrlWithoutFragment = getExpectedUrl(pathSegment, translate, currentLang); // Router-Parameter entfernt
+    const fullExpectedUrlWithoutFragment = getExpectedUrl(pathSegment, translate, currentLang);
 
     if (fullExpectedUrlWithoutFragment && pathOnlyUrl === fullExpectedUrlWithoutFragment) {
+        // Wenn der Pfad korrekt ist, aber ein übersetztes Fragment vorliegt und es sich vom aktuellen unterscheidet
+        const currentFragmentInUrl = stateUrl.includes('#') ? stateUrl.split('#')[1] : undefined;
+        if (translatedFragment && currentFragmentInUrl !== translatedFragment) {
+            const navigationExtras: NavigationExtras = { replaceUrl: true, fragment: translatedFragment };
+            router.navigateByUrl(fullExpectedUrlWithoutFragment + `#${translatedFragment}`, navigationExtras);
+            return false; // Navigation wurde durchgeführt
+        }
         return true;
     }
 
     if (fullExpectedUrlWithoutFragment && pathOnlyUrl !== fullExpectedUrlWithoutFragment) {
-        const originalFragment = stateUrl.includes('#') ? stateUrl.split('#')[1] : undefined;
         const navigationExtras: NavigationExtras = { replaceUrl: true };
-        if (originalFragment) {
-            navigationExtras.fragment = originalFragment;
+        if (translatedFragment) { // Verwende das bereits übersetzte Fragment
+            navigationExtras.fragment = translatedFragment;
         }
 
-        router.navigateByUrl(fullExpectedUrlWithoutFragment + (originalFragment ? `#${originalFragment}` : ''), navigationExtras);
+        router.navigateByUrl(fullExpectedUrlWithoutFragment + (translatedFragment ? `#${translatedFragment}` : ''), navigationExtras);
         return false;
     }
 

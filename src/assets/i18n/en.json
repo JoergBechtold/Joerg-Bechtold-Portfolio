@@ -64,6 +64,13 @@
     "NOT_FOUND": "page-not-found"
   },
 
+  "FRAGMENTS": {
+    "ABOUT_ME_ID": "about-me",
+    "SKILLS_ID": "skills",
+    "PORTFOLIO_ID": "portfolio",
+    "CONTACT_ID": "contact"
+  },
+
   "PAGE_NOT_FOUND": {
     "TITLE": "404 - Page not found",
     "MESSAGE": "The requested page does not exist.",

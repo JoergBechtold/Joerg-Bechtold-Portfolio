@@ -12,7 +12,7 @@ import {
 } from '@angular/router';
 import { ViewportScroller } from '@angular/common';
 import { filter } from 'rxjs/operators';
-import { AppRouteKeys, mainRoutes, routes, createLocalizedRoutes } from '../../../../app.routes';
+import { AppRouteKeys, mainRoutes, routes, createLocalizedRoutes } from '../../../../app.routes'; // Sicherstellen, dass AppRouteKeys importiert ist
 
 @Component({
   selector: 'app-navigation',
@@ -49,6 +49,11 @@ export class NavigationComponent implements OnInit {
   ngOnInit(): void {
     this.translate.onLangChange.subscribe(lang => {
       this.activeLanguage = lang.lang;
+      // Wenn die Sprache wechselt und wir ein Fragment in der URL haben, aktualisieren wir es.
+      const currentFragment = this.activatedRoute.snapshot.fragment;
+      if (currentFragment) {
+        this.updateFragmentInUrlAfterLangChange(currentFragment);
+      }
     });
     this.activatedRoute.paramMap.subscribe(params => {
       const langParam = params.get('lang');
@@ -77,15 +82,28 @@ export class NavigationComponent implements OnInit {
       this.onCloseSidebar();
     }
 
-    const translatedPathKey = AppRouteKeys[appRouteKey];
-    const currentLang = this.activeLanguage;
+    // Hole den translationKey für den Pfad (z.B. 'ROUTES.ABOUT_ME')
+    const pathTranslationKey = AppRouteKeys[appRouteKey];
 
-    const targetMainRoute = mainRoutes.find(route => route.data?.['translationKey'] === translatedPathKey);
-    const fragmentId = targetMainRoute?.data?.['fragmentId'];
+    // Finde die Route, die zu diesem translationKey gehört, um den fragmentKey zu bekommen
+    const targetMainRoute = mainRoutes.find(route => route.data?.['translationKey'] === pathTranslationKey);
+    const fragmentTranslationKey = targetMainRoute?.data?.['fragmentKey'] as keyof typeof AppRouteKeys | undefined;
+
+    // Übersetze den fragmentKey in die aktuelle Sprache
+    const translatedFragmentId = fragmentTranslationKey ? this.translate.instant(fragmentTranslationKey) : undefined;
+
+    const currentLang = this.activeLanguage;
+    let navigationPathSegments: string[];
 
     const isMainContentSection = ['home', 'aboutMe', 'skills', 'portfolio', 'contact'].includes(appRouteKey);
 
-    let navigationPathSegments: string[] = ['/', currentLang];
+    if (isMainContentSection) {
+      navigationPathSegments = ['/', currentLang];
+    } else {
+      // Wenn es eine andere Seite ist (z.B. Impressum), brauchen wir den übersetzten Pfad
+      const translatedPathSegment = this.translate.instant(pathTranslationKey);
+      navigationPathSegments = ['/', currentLang, translatedPathSegment];
+    }
 
     const currentUrlWithoutFragment = this.router.url.split('#')[0];
     const targetUrlPathWithoutFragment = navigationPathSegments.join('/');
@@ -97,8 +115,8 @@ export class NavigationComponent implements OnInit {
 
       const navigationExtras: NavigationExtras = {
         replaceUrl: true,
-        scrollPositionRestoration: 'disabled', // Hier bleibt es, wenn zu einem neuen Pfad navigiert wird
-        fragment: fragmentId || undefined
+        scrollPositionRestoration: 'disabled',
+        fragment: translatedFragmentId || undefined // Hier die übersetzte Fragment-ID verwenden
       } as NavigationExtras;
 
       try {
@@ -107,9 +125,9 @@ export class NavigationComponent implements OnInit {
           setTimeout(() => {
             this.viewportScroller.scrollToPosition([0, 0]);
           }, this.SCROLL_TIMEOUT_MS);
-        } else if (fragmentId && this.isBrowser) {
+        } else if (translatedFragmentId && this.isBrowser) { // Hier die übersetzte Fragment-ID verwenden
           setTimeout(() => {
-            this.scrollToElementById(fragmentId);
+            this.scrollToElementById(translatedFragmentId); // Hier die übersetzte Fragment-ID verwenden
           }, this.SCROLL_TIMEOUT_MS);
         }
       } catch (err) {
@@ -124,21 +142,19 @@ export class NavigationComponent implements OnInit {
             this.viewportScroller.scrollToPosition([0, 0]);
           }, this.SCROLL_TIMEOUT_MS);
         }
-        // Wichtig: Keine Fragment-Navigation hier, um die URL sauber zu halten.
-        // Falls ein Fragment in der URL ist und auf Home geklickt wird, muss es entfernt werden.
         if (this.router.url.includes('#') && this.isBrowser) {
           const currentPathSegments = this.router.url.split('?')[0].split('/').filter(s => s);
           const pathWithoutFragment = ['/', ...currentPathSegments];
-          this.router.navigate(pathWithoutFragment, { replaceUrl: true }); // *** HIER WIRD scrollPositionRestoration ENTFERNT ***
+          this.router.navigate(pathWithoutFragment, { replaceUrl: true });
         }
-      } else if (fragmentId) {
+      } else if (translatedFragmentId) { // Hier die übersetzte Fragment-ID verwenden
         const currentPathSegments = this.router.url.split('?')[0].split('/').filter(s => s);
         const pathForFragmentNavigation = ['/', ...currentPathSegments];
 
         const navigationExtras: NavigationExtras = {
           replaceUrl: true,
-          fragment: fragmentId,
-          scrollPositionRestoration: 'disabled' // Hier bleibt es, da wir das Fragment explizit setzen und den Scroller manuell steuern
+          fragment: translatedFragmentId, // Hier die übersetzte Fragment-ID verwenden
+          scrollPositionRestoration: 'disabled'
         } as NavigationExtras;
 
         try {
@@ -147,7 +163,7 @@ export class NavigationComponent implements OnInit {
           console.error('Fragment-only navigation failed:', err);
         }
         setTimeout(() => {
-          this.scrollToElementById(fragmentId);
+          this.scrollToElementById(translatedFragmentId); // Hier die übersetzte Fragment-ID verwenden
         }, this.SCROLL_TIMEOUT_MS);
       }
     }
@@ -194,8 +210,10 @@ export class NavigationComponent implements OnInit {
     }
 
     let targetAppRouteKey: keyof typeof AppRouteKeys | undefined;
+
     const currentFragment: string | null = this.activatedRoute.snapshot.fragment;
 
+    // Finde den AppRouteKey basierend auf dem aktuellen Pfad
     const currentUrlParts = this.router.url.split('/');
     const currentTranslatedSegment = currentUrlParts.length > 2 ? currentUrlParts[2].split('?')[0].split('#')[0] : '';
 
@@ -226,6 +244,36 @@ export class NavigationComponent implements OnInit {
       }
     }
 
+    // Wenn kein AppRouteKey gefunden wurde, aber ein Fragment vorhanden ist,
+    // versuchen wir, den AppRouteKey über das Fragment zu finden.
+    if (!targetAppRouteKey && currentFragment) {
+      const currentFragmentTranslations = await this.translate.getTranslation(this.activeLanguage).toPromise();
+      for (const keyName of Object.keys(AppRouteKeys) as Array<keyof typeof AppRouteKeys>) {
+        // Prüfen, ob der aktuelle Fragment-String zu einem der Fragment-Keys passt
+        if (keyName.endsWith('Fragment')) { // Annahme, dass Fragment-Keys so enden
+          const fragmentTranslationKey = AppRouteKeys[keyName];
+          let currentObj: any = currentFragmentTranslations;
+          const translationKeys = fragmentTranslationKey.split('.');
+          for (const tKey of translationKeys) {
+            if (currentObj && typeof currentObj === 'object' && tKey in currentObj) {
+              currentObj = currentObj[tKey];
+            } else {
+              currentObj = undefined;
+              break;
+            }
+          }
+          if (typeof currentObj === 'string' && currentObj === currentFragment) {
+            // Finde den zugehörigen AppRouteKey (z.B. von 'FRAGMENTS.ABOUT_ME_ID' zu 'ROUTES.ABOUT_ME')
+            const routeKeyPart = keyName.replace('Fragment', '');
+            if (AppRouteKeys[routeKeyPart as keyof typeof AppRouteKeys]) {
+              targetAppRouteKey = routeKeyPart as keyof typeof AppRouteKeys;
+              break;
+            }
+          }
+        }
+      }
+    }
+
     if (!targetAppRouteKey) {
       if (currentTranslatedSegment === '') {
         targetAppRouteKey = 'home';
@@ -253,6 +301,17 @@ export class NavigationComponent implements OnInit {
 
     const newTranslatedSegment = this.translate.instant(AppRouteKeys[targetAppRouteKey]);
 
+    // Wenn ein Fragment in der URL war, ermittle die neue übersetzte Fragment-ID
+    let newTranslatedFragment: string | undefined;
+    if (currentFragment) {
+      // Finde den Fragment-Key basierend auf dem targetAppRouteKey (z.B. 'ROUTES.ABOUT_ME' -> 'FRAGMENTS.ABOUT_ME_ID')
+      const foundMainRoute = mainRoutes.find(route => route.data?.['translationKey'] === AppRouteKeys[targetAppRouteKey!]);
+      const targetFragmentKey = foundMainRoute?.data?.['fragmentKey'] as keyof typeof AppRouteKeys | undefined;
+      if (targetFragmentKey) {
+        newTranslatedFragment = this.translate.instant(targetFragmentKey);
+      }
+    }
+
     let navigationPath: string[];
     const isMainContentSection = ['home', 'aboutMe', 'skills', 'portfolio', 'contact'].includes(targetAppRouteKey);
     if (isMainContentSection) {
@@ -264,10 +323,60 @@ export class NavigationComponent implements OnInit {
     const navigationExtras: NavigationExtras = {
       replaceUrl: true,
       scrollPositionRestoration: 'disabled',
-      fragment: currentFragment || undefined
+      fragment: newTranslatedFragment || undefined // Hier die neue, übersetzte Fragment-ID übergeben
     } as NavigationExtras;
 
     this.router.navigate(navigationPath, navigationExtras);
+  }
+
+  // Methode, um das Fragment nach Sprachwechsel zu aktualisieren
+  private async updateFragmentInUrlAfterLangChange(oldFragment: string): Promise<void> {
+    const currentLang = this.activeLanguage;
+    const currentUrlParts = this.router.url.split('#');
+    const pathWithoutFragment = currentUrlParts[0];
+
+    // Finde den AppRouteKey, der zum alten Fragment gehörte
+    let targetAppRouteKeyForFragment: keyof typeof AppRouteKeys | undefined;
+    const currentFragmentTranslations = await this.translate.getTranslation(this.translate.currentLang).toPromise();
+
+    for (const keyName of Object.keys(AppRouteKeys) as Array<keyof typeof AppRouteKeys>) {
+      if (keyName.endsWith('Fragment')) {
+        const fragmentTranslationKey = AppRouteKeys[keyName];
+        let currentObj: any = currentFragmentTranslations;
+        const translationKeys = fragmentTranslationKey.split('.');
+        for (const tKey of translationKeys) {
+          if (currentObj && typeof currentObj === 'object' && tKey in currentObj) {
+            currentObj = currentObj[tKey];
+          } else {
+            currentObj = undefined;
+            break;
+          }
+        }
+        if (typeof currentObj === 'string' && currentObj === oldFragment) {
+          const routeKeyPart = keyName.replace('Fragment', '');
+          if (AppRouteKeys[routeKeyPart as keyof typeof AppRouteKeys]) {
+            targetAppRouteKeyForFragment = routeKeyPart as keyof typeof AppRouteKeys;
+            break;
+          }
+        }
+      }
+    }
+
+    if (targetAppRouteKeyForFragment) {
+      // Finde den zugehörigen Fragment-Key für die neue Sprache
+      const foundMainRoute = mainRoutes.find(route => route.data?.['translationKey'] === AppRouteKeys[targetAppRouteKeyForFragment!]);
+      const newFragmentTranslationKey = foundMainRoute?.data?.['fragmentKey'] as keyof typeof AppRouteKeys | undefined;
+
+      if (newFragmentTranslationKey) {
+        const newTranslatedFragment = this.translate.instant(newFragmentTranslationKey);
+        // Navigiere mit dem aktualisierten Fragment, ohne den Pfad zu ändern
+        const navigationExtras: NavigationExtras = {
+          replaceUrl: true,
+          fragment: newTranslatedFragment
+        };
+        this.router.navigateByUrl(pathWithoutFragment + `#${newTranslatedFragment}`, navigationExtras);
+      }
+    }
   }
 
   getRouterLink(key: keyof typeof AppRouteKeys): string[] {
