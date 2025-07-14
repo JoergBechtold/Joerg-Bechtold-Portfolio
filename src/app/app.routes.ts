@@ -5,7 +5,6 @@ import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-// Importiere den TranslateManagerService
 import { TranslateManagerService } from './services/translate/translate-manager.service';
 
 export const AppRouteKeys = {
@@ -85,24 +84,14 @@ function createTranslatedRoute(route: Route, translate: TranslateService): Route
 const langResolver = async (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
     const translate = inject(TranslateService);
     const router = inject(Router);
-    // Hier den TranslateManagerService injizieren, obwohl er für diesen Resolver nicht direkt verwendet wird,
-    // um die Konsistenz zu wahren, wenn der Service später Resolver-Aufgaben übernimmt.
-    // const translateManager = inject(TranslateManagerService);
-
     const langParam = route.paramMap.get('lang');
     const defaultLang = translate.getDefaultLang();
     const availableLangs = translate.getLangs();
 
     const currentLang = langParam || defaultLang;
 
-    console.log(`[langResolver] URL langParam: '${langParam}'`);
-    console.log(`[langResolver] Default lang: '${defaultLang}'`);
-    console.log(`[langResolver] Available langs: ${availableLangs.join(', ')}`);
-    console.log(`[langResolver] Current lang to validate: '${currentLang}'`);
-
     if (!availableLangs.includes(currentLang)) {
         console.warn(`[langResolver] Invalid language in URL: '${langParam}'. Redirecting to '${defaultLang}'.`);
-        // Direkte Navigation hier, da der Resolver die Route blockieren muss
         router.navigateByUrl(`/${defaultLang}`, { replaceUrl: true });
         return false;
     }
@@ -125,15 +114,10 @@ const langResolver = async (route: ActivatedRouteSnapshot, state: RouterStateSna
         console.error(`[langResolver] Fehler: ':lang'-Route nicht in den Hauptrouten gefunden!`);
     }
 
-    // Die gesamte Logik zur Fragment-ID-Behandlung wird jetzt vom TranslateManagerService übernommen,
-    // wenn tatsächlich eine Navigation oder ein Sprachwechsel stattfindet.
-    // Daher können diese komplexen Blöcke hier entfernt werden.
-    // Der Resolver ist nur für die anfängliche Routenkonfiguration und Sprachvalidierung zuständig.
-
-    return handlePathValidation(state.url, translate, router, currentLang); // Entferne translatedFragment
+    return handlePathValidation(state.url, translate, router, currentLang);
 };
 
-// ... (validateAndSetLanguage kann entfernt werden, da es nicht mehr direkt als Resolver verwendet wird) ...
+
 
 const extractPathSegment = (stateUrl: string): string => {
     const urlWithoutFragment = stateUrl.split('#')[0];
@@ -166,8 +150,7 @@ const redirectToHome = (router: Router, translate: TranslateService, currentLang
     return false;
 };
 
-// `handlePathValidation` muss das `translatedFragment`-Argument nicht mehr erhalten, da es vom Resolver
-// nicht mehr direkt zur Fragment-URL-Anpassung verwendet wird. Dies übernimmt der Service.
+
 const handlePathValidation = (stateUrl: string, translate: TranslateService, router: Router, currentLang: string): boolean => {
     const pathOnlyUrl = stateUrl.split('#')[0];
     const pathSegment = extractPathSegment(stateUrl);
@@ -175,16 +158,13 @@ const handlePathValidation = (stateUrl: string, translate: TranslateService, rou
     const fullExpectedUrlWithoutFragment = getExpectedUrl(pathSegment, translate, currentLang);
 
     if (fullExpectedUrlWithoutFragment && pathOnlyUrl === fullExpectedUrlWithoutFragment) {
-        // Wenn der Pfad korrekt ist, keine Aktion erforderlich, da Fragment-Handhabung jetzt im Service ist.
         return true;
     }
 
     if (fullExpectedUrlWithoutFragment && pathOnlyUrl !== fullExpectedUrlWithoutFragment) {
-        // Wenn der Pfad nicht korrekt ist, aber einen erwarteten übersetzten Pfad hat, navigiere dorthin.
-        // Die Fragment-Handhabung ist Sache des TranslateManagerService nach einem Sprachwechsel.
         const navigationExtras: NavigationExtras = { replaceUrl: true };
         router.navigateByUrl(fullExpectedUrlWithoutFragment, navigationExtras);
-        return false; // Navigation wurde durchgeführt
+        return false;
     }
 
     return redirectToHome(router, translate, currentLang);
