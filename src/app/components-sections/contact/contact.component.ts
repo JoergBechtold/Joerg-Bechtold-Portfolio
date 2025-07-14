@@ -1,27 +1,22 @@
-import { Component, OnInit } from '@angular/core'; // Importiere OnInit
-import { CommonModule } from '@angular/common'; // Häufig benötigt für Angular-Direktiven wie *ngIf, *ngFor
-import { TranslateModule } from '@ngx-translate/core'; // Für Übersetzungen im Template
-// Dein TranslateManagerService mit dem korrigierten Pfad
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 import { TranslateManagerService } from '../../services/translate/translate-manager.service';
 
 @Component({
   selector: 'app-contact',
-  standalone: true, // Annahme: Sollte auch eine Standalone-Komponente sein
-  imports: [CommonModule, TranslateModule], // Füge die benötigten Module hinzu
+  standalone: true,
+  imports: [CommonModule, TranslateModule],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss'
 })
-export class ContactComponent implements OnInit { // Implementiere OnInit
+export class ContactComponent implements OnInit {
 
-  activeLanguage: string = 'de'; // Initialwert, wird durch das Abonnement aktualisiert
+  activeLanguage: string = 'de';
 
-  constructor(
-    private translateManager: TranslateManagerService // Injiziere den TranslateManagerService
-  ) { }
+  constructor(private translateManager: TranslateManagerService) { }
 
   ngOnInit(): void {
-    // Abonniere die aktive Sprache vom TranslateManagerService,
-    // falls die Komponente darauf reagieren oder sie anzeigen muss.
     this.translateManager.activeLanguage$.subscribe(lang => {
       this.activeLanguage = lang;
     });
