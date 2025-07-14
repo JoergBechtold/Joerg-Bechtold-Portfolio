@@ -31,8 +31,8 @@
     "HEADLINE": "My skills",
     "UNDERHEADLINE_PART_1": "Looking for ",
     "UNDERHEADLINE_PART_2": "another skill",
-    "DESCRIPTION_SKILLS": "Show that you have used a variety of front-end technologies in your projects.",
-    "DESCRIPTION_LEARNING_ENTHUSIASM": "Reveal enthusiasm for learning new technologies and frameworks.",
+    "DESCRIPTION_SKILLS": "Show that you have used a variety of front-end <br> technologies in your projects.",
+    "DESCRIPTION_LEARNING_ENTHUSIASM": "Reveal enthusiasm for learning new technologies <br>  and frameworks.",
     "BUTTON": "Get in touch"
   },
 
