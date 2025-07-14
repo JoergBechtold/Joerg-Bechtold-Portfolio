@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TranslateManagerServiceTsService } from './translate-manager.service.ts.service';
+import { TranslateManagerServiceTsService } from './translate-manager.service';
 
 describe('TranslateManagerServiceTsService', () => {
   let service: TranslateManagerServiceTsService;

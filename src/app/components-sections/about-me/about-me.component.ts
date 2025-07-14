@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { BaseTranslatableComponent } from '../../shared/base/base.component';
-import { AnimateOnScrollDirective } from '../../shared/animation-on-scroll/animate-on-scroll.directive'; // Importiere die neue Direktive
+// Importiere deinen TranslateManagerService mit dem korrigierten Pfad
+import { TranslateManagerService } from '../../services/translate/translate-manager.service';
+import { AnimateOnScrollDirective } from '../../shared/animation-on-scroll/animate-on-scroll.directive';
 
 @Component({
     selector: 'app-about-me',
@@ -15,14 +16,27 @@ import { AnimateOnScrollDirective } from '../../shared/animation-on-scroll/anima
     templateUrl: './about-me.component.html',
     styleUrl: './about-me.component.scss'
 })
-export class AboutMeComponent extends BaseTranslatableComponent implements OnInit {
+export class AboutMeComponent implements OnInit { // Erbt nicht mehr von BaseTranslatableComponent
 
+    // Wenn du die aktive Sprache in der Komponente benötigst, kannst du sie so speichern
+    activeLanguage: string = 'de'; // Initialwert, wird durch das Abonnement aktualisiert
 
-    constructor(protected override translate: TranslateService) {
-        super(translate);
+    constructor(
+        // Injiziere den TranslateManagerService
+        private translateManager: TranslateManagerService
+    ) {
+        // Die Logik, die vorher in super(translate) war, ist jetzt im TranslateManagerService gekapselt.
     }
 
-    override ngOnInit(): void {
-        super.ngOnInit();
+    ngOnInit(): void {
+        // Abonniere die aktive Sprache vom TranslateManagerService,
+        // falls die Komponente darauf reagieren oder sie anzeigen muss.
+        this.translateManager.activeLanguage$.subscribe(lang => {
+            this.activeLanguage = lang;
+        });
+
+        // Hier kannst du weitere Initialisierungslogik deiner AboutMeComponent hinzufügen.
+        // Die Logik, die vorher in super.ngOnInit() war (z.B. das Abonnieren von onLangChange),
+        // wird jetzt direkt vom TranslateManagerService verwaltet.
     }
 }
