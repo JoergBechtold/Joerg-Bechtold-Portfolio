@@ -3,9 +3,9 @@
         <img src="../../../assets/img/background/PURPLE-SHADOW-ABOUT-ME.svg" alt="">
 
         <div class="content-left">
-            <h1>{{ 'ABOUT_ME.HEADLINE' | translate }}</h1>
-            <p> {{ 'ABOUT_ME.DESCRIPTION_PART1' | translate }}</p>
-            <p> {{ 'ABOUT_ME.DESCRIPTION_PART2' | translate }}</p>
+            <h1 [innerHTML]="'ABOUT_ME.HEADLINE' | translate"></h1>
+            <p [innerHTML]="'ABOUT_ME.DESCRIPTION_PART1' | translate"></p>
+            <p [innerHTML]="'ABOUT_ME.DESCRIPTION_PART2' | translate"> </p>
 
             <div class="info-block">
                 <div class="icon-box">
@@ -13,7 +13,7 @@
                         alt=" {{ 'ABOUT_ME.ALT_TEXT_LOCATION_ICON' | translate}}">
                 </div>
                 <div class="text-box">
-                    <p> {{ 'ABOUT_ME.LOCATION' | translate }}</p>
+                    <p [innerHTML]="'ABOUT_ME.LOCATION' | translate"> </p>
                 </div>
             </div>
 
@@ -23,7 +23,7 @@
                         alt="{{ 'ABOUT_ME.ALT_TEXT_BULB_ICON' | translate}}">
                 </div>
                 <div class="text-box">
-                    <p> {{ 'ABOUT_ME.LEARNING' | translate }}</p>
+                    <p [innerHTML]="'ABOUT_ME.LEARNING' | translate"></p>
                 </div>
             </div>
 
@@ -33,7 +33,7 @@
                         alt="{{ 'ABOUT_ME.ALT_TEXT_PUZZLE_ICON' | translate}}">
                 </div>
                 <div class="text-box">
-                    <p> {{ 'ABOUT_ME.PROBLEM_SOLVING' | translate }}</p>
+                    <p [innerHTML]="'ABOUT_ME.PROBLEM_SOLVING' | translate"></p>
                 </div>
             </div>
         </div>

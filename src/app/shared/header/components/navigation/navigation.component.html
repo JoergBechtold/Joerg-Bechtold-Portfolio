@@ -1,17 +1,17 @@
 <div class="nav-content-box">
     <nav>
         <div class="links-header">
-            <a (click)="navigateToSection('aboutMe')">{{ 'HEADER.ABOUT_ME' | translate }}</a>
-            <a (click)="navigateToSection('skills')">{{ 'HEADER.SKILLS' | translate }}</a>
-            <a (click)="navigateToSection('portfolio')">{{ 'HEADER.PORTFOLIO' | translate }}</a>
-            <a (click)="navigateToSection('contact')">{{ 'HEADER.CONTACT' | translate}}</a>
+            <a (click)="navigateToSection('aboutMe')" [innerHTML]="'HEADER.ABOUT_ME' | translate"></a>
+            <a (click)="navigateToSection('skills')" [innerHTML]="'HEADER.SKILLS' | translate"></a>
+            <a (click)="navigateToSection('portfolio')" [innerHTML]="'HEADER.PORTFOLIO' | translate"></a>
+            <a (click)="navigateToSection('contact')" [innerHTML]="'HEADER.CONTACT' | translate"></a>
         </div>
 
         <div class="language-btns">
-            <button title="{{ 'HEADER.LANGUAGE_DE' | translate }}" translate="HEADER.LANG_DE"
+            <button title="{{ 'HEADER.LANGUAGE_DE' | translate }}" [innerHTML]="'HEADER.LANG_DE' | translate"
                 [ngClass]="{ 'active-button': activeLanguage === 'de' }" (click)="setLanguage('de')">
             </button>
-            <button title="{{ 'HEADER.LANGUAGE_EN' | translate }}" translate="HEADER.LANG_EN"
+            <button title="{{ 'HEADER.LANGUAGE_EN' | translate }}" [innerHTML]="'HEADER.LANG_EN' | translate"
                 [ngClass]="{ 'active-button': activeLanguage === 'en' }" (click)="setLanguage('en')">
             </button>
         </div>

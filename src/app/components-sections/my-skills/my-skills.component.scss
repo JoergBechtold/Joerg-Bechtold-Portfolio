@@ -60,6 +60,7 @@ section {
   }
 
   > p {
+    white-space: pre-wrap;
     text-align: center;
     @include fontSizeWeightColor($si: 16px, $we: 700);
   }

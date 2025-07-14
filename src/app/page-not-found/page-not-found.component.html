@@ -1,6 +1,5 @@
 <section>
-    <h1>{{ 'PAGE_NOT_FOUND.TITLE' | translate }}</h1>
-    <p>{{ 'PAGE_NOT_FOUND.MESSAGE' | translate }}</p>
-    <a [routerLink]="getHomeLink()">{{ 'PAGE_NOT_FOUND.GO_HOME' |
-        translate }}</a>
+    <h1 [innerHTML]="'PAGE_NOT_FOUND.TITLE' | translate"></h1>
+    <p [innerHTML]="'AGE_NOT_FOUND.MESSAGE' | translate"></p>
+    <a [routerLink]="getHomeLink()" [innerHTML]="'PAGE_NOT_FOUND.GO_HOME' | translate"></a>
 </section>

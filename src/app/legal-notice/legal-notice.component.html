@@ -1,39 +1,42 @@
 <section>
     <div class="legal-notice-content">
-        <h1>{{ 'LEGAL_NOTICE.H1' | translate }}</h1>
-        <p>{{ 'LEGAL_NOTICE.PARAGRAPH_5_DDG' | translate }}</p>
+        <h1 [innerHTML]="'LEGAL_NOTICE.H1' | translate"></h1>
+        <p [innerHTML]="'LEGAL_NOTICE.PARAGRAPH_5_DDG' | translate"></p>
         <p>Jörg Bechtold<br>
             <br>
             Gründauer Straße 16 a<br>
             63584 Gründau
         </p>
-        <p> <strong>{{ 'LEGAL_NOTICE.REPRESENTED_BY' | translate }}: </strong><br>
+        <p> <strong [innerHTML]="'LEGAL_NOTICE.REPRESENTED_BY' | translate"></strong><br>
             Jörg Bechtold<br>
         </p>
-        <p><strong>{{ 'LEGAL_NOTICE.CONTACT' | translate }}:</strong> <br>
-            {{ 'LEGAL_NOTICE.PHONE' | translate }}: 0152-54274634<br>
-            {{ 'LEGAL_NOTICE.EMAIL' | translate }}: <a href='mailto:joergbechtold@gmx.net'>joergbechtold&#64;gmx.net</a>
+        <p><strong [innerHTML]="'LEGAL_NOTICE.CONTACT' | translate"></strong><br>
+            <span [innerHTML]="'LEGAL_NOTICE.PHONE' | translate"></span>: 0152-54274634<br>
+            <span [innerHTML]="'LEGAL_NOTICE.EMAIL' | translate"></span>: <a
+                href='mailto:joergbechtold@gmx.net'>joergbechtold&#64;gmx.net</a>
         </p>
-        <p><strong>{{ 'LEGAL_NOTICE.DISCLAIMER_TITLE' | translate }}: </strong><br><br><strong>{{
-                'LEGAL_NOTICE.LIABILITY_FOR_LINKS_TITLE' | translate }}</strong><br><br>
-            {{ 'LEGAL_NOTICE.LIABILITY_FOR_LINKS_TEXT_1' | translate }}
-            {{ 'LEGAL_NOTICE.LIABILITY_FOR_LINKS_TEXT_2' | translate }}
-            {{ 'LEGAL_NOTICE.LIABILITY_FOR_LINKS_TEXT_3' | translate }}
-            {{ 'LEGAL_NOTICE.LIABILITY_FOR_LINKS_TEXT_4' | translate }}
-            {{ 'LEGAL_NOTICE.LIABILITY_FOR_LINKS_TEXT_5' | translate }}<br><br><strong>{{ 'LEGAL_NOTICE.PRIVACY_TITLE' |
-                translate }}</strong><br><br>
-            {{ 'LEGAL_NOTICE.PRIVACY_TEXT_1' | translate }}
-            {{ 'LEGAL_NOTICE.PRIVACY_TEXT_2' | translate }}
-            {{ 'LEGAL_NOTICE.PRIVACY_TEXT_3' | translate }}<br>
-            {{ 'LEGAL_NOTICE.PRIVACY_TEXT_4' | translate }}<br>
-            {{ 'LEGAL_NOTICE.PRIVACY_TEXT_5' | translate }}
+        <p><strong><span [innerHTML]="'LEGAL_NOTICE.DISCLAIMER_TITLE' | translate"></span>:
+            </strong><br><br><strong><span
+                    [innerHTML]="'LEGAL_NOTICE.LIABILITY_FOR_LINKS_TITLE' | translate"></span></strong><br><br>
+            <span [innerHTML]="'LEGAL_NOTICE.LIABILITY_FOR_LINKS_TEXT_1' | translate"></span>
+            <span [innerHTML]="'LEGAL_NOTICE.LIABILITY_FOR_LINKS_TEXT_2' | translate"></span>
+            <span [innerHTML]="'LEGAL_NOTICE.LIABILITY_FOR_LINKS_TEXT_3' | translate"></span>
+            <span [innerHTML]="'LEGAL_NOTICE.LIABILITY_FOR_LINKS_TEXT_4' | translate"></span>
+            <span [innerHTML]="'LEGAL_NOTICE.LIABILITY_FOR_LINKS_TEXT_5' | translate"></span><br><br><strong><span
+                    [innerHTML]="'LEGAL_NOTICE.PRIVACY_TITLE' |
+                translate"></span></strong><br><br>
+            <span [innerHTML]="'LEGAL_NOTICE.PRIVACY_TEXT_1' | translate"></span>
+            <span [innerHTML]="'LEGAL_NOTICE.PRIVACY_TEXT_2' | translate"></span>
+            <span [innerHTML]="'LEGAL_NOTICE.PRIVACY_TEXT_3' | translate"></span><br>
+            <span [innerHTML]="'LEGAL_NOTICE.PRIVACY_TEXT_4' | translate"></span><br>
+            <span [innerHTML]="'LEGAL_NOTICE.PRIVACY_TEXT_5' | translate"></span>
         </p><br>
-        Impressum von <a href="https://websitewissen.com" rel="dofollow">WebsiteWissen.com</a>, {{
-        'LEGAL_NOTICE.IMPRINT_SOURCE_DESCRIPTION' | translate }} <a
+        Impressum von <a href="https://websitewissen.com" rel="dofollow">WebsiteWissen.com</a>, <span
+            [innerHTML]="'LEGAL_NOTICE.IMPRINT_SOURCE_DESCRIPTION' | translate"></span> <a
             href="https://websitewissen.com/wordpress-website-erstellen" rel="dofollow">WordPress-Websites</a>, <a
             href="https://websitewissen.com/wordpress-hosting-vergleich" rel="dofollow">WordPress-Hosting</a> und <a
-            href="https://websitewissen.com/website-kosten" rel="dofollow">Website-Kosten</a> {{
-        'LEGAL_NOTICE.IMPRINT_SOURCE_ATTRIBUTION' | translate }} <a href="https://www.kanzlei-hasselbach.de/"
-            rel="dofollow">Kanzlei Hasselbach Rechtsanwälte</a>.
+            href="https://websitewissen.com/website-kosten" rel="dofollow">Website-Kosten</a> <span
+            [innerHTML]="'LEGAL_NOTICE.IMPRINT_SOURCE_ATTRIBUTION' | translate"></span> <a
+            href="https://www.kanzlei-hasselbach.de/" rel="dofollow">Kanzlei Hasselbach Rechtsanwälte</a>.
     </div>
 </section>
