@@ -6,10 +6,13 @@
         <div class="content-left">
             <div class="skills-items-container">
                 <div *ngFor="let singleSkill of skillsdata.skillsBox; let i = index"
-                    [style.--animation-delay]="i * 0.08 + 's'" class=" skill-item">
-                    <img [src]="singleSkill.img"
-                        [alt]="'MY_SKILLS.SKILL_ICON_ALT' | translate: { skillName: singleSkill.name }">
-                    <p> {{ singleSkill.name }}</p>
+                    [style.--animation-delay]="i * 0.08 + 's'" class="skill-item-box">
+                    <div class="skill-item">
+                        <img [src]="singleSkill.img"
+                            [alt]="'MY_SKILLS.SKILL_ICON_ALT' | translate: { skillName: singleSkill.name }">
+                        <p> {{ singleSkill.name }}</p>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -27,20 +30,14 @@
                 <div class="test">
 
                     <p [innerHTML]="'MY_SKILLS.DESCRIPTION_SKILLS' | translate"></p>
-                    <div class="placeholder-headline-box"></div>
+                    <div class="placeholder-box"></div>
                 </div>
-
             </div>
-
-
-
-
         </div>
 
         <div class="text-box-grid-item">
             <div class="text-content">
                 <h2>{{ 'MY_SKILLS.UNDERHEADLINE_PART_1' | translate}}
-
                     <span>{{ 'MY_SKILLS.UNDERHEADLINE_PART_2' | translate }}</span>?
                 </h2>
 
@@ -49,7 +46,7 @@
                 <button [innerHTML]="'MY_SKILLS.BUTTON' | translate"></button>
             </div>
 
-            <div class="placeholder-text-content"></div>
+            <div class="placeholder-box"></div>
         </div>
     </div>
 </section>
