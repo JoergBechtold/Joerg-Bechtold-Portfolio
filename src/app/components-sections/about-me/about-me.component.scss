@@ -10,10 +10,7 @@ p {
 }
 
 h1 {
-  @include fontSizeWeightColor(
-    $si: clamp(45px, 36px + 2.8125vw, 90px),
-    $we: 700
-  );
+  @include fontSizeWeightColor($si: var(--font-size-45-90), $we: 700);
 }
 
 .about-me-content {

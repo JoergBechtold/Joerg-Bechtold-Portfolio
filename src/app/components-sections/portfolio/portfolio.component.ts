@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { TranslateManagerService } from '../../services/translate/translate-manager.service';
 import { AnimateOnScrollDirective } from '../../shared/animation-on-scroll/animate-on-scroll.directive';
-import { SkillsdataService } from '../../services/skills/skillsdata.service';
+import { PortfolioService } from '../../services/portfolio/portfolio.service';
 
 
 @Component({
@@ -14,8 +14,8 @@ import { SkillsdataService } from '../../services/skills/skillsdata.service';
     styleUrl: './portfolio.component.scss'
 })
 export class PortfolioComponent implements OnInit {
-    // skillsdata = inject(SkillsdataService);
 
+    projectsData = inject(PortfolioService);
     activeLanguage: string = 'de';
 
     constructor(private translateManager: TranslateManagerService) { }

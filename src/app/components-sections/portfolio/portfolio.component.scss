@@ -10,5 +10,79 @@ section {
 }
 
 .portfolio-content {
-  @include commonContentStyle();
+  @include commonContentStyle($jc: center, $ai: unset);
+}
+
+.headline-box {
+  padding-top: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // justify-content: center;
+  gap: 50px;
+  width: 100%;
+
+  > p {
+    @include fontSizeWeightColor($si: 16px);
+  }
+}
+
+.h1-vector-box {
+  width: 100%;
+  // @include dFlexAllCenter($ai: center, $jc: center, $g: 32px);
+
+  > h1 {
+    // align-self: center;
+    gap: 32px;
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    @include fontSizeWeightColor($si: var(--font-size-45-90), $we: 700);
+
+    &::before {
+      content: ""; /* Obligatorisch für Pseudoelemente */
+      display: block; /* Wichtig, um Breite/Höhe zu ermöglichen */
+      width: 150px; /* Breite des Vektors */
+      height: 4px; /* Höhe des Vektors */
+      background-color: $primary-bg-purple; /* Farbe des Vektors */
+      border-radius: 4px;
+      align-self: center; /* Abgerundete Ecke auf der Seite, die vom Text wegzeigt */
+      /* top: 50%; (Nicht mehr nötig mit Flexbox am H1) */
+      /* transform: translateY(-50%); (Nicht mehr nötig mit Flexbox am H1) */
+    }
+
+    /* Pseudo-Element für den RECHTEN Vektor */
+    &::after {
+      content: ""; /* Obligatorisch für Pseudoelemente */
+      display: block;
+      /* Wichtig, um Breite/Höhe zu ermöglichen */
+      width: 40%; /* Breite des Vektors */
+      height: 4px; /* Höhe des Vektors */
+      background-color: $primary-bg-purple; /* Farbe des Vektors */
+      border-radius: 4px;
+      align-self: center; /* Abgerundete Ecke auf der Seite, die vom Text wegzeigt */
+      /* top: 50%; (Nicht mehr nötig mit Flexbox am H1) */
+      /* transform: translateY(-50%); (Nicht mehr nötig mit Flexbox am H1) */
+    }
+  }
+}
+
+.purple-vektor {
+  width: 45%;
+  height: 4px;
+  background-color: $primary-bg-purple;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.purple-vektor-1 {
+  width: 100px;
+  height: 4px;
+  background-color: $primary-bg-purple;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.project-section {
+  display: flex;
 }

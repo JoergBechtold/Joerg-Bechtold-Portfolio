@@ -1,5 +1,33 @@
 <section appAnimateOnScroll>
     <div class="portfolio-content">
+        <div class="headline-box">
+            <div class="h1-vector-box">
+                <!-- <div class="purple-vektor-1"></div> -->
+                <h1>Portfolio</h1>
+                <!-- <div class="purple-vektor"></div> -->
+            </div>
 
+            <p>Explore a selection of my work here - Interact with projects to see my skills in action</p>
+        </div>
+
+
+
+        <div class="project-section">
+            <div *ngFor="let singleProject of projectsData.projectBox;" class="project-box">
+                <div class="singel-project">
+                    <h1>{{singleProject.title}}</h1>
+                    <img [src]="singleProject.img"
+                        [alt]="'MY_SKILLS.SKILL_ICON_ALT' | translate: { skillName: singleProject }">
+                    <a [href]="singleProject.liveTestUrl" target="_blank">{{singleProject.title}}</a>
+                    <a [href]="singleProject.githubUrl" target="_blank">{{singleProject.title}}</a>
+                </div>
+            </div>
+
+
+
+
+
+
+        </div>
     </div>
 </section>
