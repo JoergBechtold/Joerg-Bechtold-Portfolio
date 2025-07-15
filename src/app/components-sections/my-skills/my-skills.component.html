@@ -18,7 +18,7 @@
         </div>
 
         <div class="headline-box-grid-item">
-            <div class="h1-p">
+            <div class="h1-box">
                 <div class="headline-vector-box">
                     <h1 [innerHTML]="'MY_SKILLS.HEADLINE' | translate"
                         [ngClass]="{ 'font-size-de': activeLanguage === 'de' }"></h1>
@@ -27,26 +27,30 @@
                     </div>
                 </div>
 
-                <div class="test">
-
+                <div class="headline-p-box">
                     <p [innerHTML]="'MY_SKILLS.DESCRIPTION_SKILLS' | translate"></p>
-                    <div class="placeholder-box"></div>
                 </div>
             </div>
         </div>
 
         <div class="text-box-grid-item">
+
             <div class="text-content">
-                <h2>{{ 'MY_SKILLS.UNDERHEADLINE_PART_1' | translate}}
-                    <span>{{ 'MY_SKILLS.UNDERHEADLINE_PART_2' | translate }}</span>?
-                </h2>
+                <div class="h2-box">
+                    <h2>{{ 'MY_SKILLS.UNDERHEADLINE_PART_1' | translate}}
+                        <span>{{ 'MY_SKILLS.UNDERHEADLINE_PART_2' | translate }}</span>?
+                    </h2>
+                </div>
 
-                <p [innerHTML]="'MY_SKILLS.DESCRIPTION_LEARNING_ENTHUSIASM' | translate"></p>
-
-                <button [innerHTML]="'MY_SKILLS.BUTTON' | translate"></button>
+                <div class="text-p-box">
+                    <p [innerHTML]="'MY_SKILLS.DESCRIPTION_LEARNING_ENTHUSIASM' | translate"></p>
+                </div>
             </div>
 
-            <div class="placeholder-box"></div>
+
+            <div class="button-box">
+                <button [innerHTML]="'MY_SKILLS.BUTTON' | translate"></button>
+            </div>
         </div>
     </div>
 </section>

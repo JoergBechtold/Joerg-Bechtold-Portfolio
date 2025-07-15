@@ -22,15 +22,19 @@ section {
 
   > img {
     position: absolute;
-    // left: clamp(-690px, -715px + 7.8125vw, -565px);
-    // bottom: clamp(-560px, -278px + -14.6875vw, -325px);
     left: -482px;
     bottom: -560px;
     width: 870px;
 
+    @media screen and (max-height: $responsive-height-814) {
+      left: -542px;
+      bottom: -581px;
+    }
+
     @media screen and (max-width: $breakpoint-width-920) {
-      left: clamp(-700px, -816.2667px + 36.3333vw, -482px);
-      bottom: clamp(-560px, -199.6667px + -39.1667vw, -325px);
+      left: clamp(-704px, -811.8621px + 31.7241vw, -520px);
+      bottom: clamp(-368px, -325.1724px + -4.6552vw, -341px);
+      width: clamp(835px, 814.4828px + 6.0345vw, 870px);
     }
   }
 
@@ -41,7 +45,6 @@ section {
       "text-box";
     grid-template-columns: 1fr;
     gap: 70px;
-    // column-gap: 50px;
   }
 }
 
@@ -65,16 +68,15 @@ section {
 }
 
 .skills-items-container {
-  display: flex;
+  @include dFlexAllCenter($jc: flex-start);
   flex-wrap: wrap;
-  // display: grid;
-  // grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
   gap: clamp(60px, 7.7612px + 4.1791vw, 88px);
-  justify-content: flex-start;
-  align-items: center;
   max-width: 100%;
   margin: 0 auto;
-  // row-gap: clamp(35px, 6.7333px + 8.8333vw, 88px);
+
+  @media screen and (max-height: $responsive-height-814) {
+    gap: 50px;
+  }
 
   @media screen and (max-width: 1250px) {
     max-width: 560px;
@@ -86,13 +88,6 @@ section {
     justify-content: center;
     margin-left: unset;
   }
-
-  // @media screen and (max-width: 920px) {
-  //   grid-template-columns: repeat(4, minmax(90px, 1fr));
-
-  //   margin: 0 auto;
-  //   gap: 75px;
-  // }
 
   @media screen and (max-width: $breakpoint-width-920) {
     width: clamp(310px, 54px + 80vw, 790px);
@@ -118,10 +113,13 @@ section {
     width: clamp(48px, 41.6px + 2vw, 60px);
     transition: transform 0.1s ease-out;
     aspect-ratio: 1 / 1;
+
+    @media screen and (max-height: $responsive-height-814) {
+      width: 48px;
+    }
   }
 
   > p {
-    // white-space: pre-wrap;
     text-align: center;
     @include fontSizeWeightColor($si: 16px, $we: 700);
   }
@@ -168,69 +166,44 @@ section.animate {
   z-index: 3;
   grid-area: headline-box;
   height: 100%;
-  display: flex;
-  justify-content: flex-end;
-
-  // display: grid;
-  // grid-template-areas:
-  //   "headline  "
-  //   "headline placeholder";
-  // grid-template-columns: auto auto;
-  // gap: 20px;
-  // align-items: flex-end;
-  // justify-content: flex-end;
+  @include dFlexAllCenter($ai: flex-end, $jc: flex-end);
   opacity: 0;
   transform: translate(100%, -100%);
-  // width: 940px;
 
   @media screen and (max-width: $breakpoint-width-920) {
     width: 100%;
   }
 }
 
-.h1-p {
-  grid-area: headline;
+.h1-box {
   @include dFlexAllCenter($ai: flex-end, $jc: flex-end, $g: 24px);
   flex-direction: column;
-  // justify-content: flex-end;
   width: 100%;
 }
 
-// .h1-p > h1 {
-//   text-align: right;
-
-//   // white-space: nowrap;
-//   @include fontSizeWeightColor(
-//     $si: clamp(45px, 36px + 2.8125vw, 90px),
-//     $we: 700
-//   );
-// }
-
-// .h1-p > h1.font-size-de {
-//   text-align: right;
-
-//   font-size: clamp(32px, 23.4px + 2.6875vw, 75px);
-// }
-
-.test {
+.headline-p-box {
   display: flex;
   gap: 20px;
-}
+  padding-right: 178px;
 
-.test > p {
-  @include fontSizeWeightColor($si: 16px);
-  text-align: right;
-  padding-left: 15px;
+  @media screen and (max-width: $breakpoint-width-920) {
+    padding-right: var(--padding-44-178);
+  }
+
+  > p {
+    @include fontSizeWeightColor($si: 16px);
+    text-align: right;
+    padding-left: var(--padding-38);
+  }
 }
 
 .headline-vector-box {
   display: flex;
   gap: 20px;
-  // justify-content: flex-end;
+
   > h1 {
     text-align: right;
 
-    // white-space: nowrap;
     @include fontSizeWeightColor(
       $si: clamp(45px, 36px + 2.8125vw, 90px),
       $we: 700
@@ -238,69 +211,92 @@ section.animate {
   }
 
   > h1.font-size-de {
-    // text-align: right;
     white-space: nowrap;
     font-size: clamp(32px, 23.4px + 2.6875vw, 75px);
 
     @media screen and (max-width: $breakpoint-width-920) {
-      white-space: unset;
+      white-space: wrap;
+      padding-left: var(--padding-38);
     }
   }
 }
 
 .purple-vector-grid-item {
   z-index: 3;
-  grid-area: vector;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  // transform: translateY(-37px);
-  // height: 199px;
+  @include dFlexAllCenter($jc: flex-start);
+  width: 158px;
+
+  @media screen and (max-width: $breakpoint-width-920) {
+    width: clamp(24px, -47.4667px + 22.3333vw, 158px);
+  }
 }
 
 .purple-vektor {
+  width: 100%;
   height: 4px;
-  width: clamp(96px, -19.6716px + 9.2537vw, 158px);
   background-color: $primary-bg-purple;
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
-
-  // @media screen and (max-width: $breakpoint-width-920) {
-  //   width: clamp(24px, -47.4667px + 22.3333vw, 158px);
-  // }
-  // transform: translateY(55px);
 }
 
-// .translate-up {
-//   transform: translateY(-25px);
-// }
-
 .text-box-grid-item {
-  // grid-area: text-box;
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-start;
+  grid-area: text-box;
   height: 100%;
-  gap: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 20px;
   opacity: 0;
   transform: translate(100%, -100%);
-  // width: 940px;
+}
+
+.button-box {
+  padding-right: 178px;
+
+  @media screen and (max-width: $breakpoint-width-920) {
+    padding-right: var(--padding-44-178);
+  }
+
+  @media screen and (max-width: 640px) {
+    padding-right: 0;
+    align-self: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  > button {
+    @include primaryButton(top, right);
+
+    @media screen and (max-width: 640px) {
+      @include primaryButton(top, center);
+    }
+  }
 }
 
 .text-content {
-  @include dFlexAllCenter($ai: flex-end, $g: 24px);
+  @include dFlexAllCenter($ai: flex-end, $jc: flex-end, $g: 24px);
   flex-direction: column;
+  width: 100%;
+  padding-right: 178px;
 
-  > p {
-    @include fontSizeWeightColor($si: 16px);
-    text-align: right;
+  @media screen and (max-width: $breakpoint-width-920) {
+    padding-right: var(--padding-44-178);
+    padding-left: 15px;
   }
+}
+
+.h2-box {
+  display: flex;
+  gap: 20px;
 
   > h2 {
     @include fontSizeWeightColor($si: 32px, $we: 700);
     text-align: right;
 
-    // white-space: nowrap;
+    @media screen and (max-width: $breakpoint-width-920) {
+      padding-left: var(--padding-38);
+    }
 
     > span {
       white-space: nowrap;
@@ -309,20 +305,24 @@ section.animate {
         $we: 700,
         $co: $primary-bg-purple
       );
-    }
-  }
 
-  > button {
-    @include primaryButton(top, right);
+      @media screen and (max-width: $breakpoint-width-920) {
+        white-space: wrap;
+      }
+    }
   }
 }
 
-.placeholder-box {
-  grid-area: placeholder;
-  width: clamp(96px, -19.6716px + 9.2537vw, 158px);
-  height: 100%;
+.text-p-box {
+  display: flex;
+  gap: 20px;
 
-  // @media screen and (max-width: $breakpoint-width-920) {
-  //   width: clamp(24px, -47.4667px + 22.3333vw, 158px);
-  // }
+  > p {
+    @include fontSizeWeightColor($si: 16px);
+    text-align: right;
+  }
+
+  @media screen and (max-width: $breakpoint-width-920) {
+    padding-left: var(--padding-38);
+  }
 }
