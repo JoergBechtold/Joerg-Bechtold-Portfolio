@@ -13,6 +13,11 @@
 
   "MAIN": {},
 
+  "LANDSCAPE_OVERLAY": {
+    "H2": "Please rotate your device",
+    "P": "This application is optimized for use in portrait mode."
+  },
+
   "ABOUT_ME": {
     "HEADLINE": "About me",
     "DESCRIPTION_PART1": "Write some information about yourself that is IT related",

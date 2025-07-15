@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { TranslateManagerService } from '../../services/translate/translate-manager.service';
 import { AnimateOnScrollDirective } from '../../shared/animation-on-scroll/animate-on-scroll.directive';
+import { SkillsdataService } from '../../services/skills/skillsdata.service';
+
 
 @Component({
     selector: 'app-portfolio',
@@ -12,6 +14,8 @@ import { AnimateOnScrollDirective } from '../../shared/animation-on-scroll/anima
     styleUrl: './portfolio.component.scss'
 })
 export class PortfolioComponent implements OnInit {
+    // skillsdata = inject(SkillsdataService);
+
     activeLanguage: string = 'de';
 
     constructor(private translateManager: TranslateManagerService) { }

@@ -12,6 +12,11 @@
   },
   "MAIN": {},
 
+  "LANDSCAPE_OVERLAY": {
+    "H2": "Bitte drehen Sie Ihr Gerät",
+    "P": "Diese Anwendung ist für die Nutzung im Hochformat optimiert."
+  },
+
   "ABOUT_ME": {
     "HEADLINE": "Über mich",
     "DESCRIPTION_PART1": "Schreib etwas über dich, das IT-bezogen ist.",
