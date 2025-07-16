@@ -2,7 +2,7 @@
 @use "../../../assets/styles/mixins.scss" as *;
 
 section {
-  @include commonSectionStyles();
+  @include commonSectionStyles($hei-desk: unset, $hei-mob: unset);
 
   @media screen and (max-width: 1250px) {
     height: unset;
@@ -10,7 +10,8 @@ section {
 }
 
 .portfolio-content {
-  @include commonContentStyle($jc: center, $ai: unset);
+  flex-direction: column;
+  @include commonContentStyle($jc: center, $ai: center);
 }
 
 .headline-box {
@@ -18,51 +19,44 @@ section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  // justify-content: center;
-  gap: 50px;
+  gap: 20px;
   width: 100%;
 
   > p {
+    text-align: center;
+    padding-inline: 44px;
     @include fontSizeWeightColor($si: 16px);
   }
 }
 
 .h1-vector-box {
-  width: 100%;
-  // @include dFlexAllCenter($ai: center, $jc: center, $g: 32px);
+  width: fit-content;
 
   > h1 {
-    // align-self: center;
-    gap: 32px;
-    display: flex;
-    justify-content: flex-end;
+    @include dFlexAllCenter();
     position: relative;
     @include fontSizeWeightColor($si: var(--font-size-45-90), $we: 700);
 
     &::before {
-      content: ""; /* Obligatorisch für Pseudoelemente */
-      display: block; /* Wichtig, um Breite/Höhe zu ermöglichen */
-      width: 150px; /* Breite des Vektors */
-      height: 4px; /* Höhe des Vektors */
-      background-color: $primary-bg-purple; /* Farbe des Vektors */
+      content: "";
+      position: absolute;
+      right: 108%;
+      display: block;
+      width: clamp(24px, -1.2px + 7.875vw, 150px);
+      height: 4px;
+      background-color: $primary-bg-purple;
       border-radius: 4px;
-      align-self: center; /* Abgerundete Ecke auf der Seite, die vom Text wegzeigt */
-      /* top: 50%; (Nicht mehr nötig mit Flexbox am H1) */
-      /* transform: translateY(-50%); (Nicht mehr nötig mit Flexbox am H1) */
     }
 
-    /* Pseudo-Element für den RECHTEN Vektor */
     &::after {
-      content: ""; /* Obligatorisch für Pseudoelemente */
+      content: "";
+      position: absolute;
+      left: 108%;
       display: block;
-      /* Wichtig, um Breite/Höhe zu ermöglichen */
-      width: 40%; /* Breite des Vektors */
-      height: 4px; /* Höhe des Vektors */
-      background-color: $primary-bg-purple; /* Farbe des Vektors */
+      width: 800px;
+      height: 4px;
+      background-color: $primary-bg-purple;
       border-radius: 4px;
-      align-self: center; /* Abgerundete Ecke auf der Seite, die vom Text wegzeigt */
-      /* top: 50%; (Nicht mehr nötig mit Flexbox am H1) */
-      /* transform: translateY(-50%); (Nicht mehr nötig mit Flexbox am H1) */
     }
   }
 }
@@ -84,5 +78,26 @@ section {
 }
 
 .project-section {
+  @include dFlexAllCenter($ai: center, $jc: center, $g: 25px);
+  flex-direction: column;
+}
+
+.project-box {
+  &:nth-child(odd) {
+    .singel-project {
+      flex-direction: row;
+    }
+  }
+
+  &:nth-child(even) {
+    .singel-project {
+      flex-direction: row-reverse;
+    }
+  }
+}
+
+.singel-project {
   display: flex;
+  justify-content: center;
+  align-items: center;
 }

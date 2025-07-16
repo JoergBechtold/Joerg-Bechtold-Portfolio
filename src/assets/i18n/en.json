@@ -46,6 +46,12 @@
       "JOIN_DESCRIPTION": "Task manager inspired by the Kanban System. Create and organize tasks using drag and drop functions, assign users and categories.",
       "EL_POLLO_LOCO_DESCRIPTION": "Jump, run and throw game based on object-oriented approach. Help Pepe to find coins and tabasco salsa to fight against the crazy hen.",
       "DA_BUBBLE_DESCRIPTION": "This App is a Slack Clone App. It revolutionizes team communication and collaboration with its intuitive interface, real-time messaging, and robust channel organization."
+    },
+
+    "ALT_TEXT": {
+      "JOIN_ALT": "Screenshot of the Join task manager app running on a laptop",
+      "EL_POLLO_LOCO_ALT": "Screenshot of the EL Pollo Loco task manager app running on a laptop",
+      "DA_BUBBLE_ALT": "Screenshot of the DA Bubble task manager app running on a laptop"
     }
   },
 

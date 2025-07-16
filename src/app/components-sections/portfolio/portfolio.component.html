@@ -16,14 +16,18 @@
 
             <div *ngFor="let singleProject of projectsService.projectBox;" class="project-box">
                 <div class="singel-project">
-                    <h1>{{singleProject.title}}</h1>
-                    <img [src]="singleProject.img"
-                        [alt]="'MY_SKILLS.SKILL_ICON_ALT' | translate: { skillName: singleProject }">
+                    <div class="img-box">
+                        <img [src]="singleProject.img" [alt]="singleProject.imgAlt | translate">
+                    </div>
 
-                    <p>{{ singleProject.description | translate }}</p>
+                    <div class="content-box">
+                        <h1>{{singleProject.title}}</h1>
+                        <p>{{ singleProject.description | translate }}</p>
 
-                    <a [href]="singleProject.liveTestUrl" target="_blank">{{singleProject.title}}</a>
-                    <a [href]="singleProject.githubUrl" target="_blank">{{singleProject.title}}</a>
+                        <a [href]="singleProject.liveTestUrl" target="_blank">{{singleProject.title}}</a>
+                        <a [href]="singleProject.githubUrl" target="_blank">{{singleProject.title}}</a>
+                    </div>
+
                 </div>
             </div>
 
