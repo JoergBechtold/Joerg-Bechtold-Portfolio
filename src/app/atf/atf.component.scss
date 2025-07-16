@@ -12,6 +12,10 @@ section {
   overflow: hidden;
   @include dFlexAllCenter();
 
+  @media screen and (min-width: $breakpoint-min-width) {
+    height: 50dvh;
+  }
+
   @media screen and (max-width: $breakpoint-width-920) {
     padding-top: var(--header-height-responsive);
   }

@@ -1,9 +1,8 @@
+@use "../../../assets/styles/variables.scss" as *;
+@use "../../../assets/styles/mixins.scss" as *;
 
-@use '../../../assets/styles/variables.scss' as*;
-@use '../../../assets/styles/mixins.scss' as*;
-
-section{
-  @include dFlexAllCenter($jc: space-between,$g: 32px);
+section {
+  @include dFlexAllCenter($jc: space-between, $g: 32px);
 
   > a {
     transition: transform 0.2s ease-in-out;
@@ -13,12 +12,14 @@ section{
     transform-origin: left center;
 
     &:hover {
-        transform: scale(1.4);
+      transform: scale(1.4);
     }
 
-    > img{
-        width: 100%;
-        display: block;
+    > img {
+      width: 100%;
+      display: block;
+      border-radius: 50%;
+      box-shadow: 4px 4px 4px 0px #00000040;
     }
   }
 }

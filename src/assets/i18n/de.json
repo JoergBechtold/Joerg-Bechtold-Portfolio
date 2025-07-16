@@ -41,6 +41,8 @@
   },
 
   "PORTFOLIO": {
+    "HEADLINE_DESCRIPTION": "Entdecken Sie hier eine Auswahl meiner Arbeiten - Interagieren Sie mit Projekten, um meine Fähigkeiten in Aktion zu sehen",
+
     "PROJECTS": {
       "JOIN_DESCRIPTION": "Aufgabenmanager, inspiriert vom Kanban-System. Erstelle und organisiere Aufgaben per Drag-and-Drop, weise Benutzern und Kategorien zu.",
       "EL_POLLO_LOCO_DESCRIPTION": "Jump, Run and Throw Spiel basierend auf einem objektorientierten Ansatz. Hilf Pepe, Münzen und Tabasco-Salsa zu finden, um gegen das verrückte Huhn zu kämpfen.",

@@ -42,6 +42,8 @@
   },
 
   "PORTFOLIO": {
+    "HEADLINE_DESCRIPTION": "Explore a selection of my work here - Interact with projects to see my skills in action",
+
     "PROJECTS": {
       "JOIN_DESCRIPTION": "Task manager inspired by the Kanban System. Create and organize tasks using drag and drop functions, assign users and categories.",
       "EL_POLLO_LOCO_DESCRIPTION": "Jump, run and throw game based on object-oriented approach. Help Pepe to find coins and tabasco salsa to fight against the crazy hen.",

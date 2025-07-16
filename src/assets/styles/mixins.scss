@@ -7,6 +7,12 @@
   gap: $g;
 }
 
+@mixin paddingTopMinWidthBreakpoint() {
+  @media screen and (min-width: $breakpoint-min-width) {
+    padding-block: 100px;
+  }
+}
+
 @mixin headerLinkLogoStyle() {
   width: 105px;
   height: auto;
@@ -64,6 +70,14 @@
   width: 100%;
   background-color: var(--primary-bg-gray);
   @include dFlexAllCenter();
+
+  @media screen and (min-width: $breakpoint-min-width) {
+    height: unset;
+  }
+
+  @media screen and (max-width: 1250px) {
+    height: unset;
+  }
 
   @media screen and (max-width: $breakpoint-width-920) {
     padding-block: 50px;

@@ -8,6 +8,11 @@
   background-color: $primary-bg-gray;
   border-top: 4px solid $primary-bg-green;
   @include paddingLeftRightHolePage();
+
+  @media screen and (min-width: $breakpoint-min-width) {
+    width: $max-width-1920;
+    justify-self: center;
+  }
 }
 
 section {

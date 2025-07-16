@@ -3,6 +3,11 @@
 
 section {
   @include commonSectionStyles();
+  @include paddingTopMinWidthBreakpoint();
+
+  @media screen and (min-width: $breakpoint-min-width) {
+    height: unset;
+  }
 
   @media screen and (max-width: 1250px) {
     height: unset;

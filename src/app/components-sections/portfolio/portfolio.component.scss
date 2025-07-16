@@ -4,7 +4,9 @@
 section {
   @include commonSectionStyles($hei-desk: unset, $hei-mob: unset);
 
-  @media screen and (max-width: 1250px) {
+  @include paddingTopMinWidthBreakpoint();
+
+  @media screen and (max-width: $breakpoint-min-width) {
     height: unset;
   }
 }
@@ -62,14 +64,21 @@ section {
 }
 
 .project-section {
-  @include dFlexAllCenter($ai: center, $jc: center, $g: 25px);
+  @include dFlexAllCenter(
+    $ai: center,
+    $jc: center,
+    $g: var(--gap-row-portfolio-section)
+  );
   flex-direction: column;
-  padding-inline: 96px;
+  padding-inline: 50px;
+  padding-block: 78px;
+  width: 100%;
 }
 
 .project-box {
-  max-width: 80%;
   display: flex;
+  justify-content: center;
+  align-items: center;
 
   &:nth-child(odd) {
     .singel-project {
@@ -97,11 +106,11 @@ section {
 
 .singel-project {
   height: 100%;
-  @include dFlexAllCenter($g: 45px);
+  @include dFlexAllCenter($g: var(--gap-column-portfolio-section));
 }
 
 .img-box {
-  flex: 1;
+  width: max(450px, min(535px, 100%));
   @include dFlexAllCenter();
 
   > img {
@@ -110,13 +119,15 @@ section {
 }
 
 .content-box {
-  flex: 1;
+  // flex: 1;
+  max-width: 535px;
+
   @include dFlexAllCenter($ai: flex-start, $g: 25px);
   flex-direction: column;
 }
 
 .content-text-box {
-  width: 60%;
+  width: 100%;
   @include dFlexAllCenter($ai: flex-start, $g: 15px);
   flex-direction: column;
 
@@ -140,18 +151,11 @@ section {
     transition: var(--transition-btn);
 
     > a {
+      white-space: nowrap;
       @include fontSizeWeightColor($si: var(--font-size-18-23));
     }
   }
 }
-
-// .btn-live-test {
-//   background-color: $primary-bg-purple;
-
-//   &:hover {
-//     background-color: $primary-bg-green;
-//   }
-// }
 
 .btn-github,
 .btn-live-test {
