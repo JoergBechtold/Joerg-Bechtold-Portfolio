@@ -96,7 +96,7 @@
   padding: $padding-block-11-15 $padding-inline-24-30 $padding-block-11-15
     $padding-inline-24-30;
   background-color: $primary-bg-green;
-  @include fontSizeWeightColor($si: clamp(18px, 17px + 0.3125vw, 23px));
+  @include fontSizeWeightColor($si: var(--font-size-18-23));
   transition: all 0.3s ease-in-out;
   transform-origin: $tra-ori-x $tra-ori-y;
   box-shadow: 4px 4px 4px 0px #00000040;

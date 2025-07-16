@@ -28,7 +28,7 @@
 
   > a {
     @include fontSizeWeightColor();
-    transition: color 0.3s ease;
+    transition: var(--transition-btn);
     cursor: pointer;
 
     &:hover {
@@ -55,7 +55,7 @@
     border-radius: 10px;
     padding: 5px 8px 5px 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: var(--transition-btn);
 
     &.active-button {
       background-color: $primary-bg-green;

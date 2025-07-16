@@ -43,10 +43,14 @@ $distance-right-left-about-me: clamp(53px, -238.64px + 31.7vw, 370px);
   --animation-delay-about-me: 0.2s;
   --animation-time-skills: 1.1s;
 
+  //transition button
+  --transition-btn: all 0.125s ease-in-out;
+
   //padding
   --padding-44-178: clamp(44px, -34.5517px + 23.1034vw, 178px);
   --padding-38: 38px;
 
   //font-size
   --font-size-45-90: clamp(45px, 36px + 2.8125vw, 90px);
+  --font-size-18-23: clamp(18px, 17px + 0.3125vw, 23px);
 }

@@ -2,9 +2,7 @@
     <div class="portfolio-content">
         <div class="headline-box">
             <div class="h1-vector-box">
-                <!-- <div class="purple-vektor-1"></div> -->
                 <h1>Portfolio</h1>
-                <!-- <div class="purple-vektor"></div> -->
             </div>
 
             <p>Explore a selection of my work here - Interact with projects to see my skills in action</p>
@@ -21,11 +19,19 @@
                     </div>
 
                     <div class="content-box">
-                        <h1>{{singleProject.title}}</h1>
-                        <p>{{ singleProject.description | translate }}</p>
+                        <div class="content-text-box">
+                            <h2>{{singleProject.title}}</h2>
+                            <p>{{ singleProject.description | translate }}</p>
+                        </div>
 
-                        <a [href]="singleProject.liveTestUrl" target="_blank">{{singleProject.title}}</a>
-                        <a [href]="singleProject.githubUrl" target="_blank">{{singleProject.title}}</a>
+
+                        <div class="content-btn-box">
+                            <button class="btn-live-test"><a [href]="singleProject.liveTestUrl" target="_blank">Live
+                                    test</a></button>
+                            <button class="btn-github"><a [href]="singleProject.githubUrl"
+                                    target="_blank">Github</a></button>
+                        </div>
+
                     </div>
 
                 </div>

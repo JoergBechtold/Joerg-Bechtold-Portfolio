@@ -61,31 +61,25 @@ section {
   }
 }
 
-.purple-vektor {
-  width: 45%;
-  height: 4px;
-  background-color: $primary-bg-purple;
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
-}
-
-.purple-vektor-1 {
-  width: 100px;
-  height: 4px;
-  background-color: $primary-bg-purple;
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
-}
-
 .project-section {
   @include dFlexAllCenter($ai: center, $jc: center, $g: 25px);
   flex-direction: column;
+  padding-inline: 96px;
 }
 
 .project-box {
+  max-width: 80%;
+  display: flex;
+
   &:nth-child(odd) {
     .singel-project {
       flex-direction: row;
+    }
+
+    .content-box,
+    .content-text-box {
+      align-items: flex-start;
+      text-align: left;
     }
   }
 
@@ -93,11 +87,79 @@ section {
     .singel-project {
       flex-direction: row-reverse;
     }
+    .content-box,
+    .content-text-box {
+      align-items: flex-end;
+      text-align: right;
+    }
   }
 }
 
 .singel-project {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 100%;
+  @include dFlexAllCenter($g: 45px);
+}
+
+.img-box {
+  flex: 1;
+  @include dFlexAllCenter();
+
+  > img {
+    width: 100%;
+  }
+}
+
+.content-box {
+  flex: 1;
+  @include dFlexAllCenter($ai: flex-start, $g: 25px);
+  flex-direction: column;
+}
+
+.content-text-box {
+  width: 60%;
+  @include dFlexAllCenter($ai: flex-start, $g: 15px);
+  flex-direction: column;
+
+  > h2 {
+    @include fontSizeWeightColor($si: 32px, $we: 700, $co: $primary-bg-purple);
+  }
+
+  > p {
+    @include fontSizeWeightColor($si: 16px);
+  }
+}
+
+.content-btn-box {
+  @include dFlexAllCenter($jc: flex-start, $g: 60px);
+
+  > button {
+    padding: $padding-block-11-15 $padding-inline-24-30 $padding-block-11-15
+      $padding-inline-24-30;
+    border-radius: 10px;
+    box-shadow: 4px 4px 4px 0px #00000040;
+    transition: var(--transition-btn);
+
+    > a {
+      @include fontSizeWeightColor($si: var(--font-size-18-23));
+    }
+  }
+}
+
+// .btn-live-test {
+//   background-color: $primary-bg-purple;
+
+//   &:hover {
+//     background-color: $primary-bg-green;
+//   }
+// }
+
+.btn-github,
+.btn-live-test {
+  background-color: transparent;
+  border: 1px solid $primary-bg-green;
+
+  &:hover {
+    background-color: $primary-bg-purple;
+    border: 1px solid $primary-bg-purple;
+  }
 }
