@@ -40,6 +40,14 @@
     "BUTTON": "Kontakt aufnehmen"
   },
 
+  "PORTFOLIO": {
+    "PROJECTS": {
+      "JOIN_DESCRIPTION": "Aufgabenmanager, inspiriert vom Kanban-System. Erstelle und organisiere Aufgaben per Drag-and-Drop, weise Benutzern und Kategorien zu.",
+      "EL_POLLO_LOCO_DESCRIPTION": "Jump, Run and Throw Spiel basierend auf einem objektorientierten Ansatz. Hilf Pepe, Münzen und Tabasco-Salsa zu finden, um gegen das verrückte Huhn zu kämpfen.",
+      "DA_BUBBLE_DESCRIPTION": "Diese App ist ein Slack-Klon. Sie revolutioniert Teamkommunikation und Zusammenarbeit mit ihrer intuitiven Benutzeroberfläche, Echtzeit-Nachrichten und robuster Kanalorganisation."
+    }
+  },
+
   "LINK": {
     "LEGAL_NOTICE": "Impressum",
     "PRIVACY_POLICY": "Datenschutzerklärung"

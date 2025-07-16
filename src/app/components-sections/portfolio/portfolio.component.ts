@@ -14,8 +14,8 @@ import { PortfolioService } from '../../services/portfolio/portfolio.service';
     styleUrl: './portfolio.component.scss'
 })
 export class PortfolioComponent implements OnInit {
-
-    projectsData = inject(PortfolioService);
+    portfolioService = inject(PortfolioService);
+    projectsService = inject(PortfolioService);
     activeLanguage: string = 'de';
 
     constructor(private translateManager: TranslateManagerService) { }

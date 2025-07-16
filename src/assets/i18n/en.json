@@ -41,6 +41,14 @@
     "BUTTON": "Get in touch"
   },
 
+  "PORTFOLIO": {
+    "PROJECTS": {
+      "JOIN_DESCRIPTION": "Task manager inspired by the Kanban System. Create and organize tasks using drag and drop functions, assign users and categories.",
+      "EL_POLLO_LOCO_DESCRIPTION": "Jump, run and throw game based on object-oriented approach. Help Pepe to find coins and tabasco salsa to fight against the crazy hen.",
+      "DA_BUBBLE_DESCRIPTION": "This App is a Slack Clone App. It revolutionizes team communication and collaboration with its intuitive interface, real-time messaging, and robust channel organization."
+    }
+  },
+
   "LINK": {
     "LEGAL_NOTICE": "Legal Notice",
     "PRIVACY_POLICY": "Privacy Policy"

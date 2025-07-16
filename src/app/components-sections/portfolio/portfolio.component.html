@@ -13,11 +13,15 @@
 
 
         <div class="project-section">
-            <div *ngFor="let singleProject of projectsData.projectBox;" class="project-box">
+
+            <div *ngFor="let singleProject of projectsService.projectBox;" class="project-box">
                 <div class="singel-project">
                     <h1>{{singleProject.title}}</h1>
                     <img [src]="singleProject.img"
                         [alt]="'MY_SKILLS.SKILL_ICON_ALT' | translate: { skillName: singleProject }">
+
+                    <p>{{ singleProject.description | translate }}</p>
+
                     <a [href]="singleProject.liveTestUrl" target="_blank">{{singleProject.title}}</a>
                     <a [href]="singleProject.githubUrl" target="_blank">{{singleProject.title}}</a>
                 </div>

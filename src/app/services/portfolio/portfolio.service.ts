@@ -1,11 +1,23 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
+import { TranslateManagerService } from '../../services/translate/translate-manager.service';
+
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class PortfolioService {
+export class PortfolioService implements OnInit {
+  activeLanguage: string = 'de';
 
-  constructor() { }
+  constructor(private translateManager: TranslateManagerService) {
+
+  }
+
+  ngOnInit(): void {
+    this.translateManager.activeLanguage$.subscribe(lang => {
+      this.activeLanguage = lang;
+    });
+  }
 
   projectBox = [
 
@@ -14,7 +26,7 @@ export class PortfolioService {
       "title": "Join",
       "img": '../../../assets/img/portfolio/JOIN.png',
       "technologies": ["Angular", "TypeScript", "HTML", "CSS", "Firebase"],
-      "description": "Task manager inspired by the Kanban System. Create and organize tasks using drag and drop functions, assign users and categories.",
+      "description": "PORTFOLIO.PROJECTS.JOIN_DESCRIPTION",
       "liveTestUrl": "https://projekte.joergbechtold.com/join",
       "githubUrl": "https://github.com/JoergBechtold/Join.git"
     },
@@ -24,7 +36,7 @@ export class PortfolioService {
       "title": "El Pollo Loco",
       "img": '../../../assets/img/portfolio/POLLO_LOCO.png',
       "technologies": ["JavaScript", "HTML", "CSS"],
-      "description": "Jump, run and throw game based on object-oriented approach. Help Pepe to find coins and tabasco salsa to fight against the crazy hen.",
+      "description": "PORTFOLIO.PROJECTS.EL_POLLO_LOCO_DESCRIPTION",
       "liveTestUrl": "https://projekte.joergbechtold.com/el-pollo-loco",
       "githubUrl": "https://github.com/JoergBechtold/El-Pollo-Loco.git"
     },
@@ -34,7 +46,7 @@ export class PortfolioService {
     //   "title": "DA Bubble",
     //   "img": '../../../assets/img/portfolio/DA_BUBBLE.png',
     //   "technologies": ["Angular", "TypeScript", "Firebase"],
-    //   "description": "This App is a Slack Clone App. It revolutionizes team communication and collaboration with its intuitive interface, real-time messaging, and robust channel organization.",
+    //   "description": "PORTFOLIO.PROJECTS.DA_BUBBLE_DESCRIPTION",
     //   "liveTestUrl": "",
     //   "githubUrl": ""
     // },
