@@ -59,7 +59,12 @@
   opacity: 0;
   --animation-start-transform: #{$animationStartTransform};
   animation: slideIn var(--animation-time-skills) ease-out forwards;
-  animation-delay: var(--animation-delay, var(--animation-delay-about-me, 0s));
+  animation-delay: var(--animation-delay-about-me, 0s);
+}
+
+@mixin headlinePorfolioAnimation($animation) {
+  animation: $animation var(--animation-time-portfolio) ease-out forwards;
+  animation-delay: var(--animation-delay-portfolio, 0s);
 }
 
 @mixin commonSectionStyles(

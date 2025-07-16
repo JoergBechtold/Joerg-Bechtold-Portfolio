@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { TranslateManagerService } from '../../services/translate/translate-manager.service';
 import { AnimateOnScrollDirective } from '../../shared/animation-on-scroll/animate-on-scroll.directive';
-import { PortfolioService, Project } from '../../services/portfolio/portfolio.service'; // <-- Project-Interface importieren!
+import { PortfolioService, Project } from '../../services/portfolio/portfolio.service';
 
 
 @Component({
     selector: 'app-portfolio',
     standalone: true,
-    imports: [CommonModule, TranslateModule], // <-- AnimateOnScrollDirective hinzufügen!
+    imports: [CommonModule, TranslateModule, AnimateOnScrollDirective],
     templateUrl: './portfolio.component.html',
     styleUrl: './portfolio.component.scss'
 })
