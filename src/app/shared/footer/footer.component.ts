@@ -18,7 +18,7 @@ import { SocialMediaComponent } from '../social-media/social-media.component';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
-  activeLanguage: string = '';
+  activeLanguage: string = 'de';
 
   constructor(
     private translate: TranslateService,

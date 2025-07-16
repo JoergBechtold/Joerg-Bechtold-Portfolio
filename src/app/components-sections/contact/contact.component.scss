@@ -1,0 +1,174 @@
+@use "../../../assets/styles/variables.scss" as *;
+@use "../../../assets/styles/mixins.scss" as *;
+
+section {
+  @include commonSectionStyles();
+  @include paddingTopMinWidthBreakpoint();
+}
+
+.contact-content {
+  @include commonContentStyle();
+}
+
+.headline-box {
+  padding-top: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.h1-vector-box {
+  width: fit-content;
+
+  > h1 {
+    @include dFlexAllCenter();
+    position: relative;
+    @include fontSizeWeightColor($si: var(--font-size-45-90), $we: 700);
+
+    &::before {
+      content: "";
+      position: absolute;
+      right: 108%;
+      display: block;
+      width: clamp(24px, -1.2px + 7.875vw, 150px);
+      height: 4px;
+      background-color: $primary-bg-purple;
+      border-radius: 4px;
+    }
+  }
+}
+
+.contact-form-container {
+  background-color: $primary-bg-gray; // Same as section background for seamless look
+  border-radius: 8px;
+  padding: 40px;
+  max-width: 500px; // Limit the form width
+  width: 100%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); // Subtle shadow
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; // Space between form groups
+}
+
+.form-group {
+  position: relative;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid $primary-bg-purple; // Purple border
+  border-radius: 5px;
+  background-color: $primary-bg-gray;
+  color: white;
+  font-size: 1rem;
+  outline: none; // Remove default outline
+  transition: border-color 0.3s ease; // Smooth transition for focus
+
+  &:focus {
+    border-color: $primary-bg-green; // Lighter purple on focus
+  }
+
+  &:hover {
+    border-color: $primary-bg-green; // For potential future absolute positioning of labels or icons
+  }
+
+  &::placeholder {
+    color: lighten(white, 30%); // Lighter placeholder text
+  }
+}
+
+textarea {
+  resize: vertical; // Allow vertical resizing
+  min-height: 120px; // Minimum height for textarea
+}
+
+.privacy-checkbox {
+  display: flex;
+  align-items: flex-start; // Align checkbox at the start of text
+  gap: 10px; // Space between checkbox and text
+
+  input[type="checkbox"] {
+    width: 20px; // Adjust checkbox size
+    height: 20px;
+    min-width: 20px; // Prevent shrinking on flex container
+    border: 1px solid $primary-bg-purple;
+    background-color: $primary-bg-gray;
+    appearance: none; // Hide default checkbox
+    cursor: pointer;
+    position: relative;
+    top: 2px;
+
+    &:hover {
+      border-color: $primary-bg-green; // For potential future absolute positioning of labels or icons
+    } // Slightly adjust vertical alignment with text
+
+    &:checked {
+      background-color: $primary-bg-purple; // Fill with purple when checked
+      border-color: $primary-bg-purple;
+
+      &::after {
+        content: "\2713"; // Unicode checkmark
+        display: block;
+        color: white;
+        font-size: 14px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+
+  label {
+    color: white;
+    font-size: 0.95rem;
+
+    .privacy-link {
+      color: $primary-bg-purple;
+      text-decoration: none; // No underline
+      &:hover {
+        text-decoration: underline; // Underline on hover
+      }
+    }
+  }
+}
+
+.submit-button {
+  background-color: gray;
+  color: white;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease; // Smooth transitions
+
+  &:hover {
+    background-color: darken(gray, 10%); // Slightly darker on hover
+    transform: translateY(-2px); // Slight lift effect
+  }
+
+  &:active {
+    transform: translateY(0); // Reset on click
+  }
+}

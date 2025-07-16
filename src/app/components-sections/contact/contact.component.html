@@ -1,1 +1,58 @@
-<p>contact works!</p>
+<section>
+    <div class="contact-content">
+        <div class="headline-box">
+            <div class="h1-vector-box">
+                <h1>Contact</h1>
+            </div>
+        </div>
+
+        <div class="text-content">
+            <h2>Got a problem to solve?</h2>
+            <p>Encourage people to contact you and describe what role you are interested in. Show that you will add
+                value to their projects through your work.</p>
+            <p>Need a Frontend developer? <b>Contact me!</b></p>
+        </div>
+
+        <div class="contact-form-container">
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="name" class="visually-hidden">Your name</label>
+                    <input type="text" id="name" name="name" placeholder="Your name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="visually-hidden">Your email</label>
+                    <input type="email" id="email" name="email" placeholder="Your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message" class="visually-hidden">Your message</label>
+                    <textarea id="message" name="message" placeholder="Your message" rows="6" required></textarea>
+                </div>
+
+                <div class="form-group privacy-checkbox">
+                    <input type="checkbox" id="privacy" name="privacy" required>
+                    <label for="privacy">
+                        I've read the <a class="" [routerLink]="getRouterLink('privacyPolicy')"
+                            [innerHTML]="'LINK.PRIVACY_POLICY' | translate"></a> and agree to the processing of
+                        my data as outlined.
+                    </label>
+                </div>
+
+                <button type="submit" class="submit-button">Send message :)</button>
+            </form>
+        </div>
+
+        <div class="arrow-scroll-top">
+            <div class="img-box">
+                <svg width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="1" y="1" width="37" height="37" rx="18.5" stroke="white" stroke-width="2" />
+                    <path
+                        d="M18 15.828L13.343 20.485C12.9526 20.8755 12.3195 20.8755 11.929 20.485C11.5386 20.0945 11.5386 19.4615 11.929 19.071L18.2929 12.7071C18.6834 12.3166 19.3166 12.3166 19.7071 12.7071L26.071 19.071C26.4615 19.4615 26.4615 20.0945 26.071 20.485C25.6806 20.8755 25.0475 20.8755 24.657 20.485L20 15.828L20 27C20 27.5523 19.5523 28 19 28C18.4477 28 18 27.5523 18 27L18 15.828Z"
+                        fill="white" />
+                </svg>
+            </div>
+        </div>
+    </div>
+
+</section>
