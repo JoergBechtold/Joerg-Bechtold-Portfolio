@@ -1,9 +1,9 @@
-<section appAnimateOnScroll>
+<section>
     <div class="skills-content">
 
         <img src="../../../assets/img/background/GREEN-SHADOW-SKILLS.png" alt="">
 
-        <div class="content-left">
+        <div appAnimateOnScroll class="content-left">
             <div class="skills-items-container">
                 <div *ngFor="let singleSkill of skillsdata.skillsBox; let i = index"
                     [style.--animation-delay]="i * 0.08 + 's'" class="skill-item-box">
@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <div class="headline-box-grid-item">
+        <div appAnimateOnScroll class="headline-box-grid-item">
             <div class="h1-box">
                 <div class="headline-vector-box">
                     <h1 [innerHTML]="'MY_SKILLS.HEADLINE' | translate"
@@ -32,7 +32,7 @@
             </div>
         </div>
 
-        <div class="text-box-grid-item">
+        <div appAnimateOnScroll class="text-box-grid-item">
             <div class="text-content">
                 <div class="h2-box">
                     <h2>{{ 'MY_SKILLS.UNDERHEADLINE_PART_1' | translate}}

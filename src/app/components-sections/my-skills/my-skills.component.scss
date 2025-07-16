@@ -136,36 +136,36 @@ section {
   }
 }
 
-section.animate {
-  .skill-item {
-    @include applySlideAnimation(translate(-100%, 100%));
-  }
+// section.animate {
+//   .skill-item {
+//     @include applySlideAnimation(translate(-100%, 100%));
+//   }
 
-  .headline-box-grid-item,
-  .text-box-grid-item {
-    @include applySlideAnimation(translate(100%, -100%));
-  }
-}
+//   .headline-box-grid-item,
+//   .text-box-grid-item {
+//     @include applySlideAnimation(translate(100%, -100%));
+//   }
+// }
 
-@keyframes slideIn {
-  0% {
-    opacity: 0;
-    transform: var(--animation-start-transform);
-  }
-  20% {
-    opacity: 0.1;
-  }
-  40% {
-    opacity: 0.2;
-  }
-  60% {
-    opacity: 0.3;
-  }
-  100% {
-    opacity: 1;
-    transform: translate(0, 0);
-  }
-}
+// @keyframes slideIn {
+//   0% {
+//     opacity: 0;
+//     transform: var(--animation-start-transform);
+//   }
+//   20% {
+//     opacity: 0.1;
+//   }
+//   40% {
+//     opacity: 0.2;
+//   }
+//   60% {
+//     opacity: 0.3;
+//   }
+//   100% {
+//     opacity: 1;
+//     transform: translate(0, 0);
+//   }
+// }
 
 .headline-box-grid-item {
   z-index: 3;
@@ -173,7 +173,7 @@ section.animate {
   height: 100%;
   @include dFlexAllCenter($ai: flex-end, $jc: flex-end);
   opacity: 0;
-  transform: translate(100%, -100%);
+  transform: translate(50%, -50%);
 
   @media screen and (max-width: $breakpoint-width-920) {
     width: 100%;
@@ -252,7 +252,7 @@ section.animate {
   align-items: flex-end;
   gap: 20px;
   opacity: 0;
-  transform: translate(100%, -100%);
+  transform: translate(50%, -50%);
 }
 
 .button-box {
@@ -329,5 +329,40 @@ section.animate {
 
   @media screen and (max-width: $breakpoint-width-920) {
     padding-left: var(--padding-38);
+  }
+}
+
+.content-left.animate {
+  .skill-item {
+    @include applySlideAnimation(translate(-100%, 100%));
+  }
+}
+
+.headline-box-grid-item.animate {
+  @include applySlideAnimation(translate(50%, -50%));
+}
+
+.text-box-grid-item.animate {
+  @include applySlideAnimation(translate(50%, -50%));
+}
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    // Verwende die Variable, die auf dem animierten Element gesetzt wird
+    transform: var(--animation-start-transform);
+  }
+  20% {
+    opacity: 0.1;
+  }
+  40% {
+    opacity: 0.2;
+  }
+  60% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0); // Endzustand ist die normale Position
   }
 }

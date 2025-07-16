@@ -56,7 +56,6 @@
 }
 
 @mixin applySlideAnimation($animationStartTransform) {
-  opacity: 0;
   --animation-start-transform: #{$animationStartTransform};
   animation: slideIn var(--animation-time-skills) ease-out forwards;
   animation-delay: var(--animation-delay-about-me, 0s);
