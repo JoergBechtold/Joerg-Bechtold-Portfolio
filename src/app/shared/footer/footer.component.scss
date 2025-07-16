@@ -9,7 +9,7 @@
   border-top: 4px solid $primary-bg-green;
   @include paddingLeftRightHolePage();
 
-  @media screen and (min-width: $breakpoint-min-width) {
+  @media screen and (min-width: $breakpoint-min-width-1921) {
     width: $max-width-1920;
     justify-self: center;
   }

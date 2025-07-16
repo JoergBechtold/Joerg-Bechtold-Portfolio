@@ -6,7 +6,7 @@ section {
 
   @include paddingTopMinWidthBreakpoint();
 
-  @media screen and (max-width: $breakpoint-min-width) {
+  @media screen and (max-width: $breakpoint-min-width-1921) {
     height: unset;
   }
 }
@@ -70,8 +70,8 @@ section {
     $g: var(--gap-row-portfolio-section)
   );
   flex-direction: column;
-  padding-inline: 50px;
-  padding-block: 78px;
+  padding-inline: clamp(25px, 11.6667px + 4.1667vw, 50px);
+  padding-block: clamp(25px, -3.2667px + 8.8333vw, 78px);
   width: 100%;
 }
 
@@ -83,23 +83,39 @@ section {
   &:nth-child(odd) {
     .singel-project {
       flex-direction: row;
+      @media screen and (max-width: $breakpoint-width-920) {
+        flex-direction: column;
+      }
     }
 
     .content-box,
     .content-text-box {
       align-items: flex-start;
       text-align: left;
+      @media screen and (max-width: $breakpoint-width-920) {
+        align-items: center;
+        text-align: center;
+        padding-inline: 25px;
+      }
     }
   }
 
   &:nth-child(even) {
     .singel-project {
       flex-direction: row-reverse;
+      @media screen and (max-width: $breakpoint-width-920) {
+        flex-direction: column;
+      }
     }
     .content-box,
     .content-text-box {
       align-items: flex-end;
       text-align: right;
+      @media screen and (max-width: $breakpoint-width-920) {
+        align-items: center;
+        text-align: center;
+        padding-inline: 25px;
+      }
     }
   }
 }
@@ -107,11 +123,21 @@ section {
 .singel-project {
   height: 100%;
   @include dFlexAllCenter($g: var(--gap-column-portfolio-section));
+
+  @media screen and (max-width: $breakpoint-width-920) {
+    gap: 30px;
+  }
 }
 
 .img-box {
-  width: max(450px, min(535px, 100%));
+  min-width: 450px;
+  width: 535px;
   @include dFlexAllCenter();
+
+  @media screen and (max-width: $breakpoint-width-920) {
+    width: clamp(265px, 153px + 35vw, 475px);
+    min-width: unset;
+  }
 
   > img {
     width: 100%;
@@ -119,11 +145,13 @@ section {
 }
 
 .content-box {
-  // flex: 1;
   max-width: 535px;
-
   @include dFlexAllCenter($ai: flex-start, $g: 25px);
   flex-direction: column;
+
+  @media screen and (max-width: $breakpoint-width-920) {
+    width: clamp(310px, 190px + 37.5vw, 535px);
+  }
 }
 
 .content-text-box {
@@ -142,6 +170,12 @@ section {
 
 .content-btn-box {
   @include dFlexAllCenter($jc: flex-start, $g: 60px);
+
+  @media screen and (max-width: $breakpoint-width-920) {
+    width: 100%;
+    justify-content: space-between;
+    gap: 0;
+  }
 
   > button {
     padding: $padding-block-11-15 $padding-inline-24-30 $padding-block-11-15

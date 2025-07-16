@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Renderer2, Inject, ChangeDetectorRef, NgZone } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2, Inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { TranslateManagerService } from '../services/translate/translate-manager.service';
@@ -18,7 +18,7 @@ export class OverlayLandscapeComponent implements OnInit, OnDestroy {
     private resizeObserver: ResizeObserver | undefined;
     private translateSubscription: Subscription | undefined;
     private resizeSubscription: Subscription | undefined;
-    private mobileBreakpointWidth: number = 920;
+    private mobileDeviceThreshold: number = 768;
 
     constructor(
         private translateManager: TranslateManagerService,
@@ -32,7 +32,6 @@ export class OverlayLandscapeComponent implements OnInit, OnDestroy {
             this.activeLanguage = lang;
             this.checkOrientation();
         });
-
 
         this.checkOrientation();
         this.resizeSubscription = fromEvent(window, 'resize').pipe(
@@ -64,12 +63,14 @@ export class OverlayLandscapeComponent implements OnInit, OnDestroy {
     }
 
     checkOrientation(): void {
-        const MOBILE_MAX_WIDTH = this.mobileBreakpointWidth;
-        const isMobileDevice = window.innerWidth <= MOBILE_MAX_WIDTH || window.innerHeight <= MOBILE_MAX_WIDTH;
+        const MAX_MOBILE_WIDTH_PORTRAIT = 768;
+        const MAX_MOBILE_HEIGHT_LANDSCAPE = 500;
+
         const isLandscape = window.matchMedia("(orientation: landscape)").matches;
         const wasOverlayShowing = this.showRotateOverlay;
 
-        this.showRotateOverlay = isMobileDevice && isLandscape;
+        this.showRotateOverlay = isLandscape && (window.innerWidth <= MAX_MOBILE_WIDTH_PORTRAIT || window.innerHeight <= MAX_MOBILE_HEIGHT_LANDSCAPE);
+
         this.cdr.detectChanges();
 
         if (this.showRotateOverlay && !wasOverlayShowing) {

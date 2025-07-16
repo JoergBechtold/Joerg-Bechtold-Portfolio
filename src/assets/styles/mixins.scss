@@ -8,7 +8,7 @@
 }
 
 @mixin paddingTopMinWidthBreakpoint() {
-  @media screen and (min-width: $breakpoint-min-width) {
+  @media screen and (min-width: $breakpoint-min-width-1921) {
     padding-block: 100px;
   }
 }
@@ -71,7 +71,7 @@
   background-color: var(--primary-bg-gray);
   @include dFlexAllCenter();
 
-  @media screen and (min-width: $breakpoint-min-width) {
+  @media screen and (min-width: $breakpoint-min-width-1921) {
     height: unset;
   }
 
@@ -80,9 +80,8 @@
   }
 
   @media screen and (max-width: $breakpoint-width-920) {
-    padding-block: 50px;
+    margin-top: 50px;
     height: unset;
-    padding-top: var(--header-height-responsive);
   }
 
   @media screen and (max-height: $responsive-height-814) {
