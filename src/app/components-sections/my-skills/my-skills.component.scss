@@ -332,10 +332,8 @@ section {
   }
 }
 
-.content-left.animate {
-  .skill-item {
-    @include applySlideAnimation(translate(-100%, 100%));
-  }
+.skill-item.animate {
+  @include applySlideAnimation(translate(-100%, 100%));
 }
 
 .headline-box-grid-item.animate {
