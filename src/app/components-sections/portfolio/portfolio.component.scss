@@ -14,6 +14,18 @@ section {
 .portfolio-content {
   flex-direction: column;
   @include commonContentStyle($jc: center, $ai: center);
+
+  > img {
+    position: absolute;
+    left: clamp(-460px, -644px + 20vw, -260px);
+    bottom: clamp(-30px, -103.6px + 8vw, 50px);
+    width: 740px;
+
+    @media screen and (max-width: $breakpoint-width-920) {
+      bottom: 190px;
+      left: clamp(-525px, -581px + 17.5vw, -420px);
+    }
+  }
 }
 
 .headline-box {
@@ -201,7 +213,7 @@ section {
 
 .btn-github,
 .btn-live-test {
-  background-color: transparent;
+  background-color: $primary-bg-gray;
   border: 1px solid $primary-bg-green;
 
   &:hover {
@@ -221,21 +233,16 @@ section {
 }
 
 .singel-project.animate {
-  // Die Animationen werden auf die Kinder des .project-box angewendet
   .img-box {
     animation: scaleInFromCenter var(--animation-time-portfolio) ease-out
       forwards;
-    // Verwende die neue Basisverzögerung des Projekts plus eine spezifische Verzögerung für img-box
     animation-delay: calc(var(--project-animation-delay, 0s) + 0.1s);
   }
 
   .content-box {
     animation: scaleInFromCenter var(--animation-time-portfolio) ease-out
       forwards;
-    // Verwende die neue Basisverzögerung des Projekts plus eine spezifische, größere Verzögerung für content-box
-    animation-delay: calc(
-      var(--project-animation-delay, 0s) + 0.5s
-    ); // Erhöhter Delay, z.B. 0.4s
+    animation-delay: calc(var(--project-animation-delay, 0s) + 0.5s);
   }
 }
 
@@ -288,17 +295,17 @@ section {
 @keyframes scaleInFromCenter {
   0% {
     opacity: 0;
-    transform: scale(0.7); /* Startet etwas kleiner und sanfter */
+    transform: scale(0.7);
   }
   20% {
-    opacity: 0.1; /* Früher und sanfter Beginn der Sichtbarkeit */
+    opacity: 0.1;
   }
   40% {
-    opacity: 0.4; /* Opazität steigt gleichmäßiger */
+    opacity: 0.4;
   }
   60% {
     opacity: 0.7;
-    transform: scale(0.95); /* Erreicht fast die Endgröße früher */
+    transform: scale(0.95);
   }
   100% {
     opacity: 1;
