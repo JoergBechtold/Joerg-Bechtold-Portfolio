@@ -1,13 +1,19 @@
-<section appAnimateOnScroll>
+<section>
     <div class="about-me-content">
         <img src="../../../assets/img/background/PURPLE-SHADOW-ABOUT-ME.svg" alt="">
 
         <div class="content-left">
-            <h1 [innerHTML]="'ABOUT_ME.HEADLINE' | translate"></h1>
-            <p [innerHTML]="'ABOUT_ME.DESCRIPTION_PART1' | translate"></p>
-            <p [innerHTML]="'ABOUT_ME.DESCRIPTION_PART2' | translate"> </p>
+            <div appAnimateOnScroll [animationThreshold]="0.2" class="h1-box">
+                <h1 [innerHTML]="'ABOUT_ME.HEADLINE' | translate"></h1>
+            </div>
 
-            <div class="info-block">
+            <div appAnimateOnScroll [animationThreshold]="0.2" class="p-box">
+                <p [innerHTML]="'ABOUT_ME.DESCRIPTION_PART1' | translate"></p>
+                <p [innerHTML]="'ABOUT_ME.DESCRIPTION_PART2' | translate"> </p>
+            </div>
+
+
+            <div appAnimateOnScroll [animationThreshold]="0.2" class="info-block">
                 <div class="icon-box">
                     <img src="../../../assets/icons/about-me-icons/LOCATION-icon.svg"
                         alt=" {{ 'ABOUT_ME.ALT_TEXT_LOCATION_ICON' | translate}}">
@@ -17,7 +23,7 @@
                 </div>
             </div>
 
-            <div class="info-block">
+            <div appAnimateOnScroll [animationThreshold]="0.2" class="info-block">
                 <div class="icon-box">
                     <img src="../../../assets/icons/about-me-icons/BULB-icon.svg"
                         alt="{{ 'ABOUT_ME.ALT_TEXT_BULB_ICON' | translate}}">
@@ -27,7 +33,7 @@
                 </div>
             </div>
 
-            <div class="info-block">
+            <div appAnimateOnScroll [animationThreshold]="0.2" class="info-block">
                 <div class="icon-box">
                     <img src="../../../assets/icons/about-me-icons/PUZZLE-icon.svg"
                         alt="{{ 'ABOUT_ME.ALT_TEXT_PUZZLE_ICON' | translate}}">
@@ -38,7 +44,7 @@
             </div>
         </div>
 
-        <div class="content-right">
+        <div appAnimateOnScroll [animationThreshold]="0.2" class="content-right">
             <div class="img-box">
                 <img src="../../../assets/img/profile-pictures/ABOUT_ME_PROFILE_PICTURE.png"
                     alt=" {{ 'ABOUT_ME.ALT_TEXT_IMG' | translate}}">

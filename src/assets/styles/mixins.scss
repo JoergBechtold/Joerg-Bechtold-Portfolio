@@ -48,11 +48,15 @@
   color: $co;
 }
 
-@mixin aboutMeAnimation($slideDirection: "", $transformStart: "") {
+@mixin aboutMeAnimation(
+  $slideDirection: "",
+  $transformStart: "",
+  $delay: var(--animation-delay-about-me)
+) {
   opacity: 0;
   transform: $transformStart;
   animation: $slideDirection var(--animation-time-about-me) ease-out forwards;
-  animation-delay: var(--animation-delay-about-me);
+  animation-delay: $delay;
 }
 
 @mixin applySlideAnimation($animationStartTransform) {

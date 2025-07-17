@@ -41,9 +41,6 @@ h1 {
   left: $distance-right-left-about-me;
   @include dFlexAllCenter($ai: flex-start);
 
-  opacity: 0;
-  transform: translateX(-100%);
-
   @media screen and (max-width: $breakpoint-width-920) {
     position: unset;
     transform: unset;
@@ -56,6 +53,13 @@ h1 {
   @media screen and (max-height: $responsive-height-814) {
     max-width: 605px;
   }
+}
+
+.h1-box,
+.p-box,
+.info-block {
+  opacity: 0;
+  transform: translateX(-50%);
 }
 
 .info-block {
@@ -84,7 +88,7 @@ h1 {
   height: clamp(307px, 172.68px + 14.6vw, 453px);
 
   opacity: 0;
-  transform: translateX(100%);
+  transform: translateX(50%);
 
   @media screen and (max-width: $breakpoint-width-920) {
     display: none;
@@ -122,25 +126,40 @@ h1 {
   flex: 1;
 }
 
-section.animate {
-  .content-left {
-    @include aboutMeAnimation(
-      $slideDirection: "slideInLeft",
-      $transformStart: "translateX(-100%)"
-    );
-  }
+.h1-box.animate {
+  @include aboutMeAnimation(
+    $slideDirection: "slideInLeft",
+    $transformStart: "translateX(-50%)",
+    $delay: 0.2s
+  );
+}
 
-  .content-right {
-    @include aboutMeAnimation(
-      $slideDirection: "slideInRight",
-      $transformStart: "translateX(100%)"
-    );
-  }
+.p-box.animate {
+  @include aboutMeAnimation(
+    $slideDirection: "slideInLeft",
+    $transformStart: "translateX(-50%)",
+    $delay: 0.4s
+  );
+}
+
+.info-block.animate {
+  @include aboutMeAnimation(
+    $slideDirection: "slideInLeft",
+    $transformStart: "translateX(-50%)",
+    $delay: 0.6s
+  );
+}
+
+.content-right.animate {
+  @include aboutMeAnimation(
+    $slideDirection: "slideInRight",
+    $transformStart: "translateX(50%)"
+  );
 }
 
 @keyframes slideInLeft {
   0% {
-    transform: translateX(-100%);
+    transform: translateX(-50%);
     opacity: 0;
   }
   20% {
@@ -162,7 +181,7 @@ section.animate {
 
 @keyframes slideInRight {
   0% {
-    transform: translateX(100%);
+    transform: translateX(50%);
     opacity: 0;
   }
   20% {
