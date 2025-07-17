@@ -130,7 +130,7 @@ section {
   }
 
   > p {
-    @include fontSizeWeightColor($si: 16, $we: 400);
+    @include fontSizeWeightColor($si: 16px, $we: 400);
   }
 }
 
@@ -146,6 +146,7 @@ form {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  caret-color: $primary-bg-green;
 }
 
 .form-group {
@@ -172,7 +173,7 @@ textarea {
   border: 1px solid $primary-bg-purple;
   border-radius: 5px;
   background-color: $primary-bg-gray;
-  @include fontSizeWeightColor($si: 16, $we: 400);
+  @include fontSizeWeightColor($si: 16px, $we: 400);
   outline: none;
   transition: border-color 0.3s ease;
   padding-right: 45px;
@@ -190,11 +191,11 @@ textarea {
   }
 
   &.ng-valid.ng-touched {
-    border-color: $primary-bg-green; // Grüner Rahmen, wenn gültig und berührt
+    border-color: $primary-bg-green;
   }
 
   &.ng-invalid.ng-touched {
-    border-color: $not-valide-red; // Roter Rahmen, wenn ungültig und berührt
+    border-color: $not-valide-red;
   }
 }
 
