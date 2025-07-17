@@ -115,7 +115,7 @@ select:-webkit-autofill:focus {
   );
 
   padding-inline: clamp(25px, 11.6667px + 4.1667vw, 50px);
-  padding-top: clamp(25px, -3.2667px + 8.8333vw, 78px);
+  padding-top: clamp(25px, 22px + 0.9375vw, 40px);
   width: 100%;
 }
 
@@ -151,20 +151,22 @@ select:-webkit-autofill:focus {
   flex: 1;
   background-color: $primary-bg-gray;
 
-  max-width: 500px;
+  max-width: 535px;
   width: 100%;
 }
 
 form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  align-items: center;
+  gap: 35px;
   caret-color: $primary-bg-green;
 }
 
 .form-group {
   position: relative;
-  margin-bottom: 25px;
+  // margin-bottom: 25px;
+  width: 100%;
 }
 
 .visually-hidden {
@@ -176,6 +178,15 @@ form {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
+}
+
+.invalid-border {
+  border-color: $not-valide-red !important;
+}
+
+input[type="text"],
+input[type="email"] {
+  height: 50px;
 }
 
 input[type="text"],
@@ -207,9 +218,9 @@ textarea {
     border-color: $primary-bg-green;
   }
 
-  &.ng-invalid.ng-touched {
-    border-color: $not-valide-red;
-  }
+  // &.ng-invalid.ng-touched {
+  //   border-color: $not-valide-red;
+  // }
 }
 
 .validation-icon {
@@ -227,12 +238,13 @@ textarea {
   color: $not-valide-red; // Rote Farbe für Fehlermeldungen
   font-size: 0.85rem;
   margin-top: 5px; // Abstand zum Eingabefeld
-  padding-left: 5px; // Kleiner Einzug
+  padding-left: 5px;
+  position: absolute; // Kleiner Einzug
 }
 
 textarea {
   resize: unset;
-  min-height: 152px;
+  min-height: 189px;
 }
 
 .privacy-checkbox {

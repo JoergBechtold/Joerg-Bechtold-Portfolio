@@ -21,7 +21,6 @@ export class ContactComponent implements OnInit, OnDestroy {
 
   activeLanguage: string = 'de';
   showEmailSentOverlay: boolean = false;
-  mailTest = false;
   privacyAccepted: boolean = false;
 
   contactData = {

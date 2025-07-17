@@ -19,44 +19,6 @@
                     </div>
                 </div>
 
-                <!-- <div class="right-box">
-                    <form (ngSubmit)="onSubmit(contactForm)" #contactForm="ngForm">
-                        <div class="form-group">
-                            <label for="name" class="visually-hidden">Your name</label>
-                            <input id="name" [(ngModel)]="contactData.name" minlength="2" type="text" name="name"
-                                placeholder="Your name" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email" class="visually-hidden">Your email</label>
-                            <input id="email" [(ngModel)]="contactData.email" type="email" name="email"
-                                placeholder="Your email" required
-                                pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="message" class="visually-hidden">Your message</label>
-                            <textarea id="message" #message="ngModel" [(ngModel)]="contactData.message" minlength="2"
-                                name="message" placeholder="Your message" rows="6" required></textarea>
-
-                            @if (!message.valid && message.touched && !message.disabled){
-                            <p>test</p>
-                            }
-                        </div>
-
-                        <div class="form-group privacy-checkbox">
-                            <input type="checkbox" id="privacy" name="privacy" required>
-                            <label for="privacy">
-                                I've read the <a class="" [routerLink]="getRouterLink('privacyPolicy')"
-                                    [innerHTML]="'LINK.PRIVACY_POLICY' | translate"></a> and agree to the processing of
-                                my data as outlined.
-                            </label>
-                        </div>
-
-                        <button disabled type="submit" class="submit-button">Send message :)</button>
-                    </form>
-                </div> -->
-
                 <div class="right-box">
                     <form (ngSubmit)="onSubmit(contactForm)" #contactForm="ngForm">
 
@@ -65,18 +27,16 @@
                                 }}</label>
                             <input id="name" [(ngModel)]="contactData.name" minlength="2" type="text" name="name"
                                 placeholder="{{ 'CONTACT.FORM.NAME_PLACEHOLDER' | translate }}" required
-                                #nameField="ngModel">
-                            <!-- #nameField="ngModel" hinzugefügt -->
-                            <!-- Icons für den Namen -->
-                            <img *ngIf="nameField.valid && nameField.touched"
+                                #nameField="ngModel"
+                                [class.invalid-border]="!nameField.valid && (nameField.touched || nameField.dirty) && nameField.value !== ''">
+                            <img *ngIf="nameField.valid && (nameField.touched || nameField.dirty)"
                                 src="../../../assets/icons/contact-icons/ACCEPTED-ICON.svg" alt="Accepted"
                                 class="validation-icon accepted-icon">
 
-                            <img *ngIf="!nameField.valid && nameField.touched"
+                            <img *ngIf="!nameField.valid && (nameField.touched || nameField.dirty) && nameField.value !== ''"
                                 src="../../../assets/icons/contact-icons/NOT-VALIDE-ICON.svg" alt="Not Valid"
                                 class="validation-icon not-valid-icon">
-                            <!-- Fehlermeldung für den Namen -->
-                            @if (!nameField.valid && nameField.touched){
+                            @if (!nameField.valid && (nameField.touched || nameField.dirty) && nameField.value !== ''){
                             <p class="error-message" *ngIf="nameField.errors?.['required']">
                                 {{ 'CONTACT.VALIDATION.NAME_REQUIRED' | translate }}</p>
 
@@ -91,17 +51,16 @@
                                 }}</label>
                             <input id="email" [(ngModel)]="contactData.email" type="email" name="email"
                                 placeholder="{{ 'CONTACT.FORM.EMAIL_PLACEHOLDER' | translate }}" required
-                                pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" #emailField="ngModel">
-                            <!-- #emailField="ngModel" hinzugefügt -->
-                            <!-- Icons für die E-Mail -->
-                            <img *ngIf="emailField.valid && emailField.touched"
+                                pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" #emailField="ngModel"
+                                [class.invalid-border]="!emailField.valid && (emailField.touched || emailField.dirty) && emailField.value !== ''">
+                            <img *ngIf="emailField.valid && (emailField.touched || emailField.dirty)"
                                 src="../../../assets/icons/contact-icons/ACCEPTED-ICON.svg" alt="Accepted"
                                 class="validation-icon accepted-icon">
-                            <img *ngIf="!emailField.valid && emailField.touched"
+                            <img *ngIf="!emailField.valid && (emailField.touched || emailField.dirty) && emailField.value !== ''"
                                 src="../../../assets/icons/contact-icons/NOT-VALIDE-ICON.svg" alt="Not Valid"
                                 class="validation-icon not-valid-icon">
-                            <!-- Fehlermeldung für die E-Mail -->
-                            @if (!emailField.valid && emailField.touched){
+                            @if (!emailField.valid && (emailField.touched || emailField.dirty) && emailField.value !==
+                            ''){
                             <p class="error-message" *ngIf="emailField.errors?.['required']">{{
                                 'CONTACT.VALIDATION.EMAIL_REQUIRED' | translate
                                 }}</p>
@@ -116,30 +75,34 @@
                                 }}</label>
                             <textarea id="message" #messageField="ngModel" [(ngModel)]="contactData.message"
                                 minlength="2" name="message"
-                                placeholder="{{ 'CONTACT.FORM.MESSAGE_PLACEHOLDER' | translate }}" rows="6"
-                                required></textarea>
-                            <!-- #messageField="ngModel" geändert -->
-                            <!-- Icons für die Nachricht -->
-                            <img *ngIf="messageField.valid && messageField.touched"
+                                placeholder="{{ 'CONTACT.FORM.MESSAGE_PLACEHOLDER' | translate }}" rows="6" required
+                                [class.invalid-border]="!messageField.valid && (messageField.touched || messageField.dirty) && messageField.value !== ''">
+</textarea>
+
+                            <img *ngIf="messageField.valid && (messageField.touched || messageField.dirty)"
                                 src="../../../assets/icons/contact-icons/ACCEPTED-ICON.svg" alt="Accepted"
                                 class="validation-icon accepted-icon">
-                            <img *ngIf="!messageField.valid && messageField.touched"
+                            <img *ngIf="!messageField.valid && (messageField.touched || messageField.dirty) && messageField.value !== ''"
                                 src="../../../assets/icons/contact-icons/NOT-VALIDE-ICON.svg" alt="Not Valid"
                                 class="validation-icon not-valid-icon">
-                            <!-- Fehlermeldung für die Nachricht -->
-                            @if (!messageField.valid && messageField.touched){
-                            <p class="error-message" *ngIf="messageField.errors?.['required']">{{
-                                'CONTACT.VALIDATION.MESSAGE_REQUIRED' |
-                                translate }}</p>
-                            <p class="error-message" *ngIf="messageField.errors?.['minlength']">{{
-                                'CONTACT.VALIDATION.MESSAGE_MINLENGTH' |
-                                translate }}</p>
+                            @if (messageField.invalid && (messageField.touched || messageField.dirty) &&
+                            contactData.message !== '') {
+                            @if (messageField.errors?.['required']) {
+                            <p class="error-message">
+                                {{ 'CONTACT.VALIDATION.MESSAGE_REQUIRED' | translate }}
+                            </p>
+                            }
+                            @if (messageField.errors?.['minlength']) {
+                            <p class="error-message">
+                                {{ 'CONTACT.VALIDATION.MESSAGE_MINLENGTH' | translate }}
+                            </p>
+                            }
                             }
                         </div>
 
                         <div class="form-group privacy-checkbox">
                             <input type="checkbox" id="privacy" name="privacy" [(ngModel)]="privacyAccepted" required
-                                #privacyField="ngModel"> <!-- #privacyField="ngModel" hinzugefügt -->
+                                #privacyField="ngModel">
                             <label for="privacy">
                                 <p>
                                     {{ 'CONTACT.FORM.PRIVACY_TEXT_PART1' | translate }} <a class=""
@@ -148,7 +111,6 @@
                                     'CONTACT.FORM.PRIVACY_TEXT_PART2' | translate }}
                                 </p>
                             </label>
-                            <!-- Fehlermeldung für die Checkbox -->
                             @if (!privacyField.valid && privacyField.touched){
                             <p class="error-message">{{ 'CONTACT.VALIDATION.PRIVACY_REQUIRED' | translate }}</p>
                             }
