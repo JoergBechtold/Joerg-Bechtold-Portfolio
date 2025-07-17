@@ -57,6 +57,44 @@
     }
   },
 
+  "CONTACT": {
+    "H1": "Contact",
+
+    "INTRO_SECTION": {
+      "HEADLINE": "Got a problem to solve?",
+      "CALL_TO_ACTION": "Encourage people to contact you and describe what role you are interested in. Show that you will add value to their projects through your work.",
+      "SUB_CALL_TO_ACTION": "Need a Frontend developer? <b> Contact me! </b>"
+    },
+
+    "FORM": {
+      "NAME_LABEL": "Your name",
+      "NAME_PLACEHOLDER": "Your name",
+      "EMAIL_LABEL": "Your email",
+      "EMAIL_PLACEHOLDER": "Your email",
+      "MESSAGE_LABEL": "Your message",
+      "MESSAGE_PLACEHOLDER": "Your message",
+      "PRIVACY_TEXT_PART1": "I've read the",
+      "PRIVACY_TEXT_PART2": "and agree to the processing of my data as outlined.",
+      "SEND_BUTTON": "Send message :)"
+    },
+    "EMAIL_SENT_TITLE": "Thank You!",
+    "EMAIL_SENT_MESSAGE": "Your message has been sent successfully. I will get back to you shortly.",
+
+    "VALIDATION": {
+      "NAME_REQUIRED": "Name is required.",
+      "NAME_MINLENGTH": "Name must be at least 2 characters long.",
+      "EMAIL_REQUIRED": "Email address is required.",
+      "EMAIL_INVALID": "Please enter a valid email address.",
+      "MESSAGE_REQUIRED": "A message is required.",
+      "MESSAGE_MINLENGTH": "Message must be at least 2 characters long.",
+      "PRIVACY_REQUIRED": "Please agree to the privacy policy."
+    },
+
+    "LINK": {
+      "PRIVACY_POLICY": "privacy policy"
+    }
+  },
+
   "LINK": {
     "LEGAL_NOTICE": "Legal Notice",
     "PRIVACY_POLICY": "Privacy Policy"

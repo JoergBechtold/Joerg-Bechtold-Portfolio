@@ -22,6 +22,7 @@ export class ContactComponent implements OnInit, OnDestroy {
   activeLanguage: string = 'de';
   showEmailSentOverlay: boolean = false;
   mailTest = false;
+  privacyAccepted: boolean = false;
 
   contactData = {
     name: "",
@@ -89,6 +90,7 @@ export class ContactComponent implements OnInit, OnDestroy {
             //   // this.applyNoScrollToBody(true);
 
             ngForm.resetForm();
+            this.privacyAccepted = false;
           },
           error: (error) => {
             console.error(error);

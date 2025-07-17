@@ -56,6 +56,45 @@
     }
   },
 
+  "CONTACT": {
+    "H1": "Kontakt",
+
+    "INTRO_SECTION": {
+      "HEADLINE": "Ein Problem zu lösen?",
+      "CALL_TO_ACTION": "Kontaktieren Sie mich und beschreiben Sie, welche Rolle Sie suchen. Ich werde Ihren Projekten durch meine Arbeit einen Mehrwert bieten.",
+      "SUB_CALL_TO_ACTION": "Benötigen Sie einen Frontend-Entwickler? <b> Kontaktieren Sie mich! </b>"
+    },
+
+    "FORM": {
+      "NAME_LABEL": "Ihr Name",
+      "NAME_PLACEHOLDER": "Ihr Name",
+      "EMAIL_LABEL": "Ihre E-Mail",
+      "EMAIL_PLACEHOLDER": "Ihre E-Mail",
+      "MESSAGE_LABEL": "Ihre Nachricht",
+      "MESSAGE_PLACEHOLDER": "Ihre Nachricht",
+      "PRIVACY_TEXT_PART1": "Ich habe die",
+      "PRIVACY_TEXT_PART2": "gelesen und stimme der Verarbeitung meiner Daten wie beschrieben zu.",
+      "SEND_BUTTON": "Nachricht senden :)"
+    },
+
+    "EMAIL_SENT_TITLE": "Vielen Dank!",
+    "EMAIL_SENT_MESSAGE": "Ihre Nachricht wurde erfolgreich gesendet. Ich melde mich in Kürze bei Ihnen.",
+
+    "VALIDATION": {
+      "NAME_REQUIRED": "Der Name ist erforderlich.",
+      "NAME_MINLENGTH": "Der Name muss mindestens 2 Zeichen lang sein.",
+      "EMAIL_REQUIRED": "Die E-Mail-Adresse ist erforderlich.",
+      "EMAIL_INVALID": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+      "MESSAGE_REQUIRED": "Eine Nachricht ist erforderlich.",
+      "MESSAGE_MINLENGTH": "Die Nachricht muss mindestens 2 Zeichen lang sein.",
+      "PRIVACY_REQUIRED": "Bitte stimmen Sie der Datenschutzerklärung zu."
+    },
+
+    "LINK": {
+      "PRIVACY_POLICY": "Datenschutzerklärung"
+    }
+  },
+
   "LINK": {
     "LEGAL_NOTICE": "Impressum",
     "PRIVACY_POLICY": "Datenschutzerklärung"

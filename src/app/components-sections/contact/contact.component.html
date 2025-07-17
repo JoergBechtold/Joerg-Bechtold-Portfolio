@@ -5,7 +5,7 @@
 
         <div class="headline-box">
             <div class="h1-vector-box">
-                <h1>Contact</h1>
+                <h1>{{ 'CONTACT.H1' | translate }}</h1>
             </div>
         </div>
 
@@ -13,17 +13,14 @@
             <div class="contact-box">
                 <div class="left-box">
                     <div class="left-text-box">
-                        <h2>Got a problem to solve?</h2>
-                        <p>Encourage people to contact you and describe what role you are interested in. Show that you
-                            will
-                            add
-                            value to their projects through your work.</p>
-                        <p>Need a Frontend developer? <b>Contact me!</b></p>
+                        <h2>{{ 'CONTACT.INTRO_SECTION.HEADLINE' | translate }}</h2>
+                        <p>{{ 'CONTACT.INTRO_SECTION.CALL_TO_ACTION' | translate }}</p>
+                        <p [innerHTML]="'CONTACT.INTRO_SECTION.SUB_CALL_TO_ACTION' | translate "></p>
                     </div>
 
                 </div>
 
-                <div class="right-box">
+                <!-- <div class="right-box">
                     <form (ngSubmit)="onSubmit(contactForm)" #contactForm="ngForm">
                         <div class="form-group">
                             <label for="name" class="visually-hidden">Your name</label>
@@ -59,6 +56,108 @@
 
                         <button disabled type="submit" class="submit-button">Send message :)</button>
                     </form>
+                </div> -->
+
+                <div class="right-box">
+                    <form (ngSubmit)="onSubmit(contactForm)" #contactForm="ngForm">
+
+                        <div class="form-group">
+                            <label for="name" class="visually-hidden">{{ 'CONTACT.FORM.NAME_LABEL' | translate
+                                }}</label>
+                            <input id="name" [(ngModel)]="contactData.name" minlength="2" type="text" name="name"
+                                placeholder="{{ 'CONTACT.FORM.NAME_PLACEHOLDER' | translate }}" required
+                                #nameField="ngModel">
+                            <!-- #nameField="ngModel" hinzugefügt -->
+                            <!-- Icons für den Namen -->
+                            <img *ngIf="nameField.valid && nameField.touched"
+                                src="../../../assets/icons/contact-icons/ACCEPTED-ICON.svg" alt="Accepted"
+                                class="validation-icon accepted-icon">
+
+                            <img *ngIf="!nameField.valid && nameField.touched"
+                                src="../../../assets/icons/contact-icons/NOT-VALIDE-ICON.svg" alt="Not Valid"
+                                class="validation-icon not-valid-icon">
+                            <!-- Fehlermeldung für den Namen -->
+                            @if (!nameField.valid && nameField.touched){
+                            <p class="error-message" *ngIf="nameField.errors?.['required']">
+                                {{ 'CONTACT.VALIDATION.NAME_REQUIRED' | translate }}</p>
+
+                            <p class="error-message" *ngIf="nameField.errors?.['minlength']">{{
+                                'CONTACT.VALIDATION.NAME_MINLENGTH' | translate
+                                }}</p>
+                            }
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="visually-hidden">{{ 'CONTACT.FORM.EMAIL_LABEL' | translate
+                                }}</label>
+                            <input id="email" [(ngModel)]="contactData.email" type="email" name="email"
+                                placeholder="{{ 'CONTACT.FORM.EMAIL_PLACEHOLDER' | translate }}" required
+                                pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" #emailField="ngModel">
+                            <!-- #emailField="ngModel" hinzugefügt -->
+                            <!-- Icons für die E-Mail -->
+                            <img *ngIf="emailField.valid && emailField.touched"
+                                src="../../../assets/icons/contact-icons/ACCEPTED-ICON.svg" alt="Accepted"
+                                class="validation-icon accepted-icon">
+                            <img *ngIf="!emailField.valid && emailField.touched"
+                                src="../../../assets/icons/contact-icons/NOT-VALIDE-ICON.svg" alt="Not Valid"
+                                class="validation-icon not-valid-icon">
+                            <!-- Fehlermeldung für die E-Mail -->
+                            @if (!emailField.valid && emailField.touched){
+                            <p class="error-message" *ngIf="emailField.errors?.['required']">{{
+                                'CONTACT.VALIDATION.EMAIL_REQUIRED' | translate
+                                }}</p>
+                            <p class="error-message" *ngIf="emailField.errors?.['pattern']">{{
+                                'CONTACT.VALIDATION.EMAIL_INVALID' | translate }}
+                            </p>
+                            }
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message" class="visually-hidden">{{ 'CONTACT.FORM.MESSAGE_LABEL' | translate
+                                }}</label>
+                            <textarea id="message" #messageField="ngModel" [(ngModel)]="contactData.message"
+                                minlength="2" name="message"
+                                placeholder="{{ 'CONTACT.FORM.MESSAGE_PLACEHOLDER' | translate }}" rows="6"
+                                required></textarea>
+                            <!-- #messageField="ngModel" geändert -->
+                            <!-- Icons für die Nachricht -->
+                            <img *ngIf="messageField.valid && messageField.touched"
+                                src="../../../assets/icons/contact-icons/ACCEPTED-ICON.svg" alt="Accepted"
+                                class="validation-icon accepted-icon">
+                            <img *ngIf="!messageField.valid && messageField.touched"
+                                src="../../../assets/icons/contact-icons/NOT-VALIDE-ICON.svg" alt="Not Valid"
+                                class="validation-icon not-valid-icon">
+                            <!-- Fehlermeldung für die Nachricht -->
+                            @if (!messageField.valid && messageField.touched){
+                            <p class="error-message" *ngIf="messageField.errors?.['required']">{{
+                                'CONTACT.VALIDATION.MESSAGE_REQUIRED' |
+                                translate }}</p>
+                            <p class="error-message" *ngIf="messageField.errors?.['minlength']">{{
+                                'CONTACT.VALIDATION.MESSAGE_MINLENGTH' |
+                                translate }}</p>
+                            }
+                        </div>
+
+                        <div class="form-group privacy-checkbox">
+                            <input type="checkbox" id="privacy" name="privacy" [(ngModel)]="privacyAccepted" required
+                                #privacyField="ngModel"> <!-- #privacyField="ngModel" hinzugefügt -->
+                            <label for="privacy">
+                                <p>
+                                    {{ 'CONTACT.FORM.PRIVACY_TEXT_PART1' | translate }} <a class=""
+                                        [routerLink]="getRouterLink('privacyPolicy')">{{
+                                        'CONTACT.LINK.PRIVACY_POLICY' | translate}}</a> {{
+                                    'CONTACT.FORM.PRIVACY_TEXT_PART2' | translate }}
+                                </p>
+                            </label>
+                            <!-- Fehlermeldung für die Checkbox -->
+                            @if (!privacyField.valid && privacyField.touched){
+                            <p class="error-message">{{ 'CONTACT.VALIDATION.PRIVACY_REQUIRED' | translate }}</p>
+                            }
+                        </div>
+
+                        <button [disabled]="!contactForm.valid" type="submit" class="submit-button">{{
+                            'CONTACT.FORM.SEND_BUTTON' | translate }}</button>
+                    </form>
                 </div>
             </div>
 
@@ -80,63 +179,10 @@
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
-            <!-- <h2>{{ 'CONTACT.EMAIL_SENT_TITLE' | translate }}</h2>
-            <p>{{ 'CONTACT.EMAIL_SENT_MESSAGE' | translate }}</p> -->
+
             <h2>test h2</h2>
             <p>test p</p>
             <button class="close-overlay-btn" (click)="closeEmailSentOverlay()">OK</button>
         </div>
     </div>
-
 </section>
-
-<!-- svgs -->
-<!-- checkbox empty -->
-<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <mask id="mask0_41963_3098" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
-        <rect width="24" height="24" fill="#797EF3" />
-    </mask>
-    <g mask="url(#mask0_41963_3098)">
-        <path
-            d="M5 21C4.45 21 3.97917 20.8042 3.5875 20.4125C3.19583 20.0208 3 19.55 3 19V5C3 4.45 3.19583 3.97917 3.5875 3.5875C3.97917 3.19583 4.45 3 5 3H19C19.55 3 20.0208 3.19583 20.4125 3.5875C20.8042 3.97917 21 4.45 21 5V19C21 19.55 20.8042 20.0208 20.4125 20.4125C20.0208 20.8042 19.55 21 19 21H5ZM5 19H19V5H5V19Z"
-            fill="#70E61C" />
-    </g>
-</svg>
-
-<!-- checkbox empty hover -->
-<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="24" height="24" rx="12" fill="#183771" />
-    <mask id="mask0_41963_3101" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
-        <rect width="24" height="24" fill="#797EF3" />
-    </mask>
-    <g mask="url(#mask0_41963_3101)">
-        <path
-            d="M5 21C4.45 21 3.97917 20.8042 3.5875 20.4125C3.19583 20.0208 3 19.55 3 19V5C3 4.45 3.19583 3.97917 3.5875 3.5875C3.97917 3.19583 4.45 3 5 3H19C19.55 3 20.0208 3.19583 20.4125 3.5875C20.8042 3.97917 21 4.45 21 5V19C21 19.55 20.8042 20.0208 20.4125 20.4125C20.0208 20.8042 19.55 21 19 21H5ZM5 19H19V5H5V19Z"
-            fill="#70E61C" />
-    </g>
-</svg>
-
-<!-- checkbox checked -->
-<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <mask id="mask0_41963_3104" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
-        <rect width="24" height="24" fill="#797EF3" />
-    </mask>
-    <g mask="url(#mask0_41963_3104)">
-        <path
-            d="M10.6 13.4L8.45 11.25C8.26667 11.0667 8.03333 10.975 7.75 10.975C7.46667 10.975 7.23333 11.0667 7.05 11.25C6.86667 11.4333 6.775 11.6667 6.775 11.95C6.775 12.2333 6.86667 12.4667 7.05 12.65L9.9 15.5C10.1 15.7 10.3333 15.8 10.6 15.8C10.8667 15.8 11.1 15.7 11.3 15.5L16.95 9.85C17.1333 9.66667 17.225 9.43333 17.225 9.15C17.225 8.86667 17.1333 8.63333 16.95 8.45C16.7667 8.26667 16.5333 8.175 16.25 8.175C15.9667 8.175 15.7333 8.26667 15.55 8.45L10.6 13.4ZM5 21C4.45 21 3.97917 20.8042 3.5875 20.4125C3.19583 20.0208 3 19.55 3 19V5C3 4.45 3.19583 3.97917 3.5875 3.5875C3.97917 3.19583 4.45 3 5 3H19C19.55 3 20.0208 3.19583 20.4125 3.5875C20.8042 3.97917 21 4.45 21 5V19C21 19.55 20.8042 20.0208 20.4125 20.4125C20.0208 20.8042 19.55 21 19 21H5ZM5 19H19V5H5V19Z"
-            fill="#70E61C" />
-    </g>
-</svg>
-
-<!-- checkbock checked hover  -->
-<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="24" height="24" rx="12" fill="#183771" />
-    <mask id="mask0_41963_3107" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
-        <rect width="24" height="24" fill="#797EF3" />
-    </mask>
-    <g mask="url(#mask0_41963_3107)">
-        <path
-            d="M10.6 13.4L8.45 11.25C8.26667 11.0667 8.03333 10.975 7.75 10.975C7.46667 10.975 7.23333 11.0667 7.05 11.25C6.86667 11.4333 6.775 11.6667 6.775 11.95C6.775 12.2333 6.86667 12.4667 7.05 12.65L9.9 15.5C10.1 15.7 10.3333 15.8 10.6 15.8C10.8667 15.8 11.1 15.7 11.3 15.5L16.95 9.85C17.1333 9.66667 17.225 9.43333 17.225 9.15C17.225 8.86667 17.1333 8.63333 16.95 8.45C16.7667 8.26667 16.5333 8.175 16.25 8.175C15.9667 8.175 15.7333 8.26667 15.55 8.45L10.6 13.4ZM5 21C4.45 21 3.97917 20.8042 3.5875 20.4125C3.19583 20.0208 3 19.55 3 19V5C3 4.45 3.19583 3.97917 3.5875 3.5875C3.97917 3.19583 4.45 3 5 3H19C19.55 3 20.0208 3.19583 20.4125 3.5875C20.8042 3.97917 21 4.45 21 5V19C21 19.55 20.8042 20.0208 20.4125 20.4125C20.0208 20.8042 19.55 21 19 21H5ZM5 19H19V5H5V19Z"
-            fill="#70E61C" />
-    </g>
-</svg>
