@@ -1,5 +1,6 @@
 @use "../../../assets/styles/variables.scss" as *;
 @use "../../../assets/styles/mixins.scss" as *;
+@use "../../../assets/styles/animations.scss" as *;
 
 section {
   @include commonSectionStyles();
@@ -7,7 +8,60 @@ section {
 }
 
 .contact-content {
-  @include commonContentStyle();
+  @include commonContentStyle($jc: center, $ai: center);
+  flex-direction: column;
+
+  > img {
+    position: absolute;
+    left: -345px;
+    bottom: -290px;
+    width: 850px;
+
+    @media screen and (max-width: $breakpoint-width-920) {
+    }
+  }
+}
+
+.arrow-scroll-top {
+  position: absolute;
+  bottom: 150px;
+  right: 150px;
+  width: 55px;
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  > svg {
+    height: 100%;
+    width: 100%;
+    animation: svgGlow 2.5s infinite alternate;
+
+    rect {
+      stroke: $white;
+      transition: stroke 0.3s ease-in-out;
+    }
+
+    path {
+      fill: $white;
+      transition: fill 0.3s ease-in-out;
+    }
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+
+    > svg {
+      rect {
+        stroke: $primary-bg-green;
+      }
+
+      path {
+        fill: $primary-bg-green;
+      }
+    }
+  }
 }
 
 .headline-box {
@@ -32,7 +86,7 @@ section {
       position: absolute;
       right: 108%;
       display: block;
-      width: clamp(24px, -1.2px + 7.875vw, 150px);
+      width: 800px;
       height: 4px;
       background-color: $primary-bg-purple;
       border-radius: 4px;
