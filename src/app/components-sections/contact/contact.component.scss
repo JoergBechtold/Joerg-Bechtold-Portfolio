@@ -136,16 +136,16 @@ section {
 
 .right-box {
   flex: 1;
-  background-color: $primary-bg-gray; // Same as section background for seamless look
+  background-color: $primary-bg-gray;
 
   max-width: 500px;
   width: 100%;
 }
 
-.contact-form {
+form {
   display: flex;
   flex-direction: column;
-  gap: 20px; // Space between form groups
+  gap: 20px;
 }
 
 .form-group {
@@ -199,34 +199,36 @@ textarea {
   gap: 10px;
 
   input[type="checkbox"] {
-    width: 20px; // Adjust checkbox size
-    height: 20px;
-    min-width: 20px; // Prevent shrinking on flex container
-    border: 1px solid $primary-bg-purple;
-    background-color: $primary-bg-gray;
-    appearance: none; // Hide default checkbox
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    appearance: none;
     cursor: pointer;
     position: relative;
-    top: 2px;
+    top: 0px;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    margin: 0;
+    padding: 0;
+    display: block;
+
+    background-image: url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="mask0_41963_3098" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><rect width="24" height="24" fill="%23797EF3"/></mask><g mask="url(%23mask0_41963_3098)"><path d="M5 21C4.45 21 3.97917 20.8042 3.5875 20.4125C3.19583 20.0208 3 19.55 3 19V5C3 4.45 3.19583 3.97917 3.5875 3.5875C3.97917 3.19583 4.45 3 5 3H19C19.55 3 20.0208 3.19583 20.4125 3.5875C20.8042 3.97917 21 4.45 21 5V19C21 19.55 20.8042 20.0208 20.4125 20.4125C20.0208 20.8042 19.55 21 19 21H5ZM5 19H19V5H5V19Z" fill="%2370E61C"/></g></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: background-image 0.2s ease;
 
     &:hover {
-      border-color: $primary-bg-green; // For potential future absolute positioning of labels or icons
-    } // Slightly adjust vertical alignment with text
+      background-image: url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="12" fill="%23183771"/><mask id="mask0_41963_3101" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><rect width="24" height="24" fill="%23797EF3"/></mask><g mask="url(%23mask0_41963_3101)"><path d="M5 21C4.45 21 3.97917 20.8042 3.5875 20.4125C3.19583 20.0208 3 19.55 3 19V5C3 4.45 3.19583 3.97917 3.5875 3.5875C3.97917 3.19583 4.45 3 5 3H19C19.55 3 20.0208 3.19583 20.4125 3.5875C20.8042 3.97917 21 4.45 21 5V19C21 19.55 20.8042 20.0208 20.4125 20.4125C20.0208 20.8042 19.55 21 19 21H5ZM5 19H19V5H5V19Z" fill="%2370E61C"/></g></svg>');
+    }
 
     &:checked {
-      background-color: $primary-bg-purple; // Fill with purple when checked
-      border-color: $primary-bg-purple;
+      background-image: url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="mask0_41963_3104" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><rect width="24" height="24" fill="%23797EF3"/></mask><g mask="url(%23mask0_41963_3104)"><path d="M10.6 13.4L8.45 11.25C8.26667 11.0667 8.03333 10.975 7.75 10.975C7.46667 10.975 7.23333 11.0667 7.05 11.25C6.86667 11.4333 6.775 11.6667 6.775 11.95C6.775 12.2333 6.86667 12.4667 7.05 12.65L9.9 15.5C10.1 15.7 10.3333 15.8 10.6 15.8C10.8667 15.8 11.1 15.7 11.3 15.5L16.95 9.85C17.1333 9.66667 17.225 9.43333 17.225 9.15C17.225 8.86667 17.1333 8.63333 16.95 8.45C16.7667 8.26667 16.5333 8.175 16.25 8.175C15.9667 8.175 15.7333 8.26667 15.55 8.45L10.6 13.4ZM5 21C4.45 21 3.97917 20.8042 3.5875 20.4125C3.19583 20.0208 3 19.55 3 19V5C3 4.45 3.19583 3.97917 3.5875 3.5875C3.97917 3.19583 4.45 3 5 3H19C19.55 3 20.0208 3.19583 20.4125 3.5875C20.8042 3.97917 21 4.45 21 5V19C21 19.55 20.8042 20.0208 20.4125 20.4125C20.0208 20.8042 19.55 21 19 21H5ZM5 19H19V5H5V19Z" fill="%2370E61C"/></g></svg>');
+    }
 
-      &::after {
-        content: "\2713"; // Unicode checkmark
-        display: block;
-        color: white;
-        font-size: 14px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
+    &:checked:hover {
+      background-image: url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="12" fill="%23183771"/><mask id="mask0_41963_3107" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><rect width="24" height="24" fill="%23797EF3"/></mask><g mask="url(%23mask0_41963_3107)"><path d="M10.6 13.4L8.45 11.25C8.26667 11.0667 8.03333 10.975 7.75 10.975C7.46667 10.975 7.23333 11.0667 7.05 11.25C6.86667 11.4333 6.775 11.6667 6.775 11.95C6.775 12.2333 6.86667 12.4667 7.05 12.65L9.9 15.5C10.1 15.7 10.3333 15.8 10.6 15.8C10.8667 15.8 11.1 15.7 11.3 15.5L16.95 9.85C17.1333 9.66667 17.225 9.43333 17.225 9.15C17.225 8.86667 17.1333 8.63333 16.95 8.45C16.7667 8.26667 16.5333 8.175 16.25 8.175C15.9667 8.175 15.7333 8.26667 15.55 8.45L10.6 13.4ZM5 21C4.45 21 3.97917 20.8042 3.5875 20.4125C3.19583 20.0208 3 19.55 3 19V5C3 4.45 3.19583 3.97917 3.5875 3.5875C3.97917 3.19583 4.45 3 5 3H19C19.55 3 20.0208 3.19583 20.4125 3.5875C20.8042 3.97917 21 4.45 21 5V19C21 19.55 20.8042 20.0208 20.4125 20.4125C20.0208 20.8042 19.55 21 19 21H5ZM5 19H19V5H5V19Z" fill="%2370E61C"/></g></svg>');
     }
   }
 
@@ -236,39 +238,24 @@ textarea {
 
     .privacy-link {
       color: $primary-bg-purple;
-      text-decoration: none; // No underline
+      text-decoration: none;
       &:hover {
-        text-decoration: underline; // Underline on hover
+        text-decoration: underline;
       }
     }
   }
 }
 
 .submit-button {
-  padding: $padding-block-11-15 $padding-inline-24-30 $padding-block-11-15
-    $padding-inline-24-30;
-  border-radius: 10px;
-  box-shadow: 4px 4px 4px 0px #00000040;
-  transition: var(--transition-btn);
+  @include primaryButton(top, center);
 
-  background-color: gray;
-
-  // padding-block: $padding-block-11-15;
-  // padding-inline: $padding-inline-24-30;
-  border: none;
-  // border-radius: 10px;
-  @include fontSizeWeightColor($si: $font-size-18-23, $we: 400);
-
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease; // Smooth transitions
-
-  &:hover {
-    background-color: darken(gray, 10%); // Slightly darker on hover
-    transform: translateY(-2px); // Slight lift effect
-  }
-
-  &:active {
-    transform: translateY(0); // Reset on click
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    background-color: #cccccc;
+    color: #666666;
+    box-shadow: none;
+    transform: none;
   }
 }
 

@@ -1,31 +1,51 @@
-import { Component, OnInit, OnDestroy, Renderer2, Inject } from '@angular/core'; // OnDestroy, Renderer2, Inject hinzugefügt
-import { CommonModule, DOCUMENT } from '@angular/common'; // DOCUMENT hinzugefügt
+import { Component, OnInit, OnDestroy, Renderer2, Inject, inject } from '@angular/core';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { TranslateManagerService } from '../../services/translate/translate-manager.service';
 import { AnimateOnScrollDirective } from '../../shared/animation-on-scroll/animate-on-scroll.directive';
 import { RouterLink, Router } from '@angular/router';
 import { AppRouteKeys } from '../../app.routes';
-import { Subscription } from 'rxjs'; // Subscription hinzugefügt, falls du später Observables abonnierst
+import { FormsModule, NgForm } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [CommonModule, RouterLink, TranslateModule],
+  imports: [CommonModule, RouterLink, TranslateModule, FormsModule],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss'
 })
-export class ContactComponent implements OnInit, OnDestroy { // OnDestroy implementiert
+export class ContactComponent implements OnInit, OnDestroy {
+
+  http = inject(HttpClient);
 
   activeLanguage: string = 'de';
   showEmailSentOverlay: boolean = false;
+  mailTest = false;
 
-  // Injiziere Renderer2 und DOCUMENT
+  contactData = {
+    name: "",
+    email: "",
+    message: ""
+  }
+
+  post = {
+    endPoint: 'https://joergbechtold.com/sendMail.php',
+    body: (payload: any) => JSON.stringify(payload),
+    options: {
+      headers: {
+        'Content-Type': 'text/plain',
+        responseType: 'text',
+      },
+    },
+  };
+
   constructor(
     private translate: TranslateService,
     private router: Router,
     private translateManager: TranslateManagerService,
-    private renderer: Renderer2, // <-- Hinzugefügt
-    @Inject(DOCUMENT) private document: Document // <-- Hinzugefügt
+    private renderer: Renderer2,
+    @Inject(DOCUMENT) private document: Document
   ) { }
 
   ngOnInit(): void {
@@ -36,9 +56,8 @@ export class ContactComponent implements OnInit, OnDestroy { // OnDestroy implem
     });
   }
 
-  // Wichtig: Beim Zerstören der Komponente sicherstellen, dass die 'no-scroll'-Klasse entfernt wird.
   ngOnDestroy(): void {
-    this.applyNoScrollToBody(false); // Stellt sicher, dass der Scroll wieder aktiviert wird
+    this.applyNoScrollToBody(false);
   }
 
   getRouterLink(key: keyof typeof AppRouteKeys): string[] {
@@ -58,36 +77,46 @@ export class ContactComponent implements OnInit, OnDestroy { // OnDestroy implem
     });
   }
 
-  sendEmailAndShowConfirmation(): void {
-    // Hier würdest du deine Logik zum Senden der E-Mail einfügen.
-    // Zum Beispiel ein Service-Aufruf:
-    // this.emailService.sendEmail().subscribe(() => {
-    //   this.showEmailSentOverlay = true;
-    //   this.applyNoScrollToBody(true); // <-- no-scroll hinzufügen
-    // });
+  onSubmit(ngForm: NgForm) {
+    if (ngForm.submitted && ngForm.form.valid) {
+      this.http.post(this.post.endPoint, this.post.body(this.contactData))
+        .subscribe({
+          next: (response) => {
 
-    // Für dieses Beispiel simulieren wir das Senden und zeigen das Overlay direkt
-    this.showEmailSentOverlay = true;
-    this.applyNoScrollToBody(true); // <-- no-scroll hinzufügen
+
+            console.log('geht');
+            //   // this.showEmailSentOverlay = true;
+            //   // this.applyNoScrollToBody(true);
+
+            ngForm.resetForm();
+          },
+          error: (error) => {
+            console.error(error);
+          },
+          complete: () => console.info('send post complete'),
+        });
+    }
   }
+
+  // onSubmit(ngForm: NgForm): void {
+  //   if (ngForm.valid && ngForm.submitted) {
+  //     console.log(this.contactData);
+
+  //   }
+
+  //   // this.showEmailSentOverlay = true;
+  //   // this.applyNoScrollToBody(true); 
+  // }
 
   closeEmailSentOverlay(): void {
     this.showEmailSentOverlay = false;
-    this.applyNoScrollToBody(false); // <-- no-scroll entfernen
+    this.applyNoScrollToBody(false);
   }
 
-  /**
-   * Navigiert zur 'home'-Sektion der Anwendung.
-   * Dies repliziert die Funktionalität des Logo-Klicks im Header.
-   */
   async navigateToHomeSection(): Promise<void> {
     await this.translateManager.navigateToSection('home');
   }
 
-  /**
-   * Fügt die 'no-scroll'-Klasse zum Body hinzu oder entfernt sie.
-   * @param shouldApplyNoScroll True, um 'no-scroll' hinzuzufügen, false zum Entfernen.
-   */
   private applyNoScrollToBody(shouldApplyNoScroll: boolean): void {
     if (shouldApplyNoScroll) {
       this.renderer.addClass(this.document.body, 'no-scroll');
