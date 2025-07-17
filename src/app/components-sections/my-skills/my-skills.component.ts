@@ -4,6 +4,8 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { TranslateManagerService } from '../../services/translate/translate-manager.service';
 import { SkillsdataService } from '../../services/skills/skillsdata.service';
 import { AnimateOnScrollDirective } from '../../shared/animation-on-scroll/animate-on-scroll.directive';
+import { AppRouteKeys } from '../../app.routes';
+
 
 @Component({
     selector: 'app-my-skills',
@@ -25,5 +27,9 @@ export class MySkillsComponent implements OnInit {
         this.translateManager.activeLanguage$.subscribe(lang => {
             this.activeLanguage = lang;
         });
+    }
+
+    async navigateFromSkills(appRouteKey: keyof typeof AppRouteKeys): Promise<void> {
+        await this.translateManager.navigateToSection(appRouteKey);
     }
 }

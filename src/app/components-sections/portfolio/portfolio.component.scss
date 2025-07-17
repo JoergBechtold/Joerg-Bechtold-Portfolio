@@ -92,9 +92,7 @@ section {
 }
 
 .project-box {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include dFlexAllCenter();
 
   &:nth-child(odd) {
     .singel-project {

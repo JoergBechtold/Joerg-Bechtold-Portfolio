@@ -45,9 +45,8 @@
                 </div>
             </div>
 
-
             <div class="button-box">
-                <button [innerHTML]="'MY_SKILLS.BUTTON' | translate"></button>
+                <button (click)="navigateFromSkills('contact')" [innerHTML]="'MY_SKILLS.BUTTON' | translate"></button>
             </div>
         </div>
     </div>

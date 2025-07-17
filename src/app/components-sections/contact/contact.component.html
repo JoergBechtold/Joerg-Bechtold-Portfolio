@@ -9,44 +9,55 @@
             </div>
         </div>
 
-        <div class="text-box">
-            <h2>Got a problem to solve?</h2>
-            <p>Encourage people to contact you and describe what role you are interested in. Show that you will add
-                value to their projects through your work.</p>
-            <p>Need a Frontend developer? <b>Contact me!</b></p>
+        <div class="contact-section">
+            <div class="contact-box">
+                <div class="left-box">
+                    <div class="left-text-box">
+                        <h2>Got a problem to solve?</h2>
+                        <p>Encourage people to contact you and describe what role you are interested in. Show that you
+                            will
+                            add
+                            value to their projects through your work.</p>
+                        <p>Need a Frontend developer? <b>Contact me!</b></p>
+                    </div>
+
+                </div>
+
+                <div class="right-box">
+                    <form class="contact-form">
+                        <div class="form-group">
+                            <label for="name" class="visually-hidden">Your name</label>
+                            <input type="text" id="name" name="name" placeholder="Your name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="visually-hidden">Your email</label>
+                            <input type="email" id="email" name="email" placeholder="Your email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message" class="visually-hidden">Your message</label>
+                            <textarea id="message" name="message" placeholder="Your message" rows="6"
+                                required></textarea>
+                        </div>
+
+                        <div class="form-group privacy-checkbox">
+                            <input type="checkbox" id="privacy" name="privacy" required>
+                            <label for="privacy">
+                                I've read the <a class="" [routerLink]="getRouterLink('privacyPolicy')"
+                                    [innerHTML]="'LINK.PRIVACY_POLICY' | translate"></a> and agree to the processing of
+                                my data as outlined.
+                            </label>
+                        </div>
+
+                        <button type="submit" class="submit-button">Send message :)</button>
+                    </form>
+                </div>
+            </div>
+
         </div>
 
-        <div class="contact-form-container">
-            <form class="contact-form">
-                <div class="form-group">
-                    <label for="name" class="visually-hidden">Your name</label>
-                    <input type="text" id="name" name="name" placeholder="Your name" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="email" class="visually-hidden">Your email</label>
-                    <input type="email" id="email" name="email" placeholder="Your email" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="message" class="visually-hidden">Your message</label>
-                    <textarea id="message" name="message" placeholder="Your message" rows="6" required></textarea>
-                </div>
-
-                <div class="form-group privacy-checkbox">
-                    <input type="checkbox" id="privacy" name="privacy" required>
-                    <label for="privacy">
-                        I've read the <a class="" [routerLink]="getRouterLink('privacyPolicy')"
-                            [innerHTML]="'LINK.PRIVACY_POLICY' | translate"></a> and agree to the processing of
-                        my data as outlined.
-                    </label>
-                </div>
-
-                <button type="submit" class="submit-button">Send message :)</button>
-            </form>
-        </div>
-
-        <div class="arrow-scroll-top">
+        <div (click)="scrollToTop()" class="arrow-scroll-top">
             <svg width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="1" y="1" width="37" height="37" rx="18.5" stroke="none" stroke-width="2" />
                 <path

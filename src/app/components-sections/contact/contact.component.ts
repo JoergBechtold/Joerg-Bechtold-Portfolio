@@ -37,4 +37,11 @@ export class ContactComponent implements OnInit {
     }
     return ['/', currentLang, translatedPath];
   }
+
+  scrollToTop(): void {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
 }

@@ -8,7 +8,7 @@ section {
 }
 
 .contact-content {
-  @include commonContentStyle($jc: center, $ai: center);
+  @include commonContentStyle($jc: unset, $ai: center);
   flex-direction: column;
 
   > img {
@@ -94,13 +94,52 @@ section {
   }
 }
 
-.contact-form-container {
-  background-color: $primary-bg-gray; // Same as section background for seamless look
-  border-radius: 8px;
-  padding: 40px;
-  max-width: 500px; // Limit the form width
+.contact-section {
+  @include dFlexAllCenter(
+    $ai: center,
+    $jc: center,
+    $g: var(--gap-row-portfolio-section)
+  );
+
+  padding-inline: clamp(25px, 11.6667px + 4.1667vw, 50px);
+  padding-top: clamp(25px, -3.2667px + 8.8333vw, 78px);
   width: 100%;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); // Subtle shadow
+}
+
+.contact-box {
+  @include dFlexAllCenter($ai: unset, $g: var(--gap-column-portfolio-section));
+  width: 1200px;
+
+  @media screen and (max-width: $breakpoint-width-920) {
+    gap: 30px;
+  }
+}
+
+.left-box {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.left-text-box {
+  height: 100%;
+
+  > h2 {
+    @include fontSizeWeightColor($si: 32px, $we: 700);
+  }
+
+  > p {
+    @include fontSizeWeightColor($si: 16, $we: 400);
+  }
+}
+
+.right-box {
+  flex: 1;
+  background-color: $primary-bg-gray; // Same as section background for seamless look
+
+  max-width: 500px;
+  width: 100%;
 }
 
 .contact-form {
