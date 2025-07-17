@@ -51,26 +51,10 @@ export class TranslateManagerService {
       }
     });
 
-    // Scroll-Restoration Logik (aus der NavigationComponent)
-    // Wir deaktivieren scrollPositionRestoration in der Navigation und scrollen manuell.
-    // Dies stellt sicher, dass wir die Kontrolle über die Scroll-Position haben.
-    // Das Abonnement hier dient hauptsächlich der Fehlerbehebung und zum Verständnis,
-    // wie Angular den Scroll-Event wahrnimmt. Die tatsächliche Scroll-Position
-    // wird in `setLanguage` und `MapsToSection` gesetzt.
     if (this.isBrowser) {
       this.router.events.pipe(
         filter((event: RouterEvent): event is Scroll => event instanceof Scroll)
       ).subscribe((event: Scroll) => {
-        // Diese Logik ist primär für die Router-interne Scroll-Restoration,
-        // die wir über `scrollPositionRestoration: 'disabled'` in unserer Navigation
-        // explizit abschalten. Manuell scrollen wir via `scrollToElementById`.
-        // Daher sind die folgenden Blöcke im Kontext dieses Service oft nicht aktiv relevant,
-        // können aber zum Debugging nützlich sein.
-        // if (event.position) {
-        //   this.viewportScroller.scrollToPosition(event.position);
-        // } else if (event.anchor) {
-        //   this.scrollToElementById(event.anchor);
-        // }
       });
     }
   }
