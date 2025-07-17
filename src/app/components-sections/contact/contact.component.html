@@ -28,7 +28,8 @@
                             <input id="name" [(ngModel)]="contactData.name" minlength="2" type="text" name="name"
                                 placeholder="{{ 'CONTACT.FORM.NAME_PLACEHOLDER' | translate }}" required
                                 #nameField="ngModel"
-                                [class.invalid-border]="!nameField.valid && (nameField.touched || nameField.dirty) && nameField.value !== ''">
+                                [class.invalid-border]="!nameField.valid && (nameField.touched || nameField.dirty) && nameField.value !== ''"
+                                [ngModelOptions]="{ updateOn: 'blur' }">
                             <img *ngIf="nameField.valid && (nameField.touched || nameField.dirty)"
                                 src="../../../assets/icons/contact-icons/ACCEPTED-ICON.svg" alt="Accepted"
                                 class="validation-icon accepted-icon">
@@ -52,7 +53,8 @@
                             <input id="email" [(ngModel)]="contactData.email" type="email" name="email"
                                 placeholder="{{ 'CONTACT.FORM.EMAIL_PLACEHOLDER' | translate }}" required
                                 pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" #emailField="ngModel"
-                                [class.invalid-border]="!emailField.valid && (emailField.touched || emailField.dirty) && emailField.value !== ''">
+                                [class.invalid-border]="!emailField.valid && (emailField.touched || emailField.dirty) && emailField.value !== ''"
+                                [ngModelOptions]="{ updateOn: 'blur' }">
                             <img *ngIf="emailField.valid && (emailField.touched || emailField.dirty)"
                                 src="../../../assets/icons/contact-icons/ACCEPTED-ICON.svg" alt="Accepted"
                                 class="validation-icon accepted-icon">
@@ -76,8 +78,9 @@
                             <textarea id="message" #messageField="ngModel" [(ngModel)]="contactData.message"
                                 minlength="2" name="message"
                                 placeholder="{{ 'CONTACT.FORM.MESSAGE_PLACEHOLDER' | translate }}" rows="6" required
-                                [class.invalid-border]="!messageField.valid && (messageField.touched || messageField.dirty) && messageField.value !== ''">
-</textarea>
+                                [class.invalid-border]="!messageField.valid && (messageField.touched || messageField.dirty) && messageField.value !== ''"
+                                [ngModelOptions]="{ updateOn: 'blur' }">
+                            </textarea>
 
                             <img *ngIf="messageField.valid && (messageField.touched || messageField.dirty)"
                                 src="../../../assets/icons/contact-icons/ACCEPTED-ICON.svg" alt="Accepted"
