@@ -8,7 +8,7 @@ import { AppRouteKeys, mainRoutes, createLocalizedRoutes, routes } from '../../a
 export class TranslationLogicHelperService {
     private isBrowser: boolean;
     private savedScrollPosition: [number, number] | null = null;
-    private readonly SCROLL_TIMEOUT_MS = 100;
+    private readonly SCROLL_TIMEOUT_MS = 60;
 
     constructor(
         private translate: TranslateService,
@@ -38,42 +38,82 @@ export class TranslationLogicHelperService {
     }
 
     private async navigateAfterLanguageChange(lang: string, oldLang: string): Promise<void> {
+        const { pathSegmentAfterLang, currentFragment } = this._getNavigationDetailsForLanguageChange();
+        const targetPathSegments = await this._determineTargetPathSegments(lang, oldLang, pathSegmentAfterLang);
+        const newTranslatedFragment = await this._getNewTranslatedFragment(oldLang, currentFragment);
+        await this.performNavigation(targetPathSegments, newTranslatedFragment);
+    }
+
+    private _getNavigationDetailsForLanguageChange(): { pathSegmentAfterLang: string; currentFragment: string | null } {
         const currentUrlSegments = this.router.url.split('/').filter(s => s);
         const pathSegmentAfterLang = currentUrlSegments.length > 1 ? currentUrlSegments[1] : '';
         const currentFragment = this.activatedRoute.snapshot.fragment;
+        return { pathSegmentAfterLang, currentFragment };
+    }
 
+    private async _determineTargetPathSegments(lang: string, oldLang: string, pathSegmentAfterLang: string): Promise<string[]> {
         let targetPathSegments: string[] = [lang];
         const newTranslatedPath = await this.getTranslatedRoutePath(oldLang, pathSegmentAfterLang);
         if (newTranslatedPath) {
             const foundAppRouteKey = await this.findAppRouteKeyForTranslation(newTranslatedPath, oldLang);
             const isMainContent = ['home', 'aboutMe', 'skills', 'portfolio', 'contact'].includes(foundAppRouteKey || '');
-            if (isMainContent && foundAppRouteKey !== 'home') targetPathSegments.push(this.translate.instant(AppRouteKeys[foundAppRouteKey!]));
+            if (isMainContent && foundAppRouteKey !== 'home') {
+                targetPathSegments.push(this.translate.instant(AppRouteKeys[foundAppRouteKey!]));
+            }
         } else {
             console.warn(`No AppRouteKey found for path '${pathSegmentAfterLang}'. Falling back to home.`);
         }
+        return targetPathSegments;
+    }
 
-        const newTranslatedFragment = await this.getTranslatedFragmentAfterLangChange(oldLang, currentFragment);
-        await this.performNavigation(targetPathSegments, newTranslatedFragment);
+    private async _getNewTranslatedFragment(oldLang: string, currentFragment: string | null): Promise<string | undefined> {
+        return this.getTranslatedFragmentAfterLangChange(oldLang, currentFragment);
     }
 
     async handleSectionNavigation(appRouteKey: keyof typeof AppRouteKeys): Promise<void> {
         const currentLang = this.translate.currentLang;
+        const segments = this._buildNavigationSegments(appRouteKey, currentLang);
+        const translatedFragment = await this._getTranslatedFragmentForSection(appRouteKey);
+
+        const currentUrlWithoutFragment = this.router.url.split('#')[0];
+        const targetUrlPathWithoutFragment = `/${segments.join('/')}`;
+
+        await this._handleNavigationOrScroll(
+            appRouteKey,
+            segments,
+            translatedFragment,
+            currentUrlWithoutFragment,
+            targetUrlPathWithoutFragment
+        );
+    }
+
+    private _buildNavigationSegments(appRouteKey: keyof typeof AppRouteKeys, currentLang: string): string[] {
         const pathTranslationKey = AppRouteKeys[appRouteKey];
         const isMainContent = ['home', 'aboutMe', 'skills', 'portfolio', 'contact'].includes(appRouteKey);
-
         let segments: string[] = [currentLang];
         if (!isMainContent || appRouteKey === 'home') {
             const translatedPath = this.translate.instant(pathTranslationKey);
             if (translatedPath) segments.push(translatedPath);
         }
+        return segments;
+    }
+
+    private async _getTranslatedFragmentForSection(appRouteKey: keyof typeof AppRouteKeys): Promise<string | undefined> {
         const fragmentKey = await this.getFragmentKeyForAppRoute(appRouteKey);
-        const translatedFragment = fragmentKey ? this.translate.instant(fragmentKey) : undefined;
+        return fragmentKey ? this.translate.instant(fragmentKey) : undefined;
+    }
 
-        const currentUrlWithoutFragment = this.router.url.split('#')[0];
-        const targetUrlPathWithoutFragment = `/${segments.join('/')}`;
+    private async _handleNavigationOrScroll(
+        appRouteKey: keyof typeof AppRouteKeys,
+        segments: string[],
+        translatedFragment: string | undefined,
+        currentUrlWithoutFragment: string,
+        targetUrlPathWithoutFragment: string
+    ): Promise<void> {
+        const shouldNavigate = currentUrlWithoutFragment !== targetUrlPathWithoutFragment || this.activatedRoute.snapshot.fragment !== translatedFragment;
 
-        if (currentUrlWithoutFragment !== targetUrlPathWithoutFragment || this.activatedRoute.snapshot.fragment !== translatedFragment) {
-            if (this.isBrowser) this.savedScrollPosition = this.viewportScroller.getScrollPosition();
+        if (shouldNavigate) {
+            this._saveScrollPositionIfBrowser();
             await this.performNavigation(segments, translatedFragment, true);
             if (appRouteKey === 'home' && !translatedFragment) this.scrollToTop();
         } else if (translatedFragment) {
@@ -81,6 +121,12 @@ export class TranslationLogicHelperService {
         } else if (appRouteKey === 'home') {
             this.scrollToTop();
             if (this.router.url.includes('#')) this.router.navigate(segments, { replaceUrl: true });
+        }
+    }
+
+    private _saveScrollPositionIfBrowser(): void {
+        if (this.isBrowser) {
+            this.savedScrollPosition = this.viewportScroller.getScrollPosition();
         }
     }
 
