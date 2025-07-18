@@ -1,7 +1,7 @@
 <section>
     <div class="footer-content">
         <div class="footer-icon-box">
-            <a title="{{ 'HEADER.TITLE_IMG' | translate }}" href="index.html">
+            <a title="{{ 'HEADER.TITLE_IMG' | translate }}" (click)="onLogoClick()">
                 <img src="../../../assets/img/HEADER-Name.png" alt="{{ 'ALT_TEXTS.FOOTER_IMG' | translate }}">
             </a>
             <a class="animationLink link-desktop" [routerLink]="getRouterLink('legalNotice')"

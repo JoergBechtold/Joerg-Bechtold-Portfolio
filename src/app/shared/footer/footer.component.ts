@@ -4,6 +4,7 @@ import { RouterLink, Router } from '@angular/router';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { AppRouteKeys } from '../../app.routes';
 import { SocialMediaComponent } from '../social-media/social-media.component';
+import { TranslateManagerService } from '../../services/translate/translate-manager.service';
 
 @Component({
   selector: 'app-footer',
@@ -22,17 +23,15 @@ export class FooterComponent implements OnInit {
 
   constructor(
     private translate: TranslateService,
-    private router: Router
+    private router: Router,
+    private translateManager: TranslateManagerService
   ) { }
 
   ngOnInit(): void {
-    const langParam = this.router.url.split('/')[1];
-    this.activeLanguage = langParam || this.translate.getDefaultLang();
-    this.translate.onLangChange.subscribe(lang => {
-      this.activeLanguage = lang.lang;
+    this.translateManager.activeLanguage$.subscribe(lang => {
+      this.activeLanguage = lang;
     });
   }
-
 
   getRouterLink(key: keyof typeof AppRouteKeys): string[] {
     const translatedPath = this.translate.instant(AppRouteKeys[key]);
@@ -42,5 +41,22 @@ export class FooterComponent implements OnInit {
       return ['/', currentLang];
     }
     return ['/', currentLang, translatedPath];
+  }
+
+  onLogoClick(): void {
+    const currentLang = this.translateManager.currentActiveLanguage;
+    const homePath = `/${currentLang}`;
+
+    this.router.navigateByUrl(homePath, {
+      replaceUrl: true,
+      skipLocationChange: false,
+      onSameUrlNavigation: 'reload'
+    })
+      .then(() => {
+        window.scrollTo(0, 0);
+      })
+      .catch(err => {
+        console.error('Fehler beim Navigieren zum Home-Pfad:', err);
+      });
   }
 }
