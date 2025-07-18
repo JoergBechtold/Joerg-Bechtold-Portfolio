@@ -38,7 +38,8 @@
     "UNDERHEADLINE_PART_2": "weiteren Fähigkeiten",
     "DESCRIPTION_SKILLS": "Zeigen Sie, dass Sie eine Vielzahl von Frontend-Technologien <br> in Ihren Projekten eingesetzt haben.",
     "DESCRIPTION_LEARNING_ENTHUSIASM": "Zeigen Sie Begeisterung für das Erlernen neuer Technologien <br>  und Frameworks.",
-    "BUTTON": "Kontakt aufnehmen"
+    "BUTTON": "Kontakt aufnehmen",
+    "GREEN_SHADOW": "Bild von einem grünen Schatten"
   },
 
   "PORTFOLIO": {
@@ -54,7 +55,7 @@
       "JOIN_ALT": "Screenshot der Aufgabenmanager-App Join auf einem Laptop",
       "EL_POLLO_LOCO_ALT": "Screenshot der EL Pollo Loco App auf einem Laptop",
       "DA_BUBBLE_ALT": "Screenshot der DA Bubble App auf einem Laptop",
-      "PURPLE_SHADOW": "Bild eines Lila schattens"
+      "PURPLE_SHADOW": "Bild von einem lila Schatten"
     }
   },
 
