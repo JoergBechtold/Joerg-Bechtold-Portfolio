@@ -82,12 +82,8 @@ export class ContactComponent implements OnInit, OnDestroy {
       this.http.post(this.post.endPoint, this.post.body(this.contactData), { responseType: 'text' })
         .subscribe({
           next: (response) => {
-            console.log('PHP Response:', response); // Hier die Antwort vom PHP-Skript loggen
-            console.log('Email send process went through on server.');
-
-            // console.log('geht');
-            //   // this.showEmailSentOverlay = true;
-            //   // this.applyNoScrollToBody(true);
+            this.showEmailSentOverlay = true;
+            this.applyNoScrollToBody(true);
 
             ngForm.resetForm();
             this.privacyAccepted = false;
@@ -99,16 +95,6 @@ export class ContactComponent implements OnInit, OnDestroy {
         });
     }
   }
-
-  // onSubmit(ngForm: NgForm): void {
-  //   if (ngForm.valid && ngForm.submitted) {
-  //     console.log(this.contactData);
-
-  //   }
-
-  //   // this.showEmailSentOverlay = true;
-  //   // this.applyNoScrollToBody(true); 
-  // }
 
   closeEmailSentOverlay(): void {
     this.showEmailSentOverlay = false;

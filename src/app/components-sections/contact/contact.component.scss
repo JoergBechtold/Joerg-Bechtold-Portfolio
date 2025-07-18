@@ -400,35 +400,16 @@ textarea {
   }
 
   h2 {
-    @include fontSizeWeightColor($si: 2.2rem, $we: 700, $co: $white);
+    @include fontSizeWeightColor($si: 32px, $we: 700);
     margin-bottom: 15px;
   }
 
   p {
-    @include fontSizeWeightColor($si: 1.1rem, $co: lighten($white, 20%));
+    @include fontSizeWeightColor($si: 18px, $we: 400);
     margin-bottom: 30px;
   }
 
   .close-overlay-btn {
-    @include primaryButton($tra-ori-x: center, $tra-ori-y: center);
-    padding: 12px 30px;
-    font-size: 1rem;
-  }
-}
-
-@keyframes bounceIn {
-  0% {
-    transform: scale(0.1);
-    opacity: 0;
-  }
-  60% {
-    transform: scale(1.1);
-    opacity: 1;
-  }
-  80% {
-    transform: scale(0.9);
-  }
-  100% {
-    transform: scale(1);
+    @include primaryButton($tra-ori-x: top, $tra-ori-y: center);
   }
 }

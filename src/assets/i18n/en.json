@@ -92,6 +92,11 @@
 
     "LINK": {
       "PRIVACY_POLICY": "privacy policy"
+    },
+
+    "EMAIL_SEND_OVERLAY": {
+      "HEADER": "Email sent successfully!",
+      "P": "Thank you for your message! I have received your email and will get back to you as soon as possible."
     }
   },
 

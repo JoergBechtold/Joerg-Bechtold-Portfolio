@@ -92,6 +92,11 @@
 
     "LINK": {
       "PRIVACY_POLICY": "Datenschutzerklärung"
+    },
+
+    "EMAIL_SEND_OVERLAY": {
+      "HEADER": "E-Mail erfolgreich gesendet!",
+      "P": "Vielen Dank für Ihre Nachricht! Ich habe Ihre E-Mail erhalten und werde mich so schnell wie möglich bei melden."
     }
   },
 
