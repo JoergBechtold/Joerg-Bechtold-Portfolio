@@ -15,20 +15,17 @@ import { PortfolioService, Project } from '../../services/portfolio/portfolio.se
 })
 export class PortfolioComponent implements OnInit {
 
-    projectsService = inject(PortfolioService); // Korrekte Injektion deines Services
+    projectsService = inject(PortfolioService);
 
-    projects: Project[] = []; // Deine Projektliste, korrekt typisiert
-    activeLanguage: string = 'de'; // Behält die aktive Sprache
+    projects: Project[] = [];
+    activeLanguage: string = 'de';
 
     constructor(private translateManager: TranslateManagerService) { }
 
     ngOnInit(): void {
-        // Beobachtet Änderungen der aktiven Sprache, falls du darauf reagieren musst
         this.translateManager.activeLanguage$.subscribe(lang => {
             this.activeLanguage = lang;
-        });
-
-        // Lädt die Projektdaten vom Service in die Komponente
+        })
         this.projects = this.projectsService.projectBox;
     }
 }
