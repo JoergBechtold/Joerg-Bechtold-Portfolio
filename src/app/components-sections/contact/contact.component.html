@@ -11,8 +11,8 @@
 
         <div class="contact-section">
             <div class="contact-box">
-                <div appAnimateOnScroll [animationThreshold]="0.2" class="left-box">
-                    <div class="left-text-box">
+                <div class="left-box">
+                    <div appAnimateOnScroll [animationThreshold]="0.2" class="left-text-box">
                         <h2>{{ 'CONTACT.INTRO_SECTION.HEADLINE' | translate }}</h2>
                         <p>{{ 'CONTACT.INTRO_SECTION.CALL_TO_ACTION' | translate }}</p>
                         <p [innerHTML]="'CONTACT.INTRO_SECTION.SUB_CALL_TO_ACTION' | translate "></p>
@@ -25,7 +25,8 @@
                         <div class="form-group">
                             <label for="name" class="visually-hidden">{{ 'CONTACT.FORM.NAME_LABEL' | translate
                                 }}</label>
-                            <input id="name" [(ngModel)]="contactData.name" minlength="2" type="text" name="name"
+                            <input appAnimateOnScroll [animationThreshold]="0.2" id="name"
+                                [(ngModel)]="contactData.name" minlength="2" type="text" name="name"
                                 placeholder="{{ 'CONTACT.FORM.NAME_PLACEHOLDER' | translate }}" required
                                 #nameField="ngModel"
                                 [class.invalid-border]="!nameField.valid && (nameField.touched || nameField.dirty) && nameField.value !== ''"
@@ -50,7 +51,8 @@
                         <div class="form-group">
                             <label for="email" class="visually-hidden">{{ 'CONTACT.FORM.EMAIL_LABEL' | translate
                                 }}</label>
-                            <input id="email" [(ngModel)]="contactData.email" type="email" name="email"
+                            <input appAnimateOnScroll [animationThreshold]="0.2" id="email"
+                                [(ngModel)]="contactData.email" type="email" name="email"
                                 placeholder="{{ 'CONTACT.FORM.EMAIL_PLACEHOLDER' | translate }}" required
                                 pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" #emailField="ngModel"
                                 [class.invalid-border]="!emailField.valid && (emailField.touched || emailField.dirty) && emailField.value !== ''"
@@ -75,8 +77,8 @@
                         <div class="form-group">
                             <label for="message" class="visually-hidden">{{ 'CONTACT.FORM.MESSAGE_LABEL' | translate
                                 }}</label>
-                            <textarea id="message" #messageField="ngModel" [(ngModel)]="contactData.message"
-                                minlength="2" name="message"
+                            <textarea appAnimateOnScroll [animationThreshold]="0.2" id="message" #messageField="ngModel"
+                                [(ngModel)]="contactData.message" minlength="2" name="message"
                                 placeholder="{{ 'CONTACT.FORM.MESSAGE_PLACEHOLDER' | translate }}" rows="6" required
                                 [class.invalid-border]="!messageField.valid && (messageField.touched || messageField.dirty) && messageField.value !== ''"
                                 [ngModelOptions]="{ updateOn: 'blur' }">
@@ -103,7 +105,7 @@
                             }
                         </div>
 
-                        <div class="form-group privacy-checkbox">
+                        <div appAnimateOnScroll [animationThreshold]="0.2" class="form-group privacy-checkbox">
                             <input type="checkbox" id="privacy" name="privacy" [(ngModel)]="privacyAccepted" required
                                 #privacyField="ngModel"
                                 [class.is-error-displayed]="!privacyField.valid && privacyField.touched && contactData.message !== ''">
@@ -121,7 +123,8 @@
                             }
                         </div>
 
-                        <button [disabled]="!contactForm.valid" type="submit" class="submit-button">{{
+                        <button appAnimateOnScroll [animationThreshold]="0.2" [disabled]="!contactForm.valid"
+                            type="submit" class="submit-button">{{
                             'CONTACT.FORM.SEND_BUTTON' | translate }}</button>
                     </form>
                 </div>

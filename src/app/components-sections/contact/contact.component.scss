@@ -33,6 +33,9 @@ select:-webkit-autofill:focus {
 }
 
 .arrow-scroll-top {
+  opacity: 0;
+  transform: translate(50%, 0);
+
   position: absolute;
   bottom: clamp(45px, -150.8955px + 15.6716vw, 150px);
   right: clamp(45px, -150.8955px + 15.6716vw, 150px);
@@ -85,6 +88,8 @@ select:-webkit-autofill:focus {
 
 .h1-vector-box {
   width: fit-content;
+  opacity: 0;
+  transform: translate(-50%, 0);
 
   > h1 {
     @include dFlexAllCenter();
@@ -168,10 +173,14 @@ select:-webkit-autofill:focus {
   height: 100%;
 
   > h2 {
+    transform: translate(0, 30px);
+    opacity: 0;
     @include fontSizeWeightColor($si: 32px, $we: 700);
   }
 
   > p {
+    transform: translate(0, 30px);
+    opacity: 0;
     @include fontSizeWeightColor($si: 16px, $we: 400);
   }
 
@@ -223,6 +232,20 @@ form {
 
 .invalid-border {
   border-color: $not-valide-red !important;
+}
+
+input[type="text"] {
+  opacity: 0;
+  transform: translate(50%, 0);
+}
+input[type="email"] {
+  opacity: 0;
+  transform: translate(50%, 0);
+}
+
+textarea {
+  opacity: 0;
+  transform: translate(50%, 0);
 }
 
 input[type="text"],
@@ -284,6 +307,9 @@ textarea {
 }
 
 .privacy-checkbox {
+  opacity: 0;
+  transform: translate(50%, 0);
+
   display: flex;
   align-items: flex-start;
   gap: 10px;
@@ -344,10 +370,13 @@ textarea {
 .submit-button {
   @include primaryButton(top, center);
   margin-top: 8px;
+  opacity: 0;
+  transform: translate(50%, 0);
 
   &:disabled {
+    opacity: 0;
+    transform: translate(50%, 0);
     cursor: not-allowed;
-    opacity: 0.6;
     background-color: #cccccc;
     color: #666666;
     box-shadow: none;
@@ -414,6 +443,65 @@ textarea {
   }
 
   .close-overlay-btn {
+    opacity: 0;
+    transform: translate(50%, 0);
+
     @include primaryButton($tra-ori-x: top, $tra-ori-y: center);
   }
+}
+
+.headline-box.animate {
+  .h1-vector-box {
+    @include headlinePorfolioAnimation(h1VectorBoxContact);
+  }
+}
+
+.left-text-box.animate {
+  > h2 {
+    animation: leftTextBox var(--animation-time-portfolio) ease-out forwards;
+    animation-delay: calc(var(--project-animation-delay, 0s) + 0.2s);
+  }
+  > p {
+    animation: leftTextBox var(--animation-time-portfolio) ease-out forwards;
+    animation-delay: calc(var(--project-animation-delay, 0s) + 0.5s);
+  }
+}
+
+input[type="text"].animate {
+  animation: form var(--animation-time-portfolio) ease-out forwards;
+  animation-delay: calc(var(--project-animation-delay, 0s) + 0.2s);
+}
+input[type="email"].animate {
+  animation: form var(--animation-time-portfolio) ease-out forwards;
+  animation-delay: calc(var(--project-animation-delay, 0s) + 0.4s);
+}
+
+.privacy-checkbox.animate {
+  animation: form var(--animation-time-portfolio) ease-out forwards;
+  animation-delay: calc(var(--project-animation-delay, 0s) + 0.6s);
+}
+
+textarea.animate {
+  animation: form var(--animation-time-portfolio) ease-out forwards;
+  animation-delay: calc(var(--project-animation-delay, 0s) + 0.8s);
+}
+
+label.animate {
+  animation: form var(--animation-time-portfolio) ease-out forwards;
+  animation-delay: calc(var(--project-animation-delay, 0s) + 1s);
+}
+
+.submit-button.animate {
+  animation: form var(--animation-time-portfolio) ease-out forwards;
+  animation-delay: calc(var(--project-animation-delay, 0s) + 1s);
+}
+
+.submit-button:disabled.animate {
+  animation: form var(--animation-time-portfolio) ease-out forwards;
+  animation-delay: calc(var(--project-animation-delay, 0s) + 1s);
+}
+
+.arrow-scroll-top.animate {
+  animation: leftTextBox var(--animation-time-portfolio) ease-out forwards;
+  animation-delay: calc(var(--project-animation-delay, 0s) + 1s);
 }
