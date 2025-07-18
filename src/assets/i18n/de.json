@@ -100,7 +100,13 @@
     "EMAIL_SEND_OVERLAY": {
       "HEADER": "E-Mail erfolgreich gesendet!",
       "P": "Vielen Dank für Ihre Nachricht! Ich habe Ihre E-Mail erhalten und werde mich so schnell wie möglich bei melden."
-    }
+    },
+
+    "ALT_TEXT": {
+      "PURPLE_SHADOW": "Bild von einem lila Schatten"
+    },
+    "ACCEPTED_ICON": "Erfolgreich abgeschlossen",
+    "NOT_VALID_ICON": "Fehler aufgetreten Icon"
   },
 
   "LINK": {

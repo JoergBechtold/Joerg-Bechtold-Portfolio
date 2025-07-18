@@ -1,7 +1,8 @@
 <section>
     <div class="contact-content">
 
-        <img src="../../../assets/img/background/PURPLE-SHADOW-CONTACT.svg" alt="">
+        <img src="../../../assets/img/background/PURPLE-SHADOW-CONTACT.svg"
+            alt="{{'CONTACT.ALT_TEXT.PURPLE_SHADOW' | translate}}">
 
         <div appAnimateOnScroll [animationThreshold]="0.2" class="headline-box">
             <div class="h1-vector-box">
@@ -32,12 +33,12 @@
                                 [class.invalid-border]="!nameField.valid && (nameField.touched || nameField.dirty) && nameField.value !== ''"
                                 [ngModelOptions]="{ updateOn: 'blur' }">
                             <img *ngIf="nameField.valid && (nameField.touched || nameField.dirty)"
-                                src="../../../assets/icons/contact-icons/ACCEPTED-ICON.svg" alt="Accepted"
-                                class="validation-icon accepted-icon">
+                                src="../../../assets/icons/contact-icons/ACCEPTED-ICON.svg"
+                                alt="{{'CONTACT.ACCEPTED_ICON' | translate}}" class="validation-icon accepted-icon">
 
                             <img *ngIf="!nameField.valid && (nameField.touched || nameField.dirty) && nameField.value !== ''"
-                                src="../../../assets/icons/contact-icons/NOT-VALIDE-ICON.svg" alt="Not Valid"
-                                class="validation-icon not-valid-icon">
+                                src="../../../assets/icons/contact-icons/NOT-VALIDE-ICON.svg"
+                                alt="{{'CONTACT.NOT_VALID_ICON' | translate}}" class="validation-icon not-valid-icon">
                             @if (!nameField.valid && (nameField.touched || nameField.dirty) && nameField.value !== ''){
                             <p class="error-message" *ngIf="nameField.errors?.['required']">
                                 {{ 'CONTACT.VALIDATION.NAME_REQUIRED' | translate }}</p>
@@ -58,11 +59,11 @@
                                 [class.invalid-border]="!emailField.valid && (emailField.touched || emailField.dirty) && emailField.value !== ''"
                                 [ngModelOptions]="{ updateOn: 'blur' }">
                             <img *ngIf="emailField.valid && (emailField.touched || emailField.dirty)"
-                                src="../../../assets/icons/contact-icons/ACCEPTED-ICON.svg" alt="Accepted"
-                                class="validation-icon accepted-icon">
+                                src="../../../assets/icons/contact-icons/ACCEPTED-ICON.svg"
+                                alt="{{'CONTACT.ACCEPTED_ICON' | translate}}" class="validation-icon accepted-icon">
                             <img *ngIf="!emailField.valid && (emailField.touched || emailField.dirty) && emailField.value !== ''"
-                                src="../../../assets/icons/contact-icons/NOT-VALIDE-ICON.svg" alt="Not Valid"
-                                class="validation-icon not-valid-icon">
+                                src="../../../assets/icons/contact-icons/NOT-VALIDE-ICON.svg"
+                                alt="{{'CONTACT.NOT_VALID_ICON' | translate}}" class="validation-icon not-valid-icon">
                             @if (!emailField.valid && (emailField.touched || emailField.dirty) && emailField.value !==
                             ''){
                             <p class="error-message" *ngIf="emailField.errors?.['required']">{{
@@ -85,11 +86,11 @@
                             </textarea>
 
                             <img *ngIf="messageField.valid && (messageField.touched || messageField.dirty)"
-                                src="../../../assets/icons/contact-icons/ACCEPTED-ICON.svg" alt="Accepted"
-                                class="validation-icon accepted-icon">
+                                src="../../../assets/icons/contact-icons/ACCEPTED-ICON.svg"
+                                alt="{{'CONTACT.ACCEPTED_ICON' | translate}}" class="validation-icon accepted-icon">
                             <img *ngIf="!messageField.valid && (messageField.touched || messageField.dirty) && messageField.value !== ''"
-                                src="../../../assets/icons/contact-icons/NOT-VALIDE-ICON.svg" alt="Not Valid"
-                                class="validation-icon not-valid-icon">
+                                src="../../../assets/icons/contact-icons/NOT-VALIDE-ICON.svg"
+                                alt="{{'CONTACT.NOT_VALID_ICON' | translate}}" class="validation-icon not-valid-icon">
                             @if (messageField.invalid && (messageField.touched || messageField.dirty) &&
                             contactData.message !== '') {
                             @if (messageField.errors?.['required']) {

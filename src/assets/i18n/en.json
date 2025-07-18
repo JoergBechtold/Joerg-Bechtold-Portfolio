@@ -100,7 +100,13 @@
     "EMAIL_SEND_OVERLAY": {
       "HEADER": "Email sent successfully!",
       "P": "Thank you for your message! I have received your email and will get back to you as soon as possible."
-    }
+    },
+    "ALT_TEXT": {
+      "PURPLE_SHADOW": "Image of a purple shadow"
+    },
+
+    "ACCEPTED_ICON": "Successfully completed Icon",
+    "NOT_VALID_ICON": "Error occurred Icon"
   },
 
   "LINK": {
