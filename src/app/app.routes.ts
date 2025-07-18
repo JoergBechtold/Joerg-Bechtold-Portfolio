@@ -5,7 +5,7 @@ import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslateManagerService } from './services/translate/translate-manager.service';
+
 
 export const AppRouteKeys = {
     home: 'ROUTES.HOME',
@@ -16,12 +16,12 @@ export const AppRouteKeys = {
     privacyPolicy: 'ROUTES.PRIVACY_POLICY',
     legalNotice: 'ROUTES.LEGAL_NOTICE',
     notFound: 'ROUTES.NOT_FOUND',
-
     aboutMeFragment: 'FRAGMENTS.ABOUT_ME_ID',
     skillsFragment: 'FRAGMENTS.SKILLS_ID',
     portfolioFragment: 'FRAGMENTS.PORTFOLIO_ID',
     contactFragment: 'FRAGMENTS.CONTACT_ID'
 };
+
 
 export const mainRoutes: Routes = [
     {
@@ -61,47 +61,43 @@ export const mainRoutes: Routes = [
     },
 ];
 
-export function createLocalizedRoutes(translate: TranslateService): Routes {
-    const localizedRoutes: Routes = [];
-    for (const route of mainRoutes) {
-        localizedRoutes.push(createTranslatedRoute(route, translate));
-    }
-    return localizedRoutes;
-}
-
 function createTranslatedRoute(route: Route, translate: TranslateService): Route {
     const translatedPathKey = route.data?.['translationKey'];
-    if (translatedPathKey) {
-        let translatedPath = translate.instant(translatedPathKey);
-        if (translatedPathKey === AppRouteKeys.home && translatedPath === '') {
-            translatedPath = '';
-        }
-        return { ...route, path: translatedPath };
+    if (!translatedPathKey) return route;
+
+    let translatedPath = translate.instant(translatedPathKey);
+    if (translatedPathKey === AppRouteKeys.home && translatedPath === '') {
+        translatedPath = '';
     }
-    return route;
+    return { ...route, path: translatedPath };
 }
 
-const langResolver = async (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
-    const translate = inject(TranslateService);
-    const router = inject(Router);
-    const langParam = route.paramMap.get('lang');
+export function createLocalizedRoutes(translate: TranslateService): Routes {
+    return mainRoutes.map(route => createTranslatedRoute(route, translate));
+}
+
+const validateAndGetCurrentLang = (langParam: string | null, translate: TranslateService, router: Router): string | null => {
     const defaultLang = translate.getDefaultLang();
     const availableLangs = translate.getLangs();
-
     const currentLang = langParam || defaultLang;
 
     if (!availableLangs.includes(currentLang)) {
-        console.warn(`[langResolver] Invalid language in URL: '${langParam}'. Redirecting to '${defaultLang}'.`);
+        console.warn(`[langResolver] Ungültige Sprache: '${langParam}'. Weiterleitung zu '${defaultLang}'.`);
         router.navigateByUrl(`/${defaultLang}`, { replaceUrl: true });
-        return false;
+        return null;
     }
+    return currentLang;
+};
 
+const setTranslateServiceLanguage = async (translate: TranslateService, currentLang: string): Promise<void> => {
     if (translate.currentLang !== currentLang) {
         await translate.use(currentLang).toPromise();
     }
+};
 
+const updateRouterConfig = (router: Router, translate: TranslateService, existingRoutes: Routes): void => {
     const newLocalizedRoutes = createLocalizedRoutes(translate);
-    const updatedRoutes = [...routes];
+    const updatedRoutes = [...existingRoutes];
     const langRouteIndex = updatedRoutes.findIndex(r => r.path === ':lang');
 
     if (langRouteIndex > -1) {
@@ -113,11 +109,7 @@ const langResolver = async (route: ActivatedRouteSnapshot, state: RouterStateSna
     } else {
         console.error(`[langResolver] Fehler: ':lang'-Route nicht in den Hauptrouten gefunden!`);
     }
-
-    return handlePathValidation(state.url, translate, router, currentLang);
 };
-
-
 
 const extractPathSegment = (stateUrl: string): string => {
     const urlWithoutFragment = stateUrl.split('#')[0];
@@ -131,6 +123,8 @@ const getExpectedUrl = (pathSegment: string, translate: TranslateService, curren
     if (!targetRoute) return undefined;
 
     const foundTranslationKey = targetRoute.data?.['translationKey'];
+    if (!foundTranslationKey) return undefined;
+
     const targetAppRouteKey = (Object.keys(AppRouteKeys) as Array<keyof typeof AppRouteKeys>)
         .find(keyName => AppRouteKeys[keyName] === foundTranslationKey);
 
@@ -143,25 +137,23 @@ const getExpectedUrl = (pathSegment: string, translate: TranslateService, curren
 };
 
 const redirectToHome = (router: Router, translate: TranslateService, currentLang: string): boolean => {
-    console.warn(`[langResolver] Path is not a valid translated route in '${currentLang}'.`);
+    console.warn(`[langResolver] Pfad ist keine gültige übersetzte Route in '${currentLang}'.`);
     const homeTranslatedPath = translate.instant(AppRouteKeys.home);
     const homeUrl = `/${currentLang}${homeTranslatedPath === '' ? '' : '/' + homeTranslatedPath}`;
     router.navigateByUrl(homeUrl, { replaceUrl: true });
     return false;
 };
 
-
 const handlePathValidation = (stateUrl: string, translate: TranslateService, router: Router, currentLang: string): boolean => {
     const pathOnlyUrl = stateUrl.split('#')[0];
     const pathSegment = extractPathSegment(stateUrl);
-
     const fullExpectedUrlWithoutFragment = getExpectedUrl(pathSegment, translate, currentLang);
 
-    if (fullExpectedUrlWithoutFragment && pathOnlyUrl === fullExpectedUrlWithoutFragment) {
+    if (fullExpectedUrlWithoutFragment === pathOnlyUrl) {
         return true;
     }
 
-    if (fullExpectedUrlWithoutFragment && pathOnlyUrl !== fullExpectedUrlWithoutFragment) {
+    if (fullExpectedUrlWithoutFragment) {
         const navigationExtras: NavigationExtras = { replaceUrl: true };
         router.navigateByUrl(fullExpectedUrlWithoutFragment, navigationExtras);
         return false;
@@ -169,6 +161,22 @@ const handlePathValidation = (stateUrl: string, translate: TranslateService, rou
 
     return redirectToHome(router, translate, currentLang);
 };
+
+const langResolver = async (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> => {
+    const translate = inject(TranslateService);
+    const router = inject(Router);
+
+    const currentLang = validateAndGetCurrentLang(route.paramMap.get('lang'), translate, router);
+    if (currentLang === null) {
+        return false;
+    }
+
+    await setTranslateServiceLanguage(translate, currentLang);
+    updateRouterConfig(router, translate, routes);
+
+    return handlePathValidation(state.url, translate, router, currentLang);
+};
+
 
 export const routes: Routes = [
     {
