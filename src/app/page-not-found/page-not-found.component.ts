@@ -1,9 +1,8 @@
-// src/app/page-not-found/page-not-found.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
-import { TranslateService, TranslateModule } from '@ngx-translate/core'; // <-- TranslateModule hier importieren!
-import { AppRouteKeys } from '../app.routes'; // Pfad prüfen!
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { AppRouteKeys } from '../app.routes';
 
 @Component({
   selector: 'app-page-not-found',
@@ -11,7 +10,7 @@ import { AppRouteKeys } from '../app.routes'; // Pfad prüfen!
   imports: [
     CommonModule,
     RouterLink,
-    TranslateModule // <-- DIES IST DIE FEHLENDE ZEILE!
+    TranslateModule
   ],
   templateUrl: './page-not-found.component.html',
   styleUrls: ['./page-not-found.component.scss']
