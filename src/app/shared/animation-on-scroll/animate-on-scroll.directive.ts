@@ -5,11 +5,7 @@ import { Directive, ElementRef, OnInit, OnDestroy, Input, Renderer2 } from '@ang
   standalone: true
 })
 export class AnimateOnScrollDirective implements OnInit, OnDestroy {
-  // @Input, um den Schwellenwert (threshold) für den Observer anzupassen
-  // Standardwert ist jetzt 0.5, kann aber immer noch überschrieben werden
-  @Input() animationThreshold: number = 0.4; // Hier wird der globale Standardwert festgelegt
-
-  // @Input, um die Animation als "onetime" zu markieren (spielt nur einmal ab)
+  @Input() animationThreshold: number = 0.4;
   @Input() animationOnetime: boolean = true;
 
   private observer!: IntersectionObserver;
@@ -21,36 +17,53 @@ export class AnimateOnScrollDirective implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.observer) {
-      this.observer.disconnect();
-    }
+    this.disconnectObserver();
   }
 
   private setupIntersectionObserver(): void {
-    if (typeof IntersectionObserver === 'undefined') {
-      this.renderer.addClass(this.el.nativeElement, 'animate');
-      console.warn('IntersectionObserver not supported. Animation will play immediately for:', this.el.nativeElement);
+    if (!this.isIntersectionObserverSupported()) {
+      this.applyAnimationFallback();
       return;
     }
 
-    const options = {
-      root: null, // Der Viewport als Root
-      rootMargin: '0px',
-      threshold: this.animationThreshold // Dieser Wert kommt jetzt vom @Input der Direktive
-    };
-
-    this.observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          this.renderer.addClass(this.el.nativeElement, 'animate');
-
-          if (this.animationOnetime) {
-            observer.unobserve(entry.target);
-          }
-        }
-      });
-    }, options);
-
+    const options = this.getObserverOptions();
+    this.observer = new IntersectionObserver(this.handleIntersection.bind(this), options);
     this.observer.observe(this.el.nativeElement);
+  }
+
+  private isIntersectionObserverSupported(): boolean {
+    return typeof IntersectionObserver !== 'undefined';
+  }
+
+  private applyAnimationFallback(): void {
+    this.renderer.addClass(this.el.nativeElement, 'animate');
+    console.warn('IntersectionObserver nicht unterstützt. Animation wird sofort abgespielt für:', this.el.nativeElement);
+  }
+
+  private getObserverOptions(): IntersectionObserverInit {
+    return {
+      root: null,
+      rootMargin: '0px',
+      threshold: this.animationThreshold
+    };
+  }
+
+  private handleIntersection(entries: IntersectionObserverEntry[], observer: IntersectionObserver): void {
+    entries.forEach(entry => this.processEntry(entry, observer));
+  }
+
+  private processEntry(entry: IntersectionObserverEntry, observer: IntersectionObserver): void {
+    if (entry.isIntersecting) {
+      this.renderer.addClass(this.el.nativeElement, 'animate');
+      if (this.animationOnetime) {
+        observer.unobserve(entry.target);
+      }
+    }
+  }
+
+  private disconnectObserver(): void {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
   }
 }
