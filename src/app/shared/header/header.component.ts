@@ -1,13 +1,14 @@
 // header.component.ts
+import { Component, OnInit, OnDestroy, ViewChild, Inject, Renderer2 } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
-import { Component, OnInit, EventEmitter, Output, Inject, Renderer2, OnDestroy, ViewChild } from '@angular/core';
-import { RouterLink, Router, ActivatedRoute } from '@angular/router';
-import { NavigationComponent } from './components/navigation/navigation.component';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Subscription } from 'rxjs';
+import { Subscription, filter } from 'rxjs';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { AppRouteKeys } from '../../app.routes';
+import { TranslateManagerService } from '../../services/translate/translate-manager.service';
+import { NavigationComponent } from './components/navigation/navigation.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-header',
@@ -26,11 +27,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isMenuOpen: boolean = false;
   @ViewChild(NavigationComponent) navigationComponent!: NavigationComponent;
 
-  private breakpointSubscription: Subscription = new Subscription();
+  private subscriptions: Subscription = new Subscription();
   private readonly maxWidthBreakpoint = 920;
   private readonly customBreakpointQuery = `(min-width: ${this.maxWidthBreakpoint + 1}px)`;
 
-  activeLanguage: string = '';
+  activeLanguage: string = 'de';
   AppRouteKeys = AppRouteKeys;
 
   constructor(
@@ -39,41 +40,58 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private breakpointObserver: BreakpointObserver,
     private translate: TranslateService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private translateManager: TranslateManagerService
   ) { }
 
   ngOnInit(): void {
-    this.breakpointSubscription = this.breakpointObserver
-      .observe([this.customBreakpointQuery])
-      .subscribe(result => {
-        if (result.matches) {
-          if (this.isMenuOpen) {
-            this.closeSidebar();
+    this.subscriptions.add(
+      this.breakpointObserver
+        .observe([this.customBreakpointQuery])
+        .subscribe(result => {
+          if (result.matches) {
+            if (this.isMenuOpen) {
+              this.closeSidebar();
+            }
           }
+        })
+    );
+    this.subscriptions.add(
+      this.translateManager.activeLanguage$.subscribe(lang => {
+        this.activeLanguage = lang;
+      })
+    );
+    this.subscriptions.add(
+      this.router.events.pipe(
+        filter(event => event instanceof NavigationEnd)
+      ).subscribe((event: NavigationEnd) => {
+        if (event.urlAfterRedirects.split('#')[0] === `/${this.activeLanguage}` || event.urlAfterRedirects.split('#')[0] === `/${this.activeLanguage}/`) {
+          setTimeout(() => {
+            window.scrollTo(0, 0);
+          }, 50);
         }
-      });
-
-    this.activatedRoute.paramMap.subscribe(params => {
-      const langParam = params.get('lang');
-      this.activeLanguage = langParam || this.translate.getDefaultLang();
-    });
-
-    this.translate.onLangChange.subscribe(lang => {
-      this.activeLanguage = lang.lang;
-    });
+      })
+    );
   }
 
   onLogoClick(): void {
-    if (this.navigationComponent) {
-      this.navigationComponent.navigateToSection('home');
-    } else {
-      console.warn('NavigationComponent not found for logo click.');
-
-    }
+    const currentLang = this.translateManager.currentActiveLanguage;
+    const homePath = `/${currentLang}`;
+    this.router.navigateByUrl(homePath, {
+      replaceUrl: true,
+      skipLocationChange: false,
+      onSameUrlNavigation: 'reload'
+    })
+      .then(() => {
+        window.scrollTo(0, 0);
+      })
+      .catch(err => {
+        console.error('Fehler beim Navigieren zum Home-Pfad:', err);
+      });
   }
 
   ngOnDestroy(): void {
-    this.breakpointSubscription.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 
   toggleSidebar(): void {
