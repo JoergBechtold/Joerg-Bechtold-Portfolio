@@ -118,6 +118,11 @@
     "LETS_TALK": "Let's talk!"
   },
 
+  "OVERLAY_LANDSCAPE": {
+    "ALT_TEXT_IMG_DEVICE": " Rotate device (portrait and landscape view",
+    "ALT_TEXT_IMG_ARROW": "Green arrow pointing left"
+  },
+
   "ROUTES": {
     "HOME": "",
     "ABOUT_ME": "about-me",

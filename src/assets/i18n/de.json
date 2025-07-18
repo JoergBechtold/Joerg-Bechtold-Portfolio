@@ -118,6 +118,11 @@
     "LETS_TALK": "Lass uns reden"
   },
 
+  "OVERLAY_LANDSCAPE": {
+    "ALT_TEXT_IMG_DEVICE": "Gerät drehen (Hoch- und Querformat-Ansicht)",
+    "ALT_TEXT_IMG_ARROW": "Grüner Pfeil nach links"
+  },
+
   "ROUTES": {
     "HOME": "",
     "ABOUT_ME": "ueber-mich",
