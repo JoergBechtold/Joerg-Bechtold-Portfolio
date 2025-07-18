@@ -1,10 +1,9 @@
-// src/app/core/services/translate-manager.service.ts
 import { Injectable } from '@angular/core';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AppRouteKeys } from '../../app.routes';
-import { TranslationLogicHelperService } from '../translate/translation-logic-helper.service'; // Pfad aktualisiert
+import { TranslationLogicHelperService } from '../translate/translation-logic-helper.service';
 
 @Injectable({ providedIn: 'root' })
 export class TranslateManagerService {
@@ -15,7 +14,7 @@ export class TranslateManagerService {
     private translate: TranslateService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private helper: TranslationLogicHelperService, // Hier wird der Helfer injiziert
+    private helper: TranslationLogicHelperService,
   ) {
     this._activeLanguageSubject = new BehaviorSubject<string>(this.translate.currentLang);
     this.activeLanguage$ = this._activeLanguageSubject.asObservable();

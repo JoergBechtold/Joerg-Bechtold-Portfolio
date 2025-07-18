@@ -1,9 +1,8 @@
-// src/app/core/services/translate/translation-logic-helper.service.ts
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { ViewportScroller, isPlatformBrowser } from '@angular/common';
-import { AppRouteKeys, mainRoutes, createLocalizedRoutes, routes } from '../../app.routes'; // Pfad anpassen
+import { AppRouteKeys, mainRoutes, createLocalizedRoutes, routes } from '../../app.routes';
 
 @Injectable({ providedIn: 'root' })
 export class TranslationLogicHelperService {
@@ -101,7 +100,7 @@ export class TranslationLogicHelperService {
             this.scheduleScroll(fragment);
         } catch (err) {
             console.error('Navigation failed:', err);
-            if (this.isBrowser) this.viewportScroller.scrollToPosition(this.savedScrollPosition || [0, 0]); // Fallback
+            if (this.isBrowser) this.viewportScroller.scrollToPosition(this.savedScrollPosition || [0, 0]);
             this.savedScrollPosition = null;
         }
     }
@@ -141,7 +140,7 @@ export class TranslationLogicHelperService {
     }
 
     private async getTranslatedRoutePath(oldLang: string, currentPathSegment: string): Promise<string | undefined> {
-        if (!currentPathSegment) return AppRouteKeys.home; // Home key
+        if (!currentPathSegment) return AppRouteKeys.home;
         const oldTranslations = await this.translate.getTranslation(oldLang).toPromise();
         for (const route of mainRoutes) {
             const translationKey = route.data?.['translationKey'];
