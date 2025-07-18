@@ -3,7 +3,7 @@
 @use "../../../assets/styles/animations.scss" as *;
 
 section {
-  @include commonSectionStyles();
+  @include commonSectionStyles($hei-mob: unset);
   @include paddingTopMinWidthBreakpoint();
 }
 
@@ -26,19 +26,16 @@ select:-webkit-autofill:focus {
 
   > img {
     position: absolute;
-    left: -345px;
-    bottom: -290px;
+    left: clamp(-480px, -558.75px + 22.5vw, -345px);
+    bottom: clamp(-435px, -519.5833px + 24.1667vw, -290px);
     width: 850px;
-
-    @media screen and (max-width: $breakpoint-width-920) {
-    }
   }
 }
 
 .arrow-scroll-top {
   position: absolute;
-  bottom: 150px;
-  right: 150px;
+  bottom: clamp(45px, -150.8955px + 15.6716vw, 150px);
+  right: clamp(45px, -150.8955px + 15.6716vw, 150px);
   width: 55px;
   aspect-ratio: 1 / 1;
   display: grid;
@@ -117,11 +114,29 @@ select:-webkit-autofill:focus {
   padding-inline: clamp(25px, 11.6667px + 4.1667vw, 50px);
   padding-top: clamp(25px, 22px + 0.9375vw, 40px);
   width: 100%;
+
+  @media screen and (max-width: $breakboint-width-1250) {
+    padding-bottom: 170px;
+  }
+
+  @media screen and (max-height: $responsive-height-814) {
+    padding-bottom: 130px;
+  }
 }
 
 .contact-box {
   @include dFlexAllCenter($ai: unset, $g: var(--gap-column-portfolio-section));
   width: 1200px;
+
+  @media screen and (max-width: $breakboint-width-1250) {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  @media screen and (max-height: $responsive-height-814) {
+    flex-direction: column;
+    align-items: center;
+  }
 
   @media screen and (max-width: $breakpoint-width-920) {
     gap: 30px;
@@ -133,6 +148,20 @@ select:-webkit-autofill:focus {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
+
+  @media screen and (max-width: $breakboint-width-1250) {
+    flex: unset;
+    width: 535px;
+  }
+
+  @media screen and (max-height: $responsive-height-814) {
+    flex: unset;
+    width: 535px;
+  }
+
+  @media screen and (max-width: $breakboint-width-640) {
+    width: 100%;
+  }
 }
 
 .left-text-box {
@@ -145,14 +174,23 @@ select:-webkit-autofill:focus {
   > p {
     @include fontSizeWeightColor($si: 16px, $we: 400);
   }
+
+  @media screen and (max-width: $breakboint-width-1250) {
+  }
 }
 
 .right-box {
   flex: 1;
-  background-color: $primary-bg-gray;
+  width: 535px;
+  position: relative;
 
-  max-width: 535px;
-  width: 100%;
+  @media screen and (max-width: $breakboint-width-1250) {
+    flex: unset;
+  }
+
+  @media screen and (max-width: $breakboint-width-640) {
+    width: 100%;
+  }
 }
 
 form {
@@ -161,11 +199,14 @@ form {
   align-items: center;
   gap: 35px;
   caret-color: $primary-bg-green;
+
+  @media screen and (max-width: $breakboint-width-380) {
+    gap: 50px;
+  }
 }
 
 .form-group {
   position: relative;
-  // margin-bottom: 25px;
   width: 100%;
 }
 
@@ -217,29 +258,24 @@ textarea {
   &.ng-valid.ng-touched {
     border-color: $primary-bg-green;
   }
-
-  // &.ng-invalid.ng-touched {
-  //   border-color: $not-valide-red;
-  // }
 }
 
 .validation-icon {
   position: absolute;
-  right: 15px; // Position rechts im Feld (innerhalb des Paddings)
-  top: 50%;
-  transform: translateY(-50%);
-  width: 24px; // Größe der Icons
+  right: 15px;
+  top: 13px;
+  width: 24px;
   height: 24px;
-  pointer-events: none; // Klicks gehen durch das Icon hindurch zum Input
-  z-index: 2; // Stellt sicher, dass das Icon über dem Input liegt
+  pointer-events: none;
+  z-index: 2;
 }
 
 .error-message {
-  color: $not-valide-red; // Rote Farbe für Fehlermeldungen
-  font-size: 0.85rem;
-  margin-top: 5px; // Abstand zum Eingabefeld
-  padding-left: 5px;
-  position: absolute; // Kleiner Einzug
+  @include errorMessage($bot: unset);
+}
+
+.error-message-checkbox {
+  @include errorMessage($bot: -21px);
 }
 
 textarea {
@@ -289,11 +325,10 @@ textarea {
     }
   }
 
-  label {
-    color: white;
-    font-size: 0.95rem;
+  > label {
+    @include fontSizeWeightColor($si: 14px, $we: 400);
 
-    .privacy-link {
+    > p > a {
       color: $primary-bg-purple;
       text-decoration: none;
       &:hover {
@@ -317,21 +352,16 @@ textarea {
 }
 
 .email-sent-overlay {
-  position: fixed; /* Fixiert über allem */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(
-    0,
-    0,
-    0,
-    0.8
-  ); /* Dunkler, leicht transparenter Hintergrund */
+  background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Stellt sicher, dass es über anderen Elementen liegt */
+  z-index: 5;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
@@ -349,24 +379,24 @@ textarea {
     max-width: 500px;
     width: 90%;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
-    transform: scale(0.8); /* Startgröße für die Animation */
-    opacity: 0; /* Start-Transparenz für die Animation */
+    transform: scale(0.8);
+    opacity: 0;
     transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55),
-      /* Coole Feder-Animation */ opacity 0.4s ease-in-out;
+      opacity 0.4s ease-in-out;
   }
 
   &.show .overlay-content {
-    transform: scale(1); /* Endgröße */
-    opacity: 1; /* End-Transparenz */
+    transform: scale(1);
+    opacity: 1;
   }
 
   .check-icon {
     width: 80px;
     height: 80px;
-    color: $primary-bg-green; /* Grüne Farbe für den Haken */
+    color: $primary-bg-green;
     stroke-width: 2.5;
     margin-bottom: 20px;
-    animation: bounceIn 0.8s ease-out forwards; /* Animation für den Haken */
+    animation: bounceIn 0.8s ease-out forwards;
   }
 
   h2 {
@@ -380,10 +410,7 @@ textarea {
   }
 
   .close-overlay-btn {
-    @include primaryButton(
-      $tra-ori-x: center,
-      $tra-ori-y: center
-    ); /* Nutze dein bestehendes Button-Mixin */
+    @include primaryButton($tra-ori-x: center, $tra-ori-y: center);
     padding: 12px 30px;
     font-size: 1rem;
   }

@@ -24,7 +24,10 @@ $max-width-1920: 1920px;
 $max-width-700: 700px;
 
 //responsive max-width
+$breakboint-width-380: 380px;
+$breakboint-width-640: 640px;
 $breakpoint-width-920: 920px;
+$breakboint-width-1250: 1250px;
 
 //responsive min-width
 $breakpoint-min-width-1921: 1921px;
@@ -41,6 +44,7 @@ $distance-right-left-about-me: clamp(53px, -238.64px + 31.7vw, 370px);
   --header-height-responsive: 75px;
   --breakpoint-width-920: 920px;
   --breakpoint-min-width: 1921px;
+  --breakboint-width-1250: 1250px;
 
   //animation time
   --animation-time-about-me: 0.7s;

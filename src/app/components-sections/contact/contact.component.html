@@ -108,14 +108,15 @@
                                 #privacyField="ngModel">
                             <label for="privacy">
                                 <p>
-                                    {{ 'CONTACT.FORM.PRIVACY_TEXT_PART1' | translate }} <a class=""
+                                    {{ 'CONTACT.FORM.PRIVACY_TEXT_PART1' | translate }} <a
                                         [routerLink]="getRouterLink('privacyPolicy')">{{
                                         'CONTACT.LINK.PRIVACY_POLICY' | translate}}</a> {{
                                     'CONTACT.FORM.PRIVACY_TEXT_PART2' | translate }}
                                 </p>
                             </label>
                             @if (!privacyField.valid && privacyField.touched){
-                            <p class="error-message">{{ 'CONTACT.VALIDATION.PRIVACY_REQUIRED' | translate }}</p>
+                            <p class="error-message-checkbox">{{ 'CONTACT.VALIDATION.PRIVACY_REQUIRED' | translate }}
+                            </p>
                             }
                         </div>
 
