@@ -3,15 +3,16 @@ import { CommonModule, DOCUMENT } from '@angular/common';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { TranslateManagerService } from '../../services/translate/translate-manager.service';
 import { AnimateOnScrollDirective } from '../../shared/animation-on-scroll/animate-on-scroll.directive';
-import { RouterLink, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AppRouteKeys } from '../../app.routes';
 import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
+
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [CommonModule, RouterLink, TranslateModule, FormsModule, AnimateOnScrollDirective],
+  imports: [CommonModule, TranslateModule, FormsModule, AnimateOnScrollDirective],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss'
 })
@@ -49,10 +50,8 @@ export class ContactComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    const langParam = this.router.url.split('/')[1];
-    this.activeLanguage = langParam || this.translate.getDefaultLang();
-    this.translate.onLangChange.subscribe(lang => {
-      this.activeLanguage = lang.lang;
+    this.translateManager.activeLanguage$.subscribe(lang => {
+      this.activeLanguage = lang;
     });
   }
 
@@ -76,6 +75,14 @@ export class ContactComponent implements OnInit, OnDestroy {
       behavior: 'smooth'
     });
   }
+  navigateToPrivacyPolicy(): void {
+    const currentLang = this.activeLanguage;
+    const privacyPolicyPath = this.translate.instant(AppRouteKeys.privacyPolicy);
+    this.router.navigate(['/', currentLang, privacyPolicyPath])
+      .catch(err => {
+        console.error('Fehler beim Navigieren zur Datenschutzseite:', err);
+      });
+  }
 
   onSubmit(ngForm: NgForm) {
     if (ngForm.submitted && ngForm.form.valid) {
@@ -84,7 +91,6 @@ export class ContactComponent implements OnInit, OnDestroy {
           next: (response) => {
             this.showEmailSentOverlay = true;
             this.applyNoScrollToBody(true);
-
             ngForm.resetForm();
             this.privacyAccepted = false;
           },
@@ -99,10 +105,6 @@ export class ContactComponent implements OnInit, OnDestroy {
   closeEmailSentOverlay(): void {
     this.showEmailSentOverlay = false;
     this.applyNoScrollToBody(false);
-  }
-
-  async navigateToHomeSection(): Promise<void> {
-    await this.translateManager.navigateToSection('home');
   }
 
   private applyNoScrollToBody(shouldApplyNoScroll: boolean): void {

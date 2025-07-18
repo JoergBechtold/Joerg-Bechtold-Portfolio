@@ -112,7 +112,7 @@
                             <label for="privacy">
                                 <p>
                                     {{ 'CONTACT.FORM.PRIVACY_TEXT_PART1' | translate }} <a
-                                        [routerLink]="getRouterLink('privacyPolicy')">{{
+                                        (click)="navigateToPrivacyPolicy()">{{
                                         'CONTACT.LINK.PRIVACY_POLICY' | translate}}</a> {{
                                     'CONTACT.FORM.PRIVACY_TEXT_PART2' | translate }}
                                 </p>
