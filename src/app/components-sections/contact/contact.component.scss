@@ -275,7 +275,7 @@ textarea {
 }
 
 .error-message-checkbox {
-  @include errorMessage($bot: -21px);
+  @include errorMessage($bot: -64%);
 }
 
 textarea {
@@ -340,6 +340,7 @@ textarea {
 
 .submit-button {
   @include primaryButton(top, center);
+  margin-top: 8px;
 
   &:disabled {
     cursor: not-allowed;

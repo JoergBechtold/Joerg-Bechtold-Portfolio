@@ -131,7 +131,6 @@
 
 @mixin errorMessage($bot: -38px, $paLe: 5px) {
   @include fontSizeWeightColor($si: 14px, $co: $not-valide-red);
-
   bottom: $bot;
   padding-left: $paLe;
   position: absolute;
