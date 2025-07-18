@@ -65,12 +65,10 @@ export class OverlayLandscapeComponent implements OnInit, OnDestroy {
     checkOrientation(): void {
         const MAX_MOBILE_WIDTH_PORTRAIT = 768;
         const MAX_MOBILE_HEIGHT_LANDSCAPE = 500;
-
         const isLandscape = window.matchMedia("(orientation: landscape)").matches;
         const wasOverlayShowing = this.showRotateOverlay;
 
         this.showRotateOverlay = isLandscape && (window.innerWidth <= MAX_MOBILE_WIDTH_PORTRAIT || window.innerHeight <= MAX_MOBILE_HEIGHT_LANDSCAPE);
-
         this.cdr.detectChanges();
 
         if (this.showRotateOverlay && !wasOverlayShowing) {
