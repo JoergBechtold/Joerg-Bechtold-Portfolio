@@ -12,7 +12,6 @@
 
     @media screen and (max-width: $breakpoint-width-920) {
       flex-direction: column;
-      // gap: 29px ;
       @include dFlexAllCenter($g: 29px);
     }
   }
