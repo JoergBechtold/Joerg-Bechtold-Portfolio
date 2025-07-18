@@ -17,7 +17,7 @@ select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px $primary-bg-gray inset !important;
-  -webkit-text-fill-color: white !important; /* Stellt sicher, dass die Textfarbe weiß bleibt */
+  -webkit-text-fill-color: white !important;
 }
 
 .contact-content {
