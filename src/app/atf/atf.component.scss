@@ -11,10 +11,6 @@ section {
   right: 0;
   overflow: hidden;
   @include dFlexAllCenter();
-
-  @media screen and (min-width: $breakpoint-min-width-1921) {
-    height: 50dvh;
-  }
 }
 
 .atf-content {
