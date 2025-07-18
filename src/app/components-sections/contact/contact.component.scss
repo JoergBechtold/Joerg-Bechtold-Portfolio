@@ -474,35 +474,35 @@ input[type="text"].animate {
 }
 input[type="email"].animate {
   animation: form var(--animation-time-portfolio) ease-out forwards;
-  animation-delay: calc(var(--project-animation-delay, 0s) + 0.4s);
+  animation-delay: calc(var(--project-animation-delay, 0s) + 0.3s);
 }
 
 .privacy-checkbox.animate {
   animation: form var(--animation-time-portfolio) ease-out forwards;
-  animation-delay: calc(var(--project-animation-delay, 0s) + 0.6s);
+  animation-delay: calc(var(--project-animation-delay, 0s) + 0.4s);
 }
 
 textarea.animate {
   animation: form var(--animation-time-portfolio) ease-out forwards;
-  animation-delay: calc(var(--project-animation-delay, 0s) + 0.8s);
+  animation-delay: calc(var(--project-animation-delay, 0s) + 0.5s);
 }
 
 label.animate {
   animation: form var(--animation-time-portfolio) ease-out forwards;
-  animation-delay: calc(var(--project-animation-delay, 0s) + 1s);
+  animation-delay: calc(var(--project-animation-delay, 0s) + 0.6s);
 }
 
 .submit-button.animate {
   animation: form var(--animation-time-portfolio) ease-out forwards;
-  animation-delay: calc(var(--project-animation-delay, 0s) + 1s);
+  animation-delay: calc(var(--project-animation-delay, 0s) + 0.6s);
 }
 
 .submit-button:disabled.animate {
   animation: form var(--animation-time-portfolio) ease-out forwards;
-  animation-delay: calc(var(--project-animation-delay, 0s) + 1s);
+  animation-delay: calc(var(--project-animation-delay, 0s) + 0.6s);
 }
 
 .arrow-scroll-top.animate {
   animation: leftTextBox var(--animation-time-portfolio) ease-out forwards;
-  animation-delay: calc(var(--project-animation-delay, 0s) + 1s);
+  animation-delay: calc(var(--project-animation-delay, 0s) + 0.6s);
 }

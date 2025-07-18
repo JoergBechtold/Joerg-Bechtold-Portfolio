@@ -1,5 +1,6 @@
 @use "../../../assets/styles/variables.scss" as *;
 @use "../../../assets/styles/mixins.scss" as *;
+@use "../../../assets/styles/animations.scss" as *;
 
 section {
   @include commonSectionStyles();
@@ -155,48 +156,4 @@ h1 {
     $slideDirection: "slideInRight",
     $transformStart: "translateX(50%)"
   );
-}
-
-@keyframes slideInLeft {
-  0% {
-    transform: translateX(-50%);
-    opacity: 0;
-  }
-  20% {
-    opacity: 0.1;
-  }
-
-  40% {
-    opacity: 0.2;
-  }
-
-  60% {
-    opacity: 0.3;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slideInRight {
-  0% {
-    transform: translateX(50%);
-    opacity: 0;
-  }
-  20% {
-    opacity: 0.1;
-  }
-
-  40% {
-    opacity: 0.2;
-  }
-
-  60% {
-    opacity: 0.3;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
 }

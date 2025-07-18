@@ -1,5 +1,6 @@
 @use "../../../assets/styles/variables.scss" as *;
 @use "../../../assets/styles/mixins.scss" as *;
+@use "../../../assets/styles/animations.scss" as *;
 
 section {
   @include commonSectionStyles();
@@ -135,37 +136,6 @@ section {
     }
   }
 }
-
-// section.animate {
-//   .skill-item {
-//     @include applySlideAnimation(translate(-100%, 100%));
-//   }
-
-//   .headline-box-grid-item,
-//   .text-box-grid-item {
-//     @include applySlideAnimation(translate(100%, -100%));
-//   }
-// }
-
-// @keyframes slideIn {
-//   0% {
-//     opacity: 0;
-//     transform: var(--animation-start-transform);
-//   }
-//   20% {
-//     opacity: 0.1;
-//   }
-//   40% {
-//     opacity: 0.2;
-//   }
-//   60% {
-//     opacity: 0.3;
-//   }
-//   100% {
-//     opacity: 1;
-//     transform: translate(0, 0);
-//   }
-// }
 
 .headline-box-grid-item {
   z-index: 3;
@@ -342,25 +312,4 @@ section {
 
 .text-box-grid-item.animate {
   @include applySlideAnimation(translate(50%, -50%));
-}
-
-@keyframes slideIn {
-  0% {
-    opacity: 0;
-    // Verwende die Variable, die auf dem animierten Element gesetzt wird
-    transform: var(--animation-start-transform);
-  }
-  20% {
-    opacity: 0.1;
-  }
-  40% {
-    opacity: 0.2;
-  }
-  60% {
-    opacity: 0.3;
-  }
-  100% {
-    opacity: 1;
-    transform: translate(0, 0); // Endzustand ist die normale Position
-  }
 }
