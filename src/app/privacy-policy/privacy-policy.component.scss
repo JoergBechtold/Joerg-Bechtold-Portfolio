@@ -12,11 +12,17 @@ a {
 }
 
 h1 {
-  font-size: clamp(30px, 26.4px + 1.125vw, 48px);
+  font-size: clamp(25px, 20.4px + 1.4375vw, 48px);
 }
 
 h2 {
-  font-size: clamp(24px, 22.8px + 0.375vw, 30px);
+  font-size: clamp(20px, 18px + 0.625vw, 30px);
+}
+
+p,
+span,
+a {
+  font-size: clamp(16px, 15.6px + 0.125vw, 18px);
 }
 
 ul {
