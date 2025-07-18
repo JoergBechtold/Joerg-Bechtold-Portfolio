@@ -105,7 +105,8 @@
 
                         <div class="form-group privacy-checkbox">
                             <input type="checkbox" id="privacy" name="privacy" [(ngModel)]="privacyAccepted" required
-                                #privacyField="ngModel">
+                                #privacyField="ngModel"
+                                [class.is-error-displayed]="!privacyField.valid && privacyField.touched && contactData.message !== ''">
                             <label for="privacy">
                                 <p>
                                     {{ 'CONTACT.FORM.PRIVACY_TEXT_PART1' | translate }} <a
@@ -114,7 +115,7 @@
                                     'CONTACT.FORM.PRIVACY_TEXT_PART2' | translate }}
                                 </p>
                             </label>
-                            @if (!privacyField.valid && privacyField.touched){
+                            @if (!privacyField.valid && privacyField.touched && contactData.message !== ''){
                             <p class="error-message-checkbox">{{ 'CONTACT.VALIDATION.PRIVACY_REQUIRED' | translate }}
                             </p>
                             }
