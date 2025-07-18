@@ -1,7 +1,6 @@
-// header.component.ts
 import { Component, OnInit, OnDestroy, ViewChild, Inject, Renderer2 } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Subscription, filter } from 'rxjs';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
@@ -26,7 +25,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   isMenuOpen: boolean = false;
   @ViewChild(NavigationComponent) navigationComponent!: NavigationComponent;
-
   private subscriptions: Subscription = new Subscription();
   private readonly maxWidthBreakpoint = 920;
   private readonly customBreakpointQuery = `(min-width: ${this.maxWidthBreakpoint + 1}px)`;
@@ -40,43 +38,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private breakpointObserver: BreakpointObserver,
     private translate: TranslateService,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
     private translateManager: TranslateManagerService
   ) { }
 
   ngOnInit(): void {
-    this.subscriptions.add(
-      this.breakpointObserver
-        .observe([this.customBreakpointQuery])
-        .subscribe(result => {
-          if (result.matches) {
-            if (this.isMenuOpen) {
-              this.closeSidebar();
-            }
-          }
-        })
-    );
-    this.subscriptions.add(
-      this.translateManager.activeLanguage$.subscribe(lang => {
-        this.activeLanguage = lang;
-      })
-    );
-    this.subscriptions.add(
-      this.router.events.pipe(
-        filter(event => event instanceof NavigationEnd)
-      ).subscribe((event: NavigationEnd) => {
-        if (event.urlAfterRedirects.split('#')[0] === `/${this.activeLanguage}` || event.urlAfterRedirects.split('#')[0] === `/${this.activeLanguage}/`) {
-          setTimeout(() => {
-            window.scrollTo(0, 0);
-          }, 50);
-        }
-      })
-    );
+    this.setupBreakpointObserver();
+    this.subscribeToLanguageChanges();
+    this.setupRouterScrollHandling();
   }
 
   onLogoClick(): void {
     const currentLang = this.translateManager.currentActiveLanguage;
     const homePath = `/${currentLang}`;
+
     this.router.navigateByUrl(homePath, {
       replaceUrl: true,
       skipLocationChange: false,
@@ -105,7 +79,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-
   closeSidebar(): void {
     if (this.isMenuOpen) {
       this.isMenuOpen = false;
@@ -129,5 +102,44 @@ export class HeaderComponent implements OnInit, OnDestroy {
       return ['/', currentLang];
     }
     return ['/', currentLang, translatedPath];
+  }
+
+  private setupBreakpointObserver(): void {
+    this.subscriptions.add(
+      this.breakpointObserver
+        .observe([this.customBreakpointQuery])
+        .subscribe(result => {
+          if (result.matches) {
+            if (this.isMenuOpen) {
+              this.closeSidebar();
+            }
+          }
+        })
+    );
+  }
+
+  private subscribeToLanguageChanges(): void {
+    this.subscriptions.add(
+      this.translateManager.activeLanguage$.subscribe(lang => {
+        this.activeLanguage = lang;
+      })
+    );
+  }
+
+  private setupRouterScrollHandling(): void {
+    this.subscriptions.add(
+      this.router.events.pipe(
+        filter(event => event instanceof NavigationEnd)
+      ).subscribe((event: NavigationEnd) => {
+        const urlWithoutFragment = event.urlAfterRedirects.split('#')[0];
+        const isHomeRoute = urlWithoutFragment === `/${this.activeLanguage}` || urlWithoutFragment === `/${this.activeLanguage}/`;
+
+        if (isHomeRoute) {
+          setTimeout(() => {
+            window.scrollTo(0, 0);
+          }, 50);
+        }
+      })
+    );
   }
 }
