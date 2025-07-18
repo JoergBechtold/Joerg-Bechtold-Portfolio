@@ -3,7 +3,7 @@
 
         <img src="../../../assets/img/background/PURPLE-SHADOW-CONTACT.svg" alt="">
 
-        <div class="headline-box">
+        <div appAnimateOnScroll [animationThreshold]="0.2" class="headline-box">
             <div class="h1-vector-box">
                 <h1>{{ 'CONTACT.H1' | translate }}</h1>
             </div>
@@ -11,7 +11,7 @@
 
         <div class="contact-section">
             <div class="contact-box">
-                <div class="left-box">
+                <div appAnimateOnScroll [animationThreshold]="0.2" class="left-box">
                     <div class="left-text-box">
                         <h2>{{ 'CONTACT.INTRO_SECTION.HEADLINE' | translate }}</h2>
                         <p>{{ 'CONTACT.INTRO_SECTION.CALL_TO_ACTION' | translate }}</p>
@@ -19,7 +19,7 @@
                     </div>
                 </div>
 
-                <div class="right-box">
+                <div appAnimateOnScroll [animationThreshold]="0.2" class="right-box">
                     <form (ngSubmit)="onSubmit(contactForm)" #contactForm="ngForm">
 
                         <div class="form-group">
@@ -128,7 +128,7 @@
 
         </div>
 
-        <div (click)="scrollToTop()" class="arrow-scroll-top">
+        <div appAnimateOnScroll [animationThreshold]="0.2" (click)="scrollToTop()" class="arrow-scroll-top">
             <svg width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="1" y="1" width="37" height="37" rx="18.5" stroke="none" stroke-width="2" />
                 <path

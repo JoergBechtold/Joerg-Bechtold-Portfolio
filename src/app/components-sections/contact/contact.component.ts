@@ -11,7 +11,7 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [CommonModule, RouterLink, TranslateModule, FormsModule],
+  imports: [CommonModule, RouterLink, TranslateModule, FormsModule, AnimateOnScrollDirective],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss'
 })
