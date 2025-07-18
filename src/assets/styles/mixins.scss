@@ -101,12 +101,13 @@
   }
 }
 
-@mixin commonContentStyle($jc: space-between, $ai: center) {
+@mixin commonContentStyle($jc: space-between, $ai: center, $overfl-y: "") {
   max-width: $max-width-1920;
   width: 100%;
   height: 100%;
   position: relative;
   overflow-x: clip;
+  overflow-y: $overfl-y;
   display: flex;
   align-items: $ai;
   justify-content: $jc;

@@ -21,7 +21,7 @@ select:-webkit-autofill:focus {
 }
 
 .contact-content {
-  @include commonContentStyle($jc: unset, $ai: center);
+  @include commonContentStyle($jc: unset, $ai: center, $overfl-y: clip);
   flex-direction: column;
 
   > img {
