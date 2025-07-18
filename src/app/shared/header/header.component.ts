@@ -47,6 +47,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.setupRouterScrollHandling();
   }
 
+
   onLogoClick(): void {
     const currentLang = this.translateManager.currentActiveLanguage;
     const homePath = `/${currentLang}`;
@@ -56,12 +57,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       skipLocationChange: false,
       onSameUrlNavigation: 'reload'
     })
-      .then(() => {
-        window.scrollTo(0, 0);
-      })
-      .catch(err => {
-        console.error('Fehler beim Navigieren zum Home-Pfad:', err);
-      });
+      .then(() => this.scrollToTopInstant())
+      .catch(err => console.error('Fehler beim Navigieren zum Home-Pfad:', err));
   }
 
   ngOnDestroy(): void {
@@ -69,8 +66,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   toggleSidebar(): void {
-    const currentWindowWidth = window.innerWidth;
-    if (currentWindowWidth <= this.maxWidthBreakpoint) {
+    if (window.innerWidth <= this.maxWidthBreakpoint) {
       this.isMenuOpen = !this.isMenuOpen;
       this.applyNoScrollToBody(this.isMenuOpen);
     } else {
@@ -108,14 +104,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.breakpointObserver
         .observe([this.customBreakpointQuery])
-        .subscribe(result => {
-          if (result.matches) {
-            if (this.isMenuOpen) {
-              this.closeSidebar();
-            }
-          }
-        })
+        .subscribe(result => this.handleBreakpointChange(result.matches))
     );
+  }
+
+  private handleBreakpointChange(matches: boolean): void {
+    if (matches && this.isMenuOpen) {
+      this.closeSidebar();
+    }
   }
 
   private subscribeToLanguageChanges(): void {
@@ -130,16 +126,26 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.router.events.pipe(
         filter(event => event instanceof NavigationEnd)
-      ).subscribe((event: NavigationEnd) => {
-        const urlWithoutFragment = event.urlAfterRedirects.split('#')[0];
-        const isHomeRoute = urlWithoutFragment === `/${this.activeLanguage}` || urlWithoutFragment === `/${this.activeLanguage}/`;
-
-        if (isHomeRoute) {
-          setTimeout(() => {
-            window.scrollTo(0, 0);
-          }, 50);
-        }
-      })
+      ).subscribe((event: NavigationEnd) => this.handleNavigationEnd(event))
     );
+  }
+
+  private handleNavigationEnd(event: NavigationEnd): void {
+    const urlWithoutFragment = event.urlAfterRedirects.split('#')[0];
+    const isHomeRoute = urlWithoutFragment === `/${this.activeLanguage}` || urlWithoutFragment === `/${this.activeLanguage}/`;
+
+    if (isHomeRoute) {
+      this.scrollToTopDelayed();
+    }
+  }
+
+  private scrollToTopInstant(): void {
+    window.scrollTo(0, 0);
+  }
+
+  private scrollToTopDelayed(): void {
+    setTimeout(() => {
+      this.scrollToTopInstant();
+    }, 50);
   }
 }
