@@ -7,7 +7,7 @@ section {
 
   @include paddingTopMinWidthBreakpoint();
 
-  @media screen and (max-width: $breakpoint-min-width-1921) {
+  @media screen and (max-width: $breakpoint-width-1920) {
     height: unset;
   }
 }

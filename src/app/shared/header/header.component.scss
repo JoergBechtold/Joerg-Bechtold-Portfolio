@@ -2,6 +2,14 @@
 @use "../../../assets/styles/mixins.scss" as *;
 @use "../../../app/shared/header/components/sidebar/sidebar.component.scss" as *;
 
+:host {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background-color: $primary-bg-gray;
+  @include paddingLeftRightHolePage();
+}
+
 .header {
   height: var(--header-height);
   position: fixed;
