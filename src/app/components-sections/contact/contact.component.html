@@ -143,8 +143,8 @@
         </div>
     </div>
 
-    <div class="email-sent-overlay" [ngClass]="{'show': showEmailSentOverlay}">
-        <div class="overlay-content">
+    <div class="email-sent-overlay" (click)="closeEmailSentOverlay()" [ngClass]="{'show': showEmailSentOverlay}">
+        <div (click)="$event.stopPropagation()" class="overlay-content">
             <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="20 6 9 17 4 12"></polyline>

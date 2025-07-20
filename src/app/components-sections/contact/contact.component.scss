@@ -444,9 +444,6 @@ textarea {
   }
 
   .close-overlay-btn {
-    opacity: 0;
-    transform: translate(50%, 0);
-
     @include primaryButton($tra-ori-x: top, $tra-ori-y: center);
   }
 }
