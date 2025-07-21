@@ -182,7 +182,7 @@ select:-webkit-autofill:focus {
   > p {
     transform: translate(0, 30px);
     opacity: 0;
-    @include fontSizeWeightColor($si: 16px, $we: 400);
+    @include fontSizeWeightColor($si: 18px, $we: 400);
   }
 
   @media screen and (max-width: $breakboint-width-1250) {
@@ -356,7 +356,7 @@ textarea {
   }
 
   > label {
-    @include fontSizeWeightColor($si: 14px, $we: 400);
+    @include fontSizeWeightColor($si: 16px, $we: 400);
 
     > p > a {
       color: $primary-bg-purple;
