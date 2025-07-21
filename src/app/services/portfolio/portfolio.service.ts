@@ -52,15 +52,15 @@ export class PortfolioService implements OnInit {
       "githubUrl": "https://github.com/JoergBechtold/El-Pollo-Loco.git"
     },
 
-    {
-      "id": "da-bubble",
-      "title": "DA Bubble",
-      "img": '../../../assets/img/portfolio/DA_BUBBLE.png',
-      "imgAlt": 'PORTFOLIO.ALT_TEXT.DA_BUBBLE_ALT',
-      "technologies": ["Angular", "TypeScript", "Firebase"],
-      "description": "PORTFOLIO.PROJECTS.DA_BUBBLE_DESCRIPTION",
-      "liveTestUrl": "",
-      "githubUrl": ""
-    },
+    // {
+    //   "id": "da-bubble",
+    //   "title": "DA Bubble",
+    //   "img": '../../../assets/img/portfolio/DA_BUBBLE.png',
+    //   "imgAlt": 'PORTFOLIO.ALT_TEXT.DA_BUBBLE_ALT',
+    //   "technologies": ["Angular", "TypeScript", "Firebase"],
+    //   "description": "PORTFOLIO.PROJECTS.DA_BUBBLE_DESCRIPTION",
+    //   "liveTestUrl": "",
+    //   "githubUrl": ""
+    // },
   ]
 }
