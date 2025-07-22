@@ -8,7 +8,6 @@ import { AppRouteKeys } from '../../app.routes';
 import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
-
 @Component({
   selector: 'app-contact',
   standalone: true,
@@ -60,13 +59,7 @@ export class ContactComponent implements OnInit, OnDestroy {
   }
 
   getRouterLink(key: keyof typeof AppRouteKeys): string[] {
-    const translatedPath = this.translate.instant(AppRouteKeys[key]);
-    const currentLang = this.activeLanguage;
-
-    if (key === AppRouteKeys.home && translatedPath === '') {
-      return ['/', currentLang];
-    }
-    return ['/', currentLang, translatedPath];
+    return this.translateManager.getRouterLink(key);
   }
 
   scrollToTop(): void {
@@ -76,9 +69,9 @@ export class ContactComponent implements OnInit, OnDestroy {
     });
   }
   navigateToPrivacyPolicy(): void {
-    const currentLang = this.activeLanguage;
-    const privacyPolicyPath = this.translate.instant(AppRouteKeys.privacyPolicy);
-    this.router.navigate(['/', currentLang, privacyPolicyPath])
+    // Rufe die navigateToSection-Methode des TranslateManagerService auf
+    // Hier ist das Problem: 'privacyPolicy' ist der String-Key, nicht die Variable AppRouteKeys.privacyPolicy
+    this.translateManager.navigateToSection('privacyPolicy' as keyof typeof AppRouteKeys) // <-- Korrektur hier
       .catch(err => {
         console.error('Fehler beim Navigieren zur Datenschutzseite:', err);
       });

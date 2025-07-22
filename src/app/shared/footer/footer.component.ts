@@ -4,7 +4,7 @@ import { RouterLink, Router } from '@angular/router';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { AppRouteKeys } from '../../app.routes';
 import { SocialMediaComponent } from '../social-media/social-media.component';
-import { TranslateManagerService } from '../../services/translate/translate-manager.service';
+import { TranslateManagerService } from '../../services/translate/translate-manager.service'; // Sicherstellen, dass dieser Import existiert
 
 @Component({
   selector: 'app-footer',
@@ -24,7 +24,7 @@ export class FooterComponent implements OnInit {
   constructor(
     private translate: TranslateService,
     private router: Router,
-    private translateManager: TranslateManagerService
+    private translateManager: TranslateManagerService // Hier ist er!
   ) { }
 
   ngOnInit(): void {
@@ -33,14 +33,9 @@ export class FooterComponent implements OnInit {
     });
   }
 
+  // Diese Methode delegiert nun an den TranslateManagerService
   getRouterLink(key: keyof typeof AppRouteKeys): string[] {
-    const translatedPath = this.translate.instant(AppRouteKeys[key]);
-    const currentLang = this.activeLanguage;
-
-    if (key === AppRouteKeys.home && translatedPath === '') {
-      return ['/', currentLang];
-    }
-    return ['/', currentLang, translatedPath];
+    return this.translateManager.getRouterLink(key);
   }
 
   onLogoClick(): void {

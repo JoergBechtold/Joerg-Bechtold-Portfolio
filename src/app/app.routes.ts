@@ -5,7 +5,9 @@ import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslationLogicHelperService } from './services/translate/translation-logic-helper.service';
+// TranslationLogicHelperService wird hier nicht mehr direkt benötigt, da der Resolver vereinfacht wurde
+// import { TranslationLogicHelperService } from './services/translate/translation-logic-helper.service';
+
 
 export const AppRouteKeys = {
     home: 'ROUTES.HOME',
@@ -22,50 +24,11 @@ export const AppRouteKeys = {
     contactFragment: 'FRAGMENTS.CONTACT_ID'
 };
 
-// Basiskonfiguration der Routen, ohne Sprachpräfix
-export const baseRoutes: Routes = [
-    {
-        path: '',
-        component: MainContentComponent,
-        data: { translationKey: AppRouteKeys.home, fragmentKey: AppRouteKeys.home }
-    },
-    {
-        path: 'about-me',
-        component: MainContentComponent,
-        data: { translationKey: AppRouteKeys.aboutMe, fragmentKey: AppRouteKeys.aboutMeFragment }
-    },
-    {
-        path: 'skills',
-        component: MainContentComponent,
-        data: { translationKey: AppRouteKeys.skills, fragmentKey: AppRouteKeys.skillsFragment }
-    },
-    {
-        path: 'portfolio',
-        component: MainContentComponent,
-        data: { translationKey: AppRouteKeys.portfolio, fragmentKey: AppRouteKeys.portfolioFragment }
-    },
-    {
-        path: 'contact',
-        component: MainContentComponent,
-        data: { translationKey: AppRouteKeys.contact, fragmentKey: AppRouteKeys.contactFragment }
-    },
-    {
-        path: 'privacy-policy',
-        component: PrivacyPolicyComponent,
-        data: { translationKey: AppRouteKeys.privacyPolicy, titleKey: 'LINK.PRIVACY_POLICY' }
-    },
-    {
-        path: 'legal-notice',
-        component: LegalNoticeComponent,
-        data: { translationKey: AppRouteKeys.legalNotice, titleKey: 'LINK.LEGAL_NOTICE' }
-    },
-];
-
 // Resolver, der nur die Sprache setzt und prüft, aber keine Router-Konfiguration mehr ändert
 const langResolver = async (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> => {
     const translate = inject(TranslateService);
     const router = inject(Router);
-    const helper = inject(TranslationLogicHelperService);
+    // const helper = inject(TranslationLogicHelperService); // Nicht mehr benötigt für diesen Resolver
 
     const langParam = route.paramMap.get('lang');
     const defaultLang = translate.getDefaultLang();
@@ -83,64 +46,45 @@ const langResolver = async (route: ActivatedRouteSnapshot, state: RouterStateSna
         await translate.use(currentLang).toPromise();
     }
 
-    // Validierung der URL durchführen, falls nötig, aber nicht mehr die Routen neu setzen
-    // helper.validateAndRedirectUrl(state.url, currentLang); // Diese Logik kann vereinfacht/verlagert werden
-
     return true; // Erlaube die Navigation
 };
-
-// Funktion zum Erzeugen der lokalisierten Routen für die dynamische Routenanpassung
-// Dies wird NICHT mehr zur Laufzeit für die Router-Konfiguration verwendet,
-// sondern nur, um die Pfade für Navigation zu generieren.
-export function createLocalizedRoutesForNavigation(translate: TranslateService): Routes {
-    return baseRoutes.map(route => {
-        const translatedPathKey = route.data?.['translationKey'];
-        if (!translatedPathKey) return route;
-
-        let translatedPath = translate.instant(translatedPathKey);
-        // Besondere Behandlung für die "Home"-Route, die im Pfad leer sein soll
-        if (translatedPathKey === AppRouteKeys.home && translatedPath === '') {
-            translatedPath = '';
-        }
-        return { ...route, path: translatedPath };
-    });
-}
 
 // Hauptroutenkonfiguration
 export const routes: Routes = [
     {
-        path: ':lang', // Der Sprachparameter
+        path: ':lang',
         resolve: {
-            lang: langResolver // Sprache setzen und validieren
+            lang: langResolver
         },
         children: [
             {
-                path: '', // Home-Route für die Sprache (z.B. /de)
+                path: '',
                 component: MainContentComponent,
                 data: { translationKey: AppRouteKeys.home, fragmentKey: AppRouteKeys.home }
             },
-            // Hier fügen wir die anderen Routen statisch hinzu.
-            // Wenn eine Route nur ein Fragment ist und auf MainContentComponent zeigt,
-            // brauchen wir keine separate URL dafür, da wir über das Fragment scrollen.
-            // Andernfalls, wenn es eine eigene Seite ist (PrivacyPolicy, LegalNotice),
-            // behalten wir sie bei.
             {
-                path: 'privacy-policy', // Beispiel: /de/privacy-policy
+                // Für Deutsch: 'datenschutzerklaerung' (aus de.json -> ROUTES.PRIVACY_POLICY)
+                path: 'datenschutzerklaerung', // <-- IST DAS HIER EXAKT RICHTIG GESCHRIEBEN?
                 component: PrivacyPolicyComponent,
                 data: { translationKey: AppRouteKeys.privacyPolicy, titleKey: 'LINK.PRIVACY_POLICY' }
             },
             {
-                path: 'legal-notice', // Beispiel: /de/legal-notice
+                // Für Englisch: 'privacy-policy' (aus en.json -> ROUTES.PRIVACY_POLICY)
+                path: 'privacy-policy', // <-- IST DAS HIER EXAKT RICHTIG GESCHRIEBEN?
+                component: PrivacyPolicyComponent,
+                data: { translationKey: AppRouteKeys.privacyPolicy, titleKey: 'LINK.PRIVACY_POLICY' }
+            },
+            {
+                path: 'impressum', // Dieser sollte stimmen
                 component: LegalNoticeComponent,
                 data: { translationKey: AppRouteKeys.legalNotice, titleKey: 'LINK.LEGAL_NOTICE' }
             },
-            // Wir verwenden Wildcard-Routen für die abschnittsbasierten Seiten
-            // Diese Routen werden nicht direkt in der URL angezeigt, sondern über Fragmente angesprungen.
-            // Wenn du möchtest, dass diese Routen auch eigene URLs haben (z.B. /de/ueber-mich),
-            // musst du sie hier explizit mit ihren übersetzten Pfaden definieren
-            // und die Logik im TranslateManagerService anpassen.
-            // Vorerst belassen wir es bei der Fragment-basierten Navigation für diese Abschnitte
-            // um die Anzahl der tatsächlichen Routenwechsel zu minimieren.
+            {
+                path: 'legal-notice', // Dieser sollte stimmen
+                component: LegalNoticeComponent,
+                data: { translationKey: AppRouteKeys.legalNotice, titleKey: 'LINK.LEGAL_NOTICE' }
+            },
+            // ... weitere Child-Routen
         ]
     },
     {
