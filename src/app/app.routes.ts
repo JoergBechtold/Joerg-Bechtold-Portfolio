@@ -1,11 +1,11 @@
-import { Routes, Route, ActivatedRouteSnapshot, RouterStateSnapshot, Router, NavigationExtras } from '@angular/router';
+import { Routes, Route, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { MainContentComponent } from './main-content/main-content.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-
+import { TranslationLogicHelperService } from './services/translate/translation-logic-helper.service';
 
 export const AppRouteKeys = {
     home: 'ROUTES.HOME',
@@ -22,8 +22,8 @@ export const AppRouteKeys = {
     contactFragment: 'FRAGMENTS.CONTACT_ID'
 };
 
-
-export const mainRoutes: Routes = [
+// Basiskonfiguration der Routen, ohne Sprachpräfix
+export const baseRoutes: Routes = [
     {
         path: '',
         component: MainContentComponent,
@@ -61,22 +61,13 @@ export const mainRoutes: Routes = [
     },
 ];
 
-function createTranslatedRoute(route: Route, translate: TranslateService): Route {
-    const translatedPathKey = route.data?.['translationKey'];
-    if (!translatedPathKey) return route;
+// Resolver, der nur die Sprache setzt und prüft, aber keine Router-Konfiguration mehr ändert
+const langResolver = async (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> => {
+    const translate = inject(TranslateService);
+    const router = inject(Router);
+    const helper = inject(TranslationLogicHelperService);
 
-    let translatedPath = translate.instant(translatedPathKey);
-    if (translatedPathKey === AppRouteKeys.home && translatedPath === '') {
-        translatedPath = '';
-    }
-    return { ...route, path: translatedPath };
-}
-
-export function createLocalizedRoutes(translate: TranslateService): Routes {
-    return mainRoutes.map(route => createTranslatedRoute(route, translate));
-}
-
-const validateAndGetCurrentLang = (langParam: string | null, translate: TranslateService, router: Router): string | null => {
+    const langParam = route.paramMap.get('lang');
     const defaultLang = translate.getDefaultLang();
     const availableLangs = translate.getLangs();
     const currentLang = langParam || defaultLang;
@@ -84,115 +75,81 @@ const validateAndGetCurrentLang = (langParam: string | null, translate: Translat
     if (!availableLangs.includes(currentLang)) {
         console.warn(`[langResolver] Ungültige Sprache: '${langParam}'. Weiterleitung zu '${defaultLang}'.`);
         router.navigateByUrl(`/${defaultLang}`, { replaceUrl: true });
-        return null;
+        return false;
     }
-    return currentLang;
-};
 
-const setTranslateServiceLanguage = async (translate: TranslateService, currentLang: string): Promise<void> => {
+    // Setze die Sprache, aber triggere keine Neuladung der Routen
     if (translate.currentLang !== currentLang) {
         await translate.use(currentLang).toPromise();
     }
+
+    // Validierung der URL durchführen, falls nötig, aber nicht mehr die Routen neu setzen
+    // helper.validateAndRedirectUrl(state.url, currentLang); // Diese Logik kann vereinfacht/verlagert werden
+
+    return true; // Erlaube die Navigation
 };
 
-const updateRouterConfig = (router: Router, translate: TranslateService, existingRoutes: Routes): void => {
-    const newLocalizedRoutes = createLocalizedRoutes(translate);
-    const updatedRoutes = [...existingRoutes];
-    const langRouteIndex = updatedRoutes.findIndex(r => r.path === ':lang');
+// Funktion zum Erzeugen der lokalisierten Routen für die dynamische Routenanpassung
+// Dies wird NICHT mehr zur Laufzeit für die Router-Konfiguration verwendet,
+// sondern nur, um die Pfade für Navigation zu generieren.
+export function createLocalizedRoutesForNavigation(translate: TranslateService): Routes {
+    return baseRoutes.map(route => {
+        const translatedPathKey = route.data?.['translationKey'];
+        if (!translatedPathKey) return route;
 
-    if (langRouteIndex > -1) {
-        updatedRoutes[langRouteIndex] = {
-            ...updatedRoutes[langRouteIndex],
-            children: newLocalizedRoutes
-        };
-        router.resetConfig(updatedRoutes);
-    } else {
-        console.error(`[langResolver] Fehler: ':lang'-Route nicht in den Hauptrouten gefunden!`);
-    }
-};
+        let translatedPath = translate.instant(translatedPathKey);
+        // Besondere Behandlung für die "Home"-Route, die im Pfad leer sein soll
+        if (translatedPathKey === AppRouteKeys.home && translatedPath === '') {
+            translatedPath = '';
+        }
+        return { ...route, path: translatedPath };
+    });
+}
 
-const extractPathSegment = (stateUrl: string): string => {
-    const urlWithoutFragment = stateUrl.split('#')[0];
-    return urlWithoutFragment.split('/').filter(s => s !== '').slice(1).join('/');
-};
-
-const getExpectedUrl = (pathSegment: string, translate: TranslateService, currentLang: string): string | undefined => {
-    const tempLocalizedRoutes = createLocalizedRoutes(translate);
-    const targetRoute = tempLocalizedRoutes.find(r => r.path === pathSegment);
-
-    if (!targetRoute) return undefined;
-
-    const foundTranslationKey = targetRoute.data?.['translationKey'];
-    if (!foundTranslationKey) return undefined;
-
-    const targetAppRouteKey = (Object.keys(AppRouteKeys) as Array<keyof typeof AppRouteKeys>)
-        .find(keyName => AppRouteKeys[keyName] === foundTranslationKey);
-
-    if (!targetAppRouteKey) return undefined;
-
-    const correctTranslatedPath = translate.instant(AppRouteKeys[targetAppRouteKey]);
-    const effectivePath = (targetAppRouteKey === 'home' && correctTranslatedPath === '') ? '' : correctTranslatedPath;
-
-    return `/${currentLang}${effectivePath ? '/' + effectivePath : ''}`;
-};
-
-const redirectToHome = (router: Router, translate: TranslateService, currentLang: string): boolean => {
-    console.warn(`[langResolver] Pfad ist keine gültige übersetzte Route in '${currentLang}'.`);
-    const homeTranslatedPath = translate.instant(AppRouteKeys.home);
-    const homeUrl = `/${currentLang}${homeTranslatedPath === '' ? '' : '/' + homeTranslatedPath}`;
-    router.navigateByUrl(homeUrl, { replaceUrl: true });
-    return false;
-};
-
-const handlePathValidation = (stateUrl: string, translate: TranslateService, router: Router, currentLang: string): boolean => {
-    const pathOnlyUrl = stateUrl.split('#')[0];
-    const pathSegment = extractPathSegment(stateUrl);
-    const fullExpectedUrlWithoutFragment = getExpectedUrl(pathSegment, translate, currentLang);
-
-    if (fullExpectedUrlWithoutFragment === pathOnlyUrl) {
-        return true;
-    }
-
-    if (fullExpectedUrlWithoutFragment) {
-        const navigationExtras: NavigationExtras = { replaceUrl: true };
-        router.navigateByUrl(fullExpectedUrlWithoutFragment, navigationExtras);
-        return false;
-    }
-
-    return redirectToHome(router, translate, currentLang);
-};
-
-const langResolver = async (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> => {
-    const translate = inject(TranslateService);
-    const router = inject(Router);
-
-    const currentLang = validateAndGetCurrentLang(route.paramMap.get('lang'), translate, router);
-    if (currentLang === null) {
-        return false;
-    }
-
-    await setTranslateServiceLanguage(translate, currentLang);
-    updateRouterConfig(router, translate, routes);
-
-    return handlePathValidation(state.url, translate, router, currentLang);
-};
-
-
+// Hauptroutenkonfiguration
 export const routes: Routes = [
     {
-        path: ':lang',
+        path: ':lang', // Der Sprachparameter
         resolve: {
-            lang: langResolver
+            lang: langResolver // Sprache setzen und validieren
         },
-        children: mainRoutes
+        children: [
+            {
+                path: '', // Home-Route für die Sprache (z.B. /de)
+                component: MainContentComponent,
+                data: { translationKey: AppRouteKeys.home, fragmentKey: AppRouteKeys.home }
+            },
+            // Hier fügen wir die anderen Routen statisch hinzu.
+            // Wenn eine Route nur ein Fragment ist und auf MainContentComponent zeigt,
+            // brauchen wir keine separate URL dafür, da wir über das Fragment scrollen.
+            // Andernfalls, wenn es eine eigene Seite ist (PrivacyPolicy, LegalNotice),
+            // behalten wir sie bei.
+            {
+                path: 'privacy-policy', // Beispiel: /de/privacy-policy
+                component: PrivacyPolicyComponent,
+                data: { translationKey: AppRouteKeys.privacyPolicy, titleKey: 'LINK.PRIVACY_POLICY' }
+            },
+            {
+                path: 'legal-notice', // Beispiel: /de/legal-notice
+                component: LegalNoticeComponent,
+                data: { translationKey: AppRouteKeys.legalNotice, titleKey: 'LINK.LEGAL_NOTICE' }
+            },
+            // Wir verwenden Wildcard-Routen für die abschnittsbasierten Seiten
+            // Diese Routen werden nicht direkt in der URL angezeigt, sondern über Fragmente angesprungen.
+            // Wenn du möchtest, dass diese Routen auch eigene URLs haben (z.B. /de/ueber-mich),
+            // musst du sie hier explizit mit ihren übersetzten Pfaden definieren
+            // und die Logik im TranslateManagerService anpassen.
+            // Vorerst belassen wir es bei der Fragment-basierten Navigation für diese Abschnitte
+            // um die Anzahl der tatsächlichen Routenwechsel zu minimieren.
+        ]
     },
     {
         path: '',
-        redirectTo: `/de`,
+        redirectTo: `/de`, // Standardmäßige Weiterleitung zur deutschen Version
         pathMatch: 'full'
     },
     {
-        path: '**',
+        path: '**', // Catch-all für nicht gefundene Routen
         component: PageNotFoundComponent
     }
 ];
