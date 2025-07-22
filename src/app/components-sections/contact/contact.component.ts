@@ -3,7 +3,7 @@ import { CommonModule, DOCUMENT } from '@angular/common';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { TranslateManagerService } from '../../services/translate/translate-manager.service';
 import { AnimateOnScrollDirective } from '../../shared/animation-on-scroll/animate-on-scroll.directive';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AppRouteKeys } from '../../app.routes';
 import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -11,7 +11,7 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [CommonModule, TranslateModule, FormsModule, AnimateOnScrollDirective],
+  imports: [CommonModule, TranslateModule, FormsModule, AnimateOnScrollDirective, RouterLink],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss'
 })

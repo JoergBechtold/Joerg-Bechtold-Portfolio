@@ -22,6 +22,11 @@ export class PrivacyPolicyComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        window.scrollTo({ top: 0, left: 0 });
+        // Entferne dieses manuelle Scrollen!
+        // window.scrollTo({ top: 0, left: 0 });
+
+        // Stattdessen rufe die Service-Methode auf, die das Scrollen mit Timer übernimmt
+        // Dies stellt sicher, dass das Scrollen nach der Komponente und Übersetzung geladen ist.
+        this.translateManager.scrollToTop(); // <-- Rufe die Methode deines Managers auf
     }
 }
