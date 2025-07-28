@@ -22,9 +22,9 @@ section {
   overflow: hidden;
   @include dFlexAllCenter();
 
-  @media screen and (min-width: $breakpoint-min-width-1921) {
-    height: unset;
-  }
+  // @media screen and (min-width: $breakpoint-min-width-1921) {
+  //   height: unset;
+  // }
 
   > img {
     position: absolute;
@@ -38,7 +38,8 @@ section {
 
     @media screen and (min-width: $breakpoint-min-width-1921) {
       display: block;
-      bottom: -1680px;
+      // bottom: -1680px;
+      bottom: -67%;
     }
 
     // @media screen and (max-width: $breakpoint-width-1920) {
@@ -212,12 +213,20 @@ section {
 .img-box {
   position: relative;
   height: 520px;
-  // height: 1055px;
-
   aspect-ratio: 1 / 1;
   display: grid;
   place-items: center;
   z-index: 0;
+
+  @media screen and (min-height: $responsive-height-1080) {
+    height: 590px;
+    transform: translateY(10px);
+  }
+
+  @media screen and (min-height: $responsive-height-1200) {
+    height: 600px;
+    transform: translateY(70px);
+  }
 
   @media screen and (min-width: $breakpoint-min-width-1921) {
     height: 715px;
