@@ -127,7 +127,7 @@ section {
 
   > p {
     text-align: center;
-    @include fontSizeWeightColor($si: 16px, $we: 700);
+    @include fontSizeWeightColor($si: 18px, $we: 700);
   }
 
   &:hover {
@@ -166,7 +166,7 @@ section {
   }
 
   > p {
-    @include fontSizeWeightColor($si: 16px);
+    @include fontSizeWeightColor($si: 18px);
     text-align: right;
     padding-left: var(--padding-38);
   }
@@ -293,7 +293,7 @@ section {
   gap: 20px;
 
   > p {
-    @include fontSizeWeightColor($si: 16px);
+    @include fontSizeWeightColor($si: 18px);
     text-align: right;
   }
 

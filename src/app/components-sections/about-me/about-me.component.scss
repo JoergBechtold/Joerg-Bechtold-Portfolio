@@ -8,7 +8,7 @@ section {
 }
 
 p {
-  @include fontSizeWeightColor($si: 16px, $we: 400);
+  @include fontSizeWeightColor($si: 18px, $we: 400);
 }
 
 h1 {
@@ -65,7 +65,7 @@ h1 {
 
 .info-block {
   margin-top: 32px;
-  @include dFlexAllCenter($g: 16px, $ai: flex-start);
+  @include dFlexAllCenter($g: 18px, $ai: flex-start);
 }
 
 .icon-box {

@@ -41,7 +41,7 @@ section {
     transform: translate(0, 30px);
     text-align: center;
     padding-inline: 44px;
-    @include fontSizeWeightColor($si: 16px);
+    @include fontSizeWeightColor($si: 18px);
   }
 }
 
@@ -182,7 +182,7 @@ section {
   }
 
   > p {
-    @include fontSizeWeightColor($si: 16px);
+    @include fontSizeWeightColor($si: 18px);
   }
 }
 

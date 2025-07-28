@@ -210,7 +210,7 @@ form {
   gap: 35px;
   caret-color: $primary-bg-green;
 
-  @media screen and (max-width: $breakboint-width-380) {
+  @media screen and (max-width: $breakboint-width-485) {
     gap: 50px;
   }
 }
@@ -262,7 +262,7 @@ textarea {
   border: 1px solid $primary-bg-purple;
   border-radius: 5px;
   background-color: $primary-bg-gray;
-  @include fontSizeWeightColor($si: 16px, $we: 400);
+  @include fontSizeWeightColor($si: 18px, $we: 400);
   outline: none;
   transition: border-color 0.3s ease;
   padding-right: 45px;
@@ -299,7 +299,8 @@ textarea {
 }
 
 .error-message-checkbox {
-  @include errorMessage($bot: -64%);
+  // position: absolute;
+  @include errorMessage($bot: unset);
 }
 
 textarea {
@@ -308,11 +309,13 @@ textarea {
 }
 
 .privacy-checkbox {
+  position: relative;
   opacity: 0;
   transform: translate(50%, 0);
 
   display: flex;
   align-items: flex-start;
+  flex-direction: column;
   gap: 10px;
 
   input[type="checkbox"] {
