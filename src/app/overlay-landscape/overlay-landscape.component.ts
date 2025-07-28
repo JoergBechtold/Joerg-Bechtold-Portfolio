@@ -18,7 +18,6 @@ export class OverlayLandscapeComponent implements OnInit, OnDestroy {
     private resizeObserver: ResizeObserver | undefined;
     private translateSubscription: Subscription | undefined;
     private resizeSubscription: Subscription | undefined;
-    private mobileDeviceThreshold: number = 768;
 
     constructor(
         private translateManager: TranslateManagerService,
@@ -38,12 +37,6 @@ export class OverlayLandscapeComponent implements OnInit, OnDestroy {
             debounceTime(50),
             tap(() => this.checkOrientation())
         ).subscribe();
-
-        if (typeof ResizeObserver !== 'undefined') {
-            this.resizeObserver = new ResizeObserver(() => {
-            });
-            this.resizeObserver.observe(this.document.body);
-        }
     }
 
     ngOnDestroy(): void {
@@ -58,17 +51,21 @@ export class OverlayLandscapeComponent implements OnInit, OnDestroy {
         if (this.resizeSubscription) {
             this.resizeSubscription.unsubscribe();
         }
-
         this.renderer.removeClass(this.document.body, 'no-scroll');
     }
 
+    isTouchDevice(): boolean {
+        return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || (navigator as any).msMaxTouchPoints > 0;
+    }
+
     checkOrientation(): void {
-        const MAX_MOBILE_WIDTH_PORTRAIT = 768;
-        const MAX_MOBILE_HEIGHT_LANDSCAPE = 500;
+        const MIN_LANDSCAPE_WIDTH_FOR_OVERLAY = 1138;
         const isLandscape = window.matchMedia("(orientation: landscape)").matches;
+        const isTouch = this.isTouchDevice();
+        const currentWidth = window.innerWidth;
         const wasOverlayShowing = this.showRotateOverlay;
 
-        this.showRotateOverlay = isLandscape && (window.innerWidth <= MAX_MOBILE_WIDTH_PORTRAIT || window.innerHeight <= MAX_MOBILE_HEIGHT_LANDSCAPE);
+        this.showRotateOverlay = isTouch && isLandscape && (currentWidth <= MIN_LANDSCAPE_WIDTH_FOR_OVERLAY);
         this.cdr.detectChanges();
 
         if (this.showRotateOverlay && !wasOverlayShowing) {
