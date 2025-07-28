@@ -14,16 +14,25 @@
             </svg>
         </div>
 
-        <div class="atf-bg-img">
+        <!-- <div class="atf-bg-img">
             <img src="../../assets/img/background/PROFILE_IMG_SHADOW.png"
                 alt="{{'ATF.ALT_TEXT_PURPLE_GREEN_SHADOW'| translate}}">
             <img src="../../assets/img/profile-pictures/ATF_PROFILE_PICTURE.png"
                 alt="{{'ATF.ALT_TEXT_PROFILE_PICTURE'| translate}}">
             <img src="../../assets/img/background/HERO-BACKGROUND.svg"
                 alt="{{'ATF.ALT_TEXT_GRAY_BACKGROUND_IMG'| translate}}">
+        </div> -->
+
+        <div class="left-content">
+            <div class="img-box">
+                <img src="../../assets/img/background/PROFILE_IMG_SHADOW.png"
+                    alt="{{'ATF.ALT_TEXT_PURPLE_GREEN_SHADOW'| translate}}">
+                <img src="../../assets/img/profile-pictures/ATF_PROFILE_PICTURE.png"
+                    alt="{{'ATF.ALT_TEXT_PROFILE_PICTURE'| translate}}">
+            </div>
         </div>
 
-        <div class="main-content">
+        <div class="right-content">
             <div class="text-box">
                 <div class="vertical-text" [class.lang-de]="activeLanguage === 'de'"
                     [class.lang-en]="activeLanguage === 'en'">
@@ -34,10 +43,43 @@
                     <h1>Jörg Bechtold</h1>
                     <h2>FRONTEND DEVELOPER</h2>
                 </div>
+
+
             </div>
 
             <button (click)="navigateFromAtf('contact')" [innerHTML]="'ATF.LETS_TALK' | translate"
                 class="call-to-action-button"></button>
+        </div>
+
+        <div class="main-content">
+            <!-- <div class="img-box">
+                <img src="../../assets/img/background/PROFILE_IMG_SHADOW.png"
+                    alt="{{'ATF.ALT_TEXT_PURPLE_GREEN_SHADOW'| translate}}">
+                <img src="../../assets/img/profile-pictures/ATF_PROFILE_PICTURE.png"
+                    alt="{{'ATF.ALT_TEXT_PROFILE_PICTURE'| translate}}">
+            </div> -->
+
+            <!-- <div class="right-content">
+                <div class="text-box">
+                    <div class="vertical-text" [class.lang-de]="activeLanguage === 'de'"
+                        [class.lang-en]="activeLanguage === 'en'">
+                        <span [innerHTML]="'ATF.I_AM' | translate"></span>
+                    </div>
+
+                    <div class="intro-text">
+                        <h1>Jörg Bechtold</h1>
+                        <h2>FRONTEND DEVELOPER</h2>
+                    </div>
+
+
+                </div>
+
+                <button (click)="navigateFromAtf('contact')" [innerHTML]="'ATF.LETS_TALK' | translate"
+                    class="call-to-action-button"></button>
+            </div> -->
+
+            <!-- <button (click)="navigateFromAtf('contact')" [innerHTML]="'ATF.LETS_TALK' | translate"
+                class="call-to-action-button"></button> -->
         </div>
     </div>
 </section>

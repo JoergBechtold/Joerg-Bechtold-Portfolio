@@ -2,41 +2,48 @@
 @use "../../assets/styles/mixins.scss" as *;
 @use "../../assets/styles/animations.scss" as *;
 
-:host {
-  position: relative;
-  display: block;
-  height: 100dvh;
-  left: 0;
-  right: 0;
-  background-color: $primary-bg-gray;
-}
+// :host {
+//   position: relative;
+//   display: block;
+//   height: 100dvh;
+//   left: 0;
+//   right: 0;
+//   background-color: $primary-bg-gray;
+// }
 
 section {
-  height: 100%;
+  height: 100dvh;
   width: 100%;
   background-color: $primary-bg-gray;
+
   position: relative;
-  left: 0;
-  right: 0;
+  // left: 0;
+  // right: 0;
   overflow: hidden;
   @include dFlexAllCenter();
+
+  @media screen and (min-width: $breakpoint-min-width-1921) {
+    height: unset;
+  }
 
   > img {
     position: absolute;
     left: clamp(-260px, -312px + 16.25vw, 0px);
     right: 0;
     width: 100%;
-    bottom: -1680px;
+    bottom: -720px;
+    // bottom: -665px;
     z-index: 3;
     object-fit: cover;
 
-    @media screen and (min-width: $breakpoint-width-1920) {
+    @media screen and (min-width: $breakpoint-min-width-1921) {
       display: block;
+      bottom: -1680px;
     }
 
-    @media screen and (max-width: $breakpoint-width-1920) {
-      display: none;
-    }
+    // @media screen and (max-width: $breakpoint-width-1920) {
+    //   display: none;
+    // }
 
     @media screen and (max-width: $breakpoint-width-920) and (max-height: $responsive-height-814) {
       bottom: -575px;
@@ -53,12 +60,13 @@ section {
   max-width: $max-width-1920;
   width: 100%;
   height: 100%;
+  @include dFlexAllCenter($g: 80px);
 }
 
 .atf-bg-img {
   height: 100%;
   width: 100%;
-  position: relative;
+  // position: relative;
   overflow: hidden;
 
   @media screen and (min-width: $breakpoint-min-width-1921) {
@@ -160,39 +168,88 @@ section {
   }
 }
 
-.main-content {
-  position: absolute;
+// .main-content {
+//   position: absolute;
+//   flex-direction: column;
+//   @include dFlexAllCenter($g: 25px);
+//   left: clamp(420px, 15.2px + 44vw, 860px);
+//   bottom: 385px;
+//   z-index: 5;
+
+//   > button {
+//     @include primaryButton(top, center);
+//   }
+
+//   @media screen and (max-height: $responsive-height-814) {
+//     bottom: 280px;
+//   }
+
+//   @media screen and (max-width: $breakpoint-width-920) {
+//     left: 50%;
+//     bottom: 105px;
+//     transform: translateX(-50%);
+//   }
+
+//   @media screen and (max-width: $breakpoint-width-920) and (max-height: $responsive-height-814) {
+//     bottom: clamp(80px, 118.3333px + -4.1667vw, 105px);
+//   }
+
+//   @media screen and (max-height: $responsive-height-666) {
+//     bottom: 80px;
+//   }
+// }
+
+.left-content {
+  height: calc(515px + $header-height);
+  display: grid;
+  place-items: center;
+
+  @media screen and (min-width: $breakpoint-min-width-1921) {
+    height: calc(1055px + $header-height);
+  }
+}
+
+.img-box {
+  position: relative;
+  height: 520px;
+  // height: 1055px;
+
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+  z-index: 0;
+
+  @media screen and (min-width: $breakpoint-min-width-1921) {
+    height: 715px;
+  }
+
+  > img:nth-child(1) {
+    position: absolute;
+    width: 165%;
+    transform: translateY(75px);
+  }
+
+  > img:nth-child(2) {
+    position: absolute;
+    width: 100%;
+    transform: translateY(50px);
+  }
+}
+
+.right-content {
+  z-index: 4;
+  display: flex;
   flex-direction: column;
-  @include dFlexAllCenter($g: 25px);
-  left: clamp(420px, 15.2px + 44vw, 860px);
-  bottom: 385px;
-  z-index: 5;
+  align-items: center;
 
   > button {
     @include primaryButton(top, center);
-  }
-
-  @media screen and (max-height: $responsive-height-814) {
-    bottom: 280px;
-  }
-
-  @media screen and (max-width: $breakpoint-width-920) {
-    left: 50%;
-    bottom: 105px;
-    transform: translateX(-50%);
-  }
-
-  @media screen and (max-width: $breakpoint-width-920) and (max-height: $responsive-height-814) {
-    bottom: clamp(80px, 118.3333px + -4.1667vw, 105px);
-  }
-
-  @media screen and (max-height: $responsive-height-666) {
-    bottom: 80px;
   }
 }
 
 .text-box {
   @include dFlexAllCenter();
+  // flex-direction: column;
   max-width: 900px;
   width: 100%;
   z-index: 2;
