@@ -4,12 +4,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AppRouteKeys } from '../../app.routes';
 import { TranslationLogicHelperService } from '../translate/translation-logic-helper.service';
-import { map } from 'rxjs/operators'; // Importiere map
+import { map } from 'rxjs/operators';
 import { ViewportScroller } from '@angular/common';
 
 @Injectable({ providedIn: 'root' })
 export class TranslateManagerService {
-  private _activeLanguageSubject: BehaviorSubject<string>;
+  private activeLanguageSubject: BehaviorSubject<string>;
   public activeLanguage$: Observable<string>;
 
   constructor(
@@ -19,26 +19,22 @@ export class TranslateManagerService {
     private helper: TranslationLogicHelperService,
     private viewportScroller: ViewportScroller,
   ) {
-    // Initialisiere mit der aktuellen Sprache des Browsers oder der Standardeinstellung
-    this._activeLanguageSubject = new BehaviorSubject<string>(this.translate.currentLang || this.translate.getDefaultLang());
-    this.activeLanguage$ = this._activeLanguageSubject.asObservable();
+    this.activeLanguageSubject = new BehaviorSubject<string>(this.translate.currentLang || this.translate.getDefaultLang());
+    this.activeLanguage$ = this.activeLanguageSubject.asObservable();
     this.setupLangChangeSubscription();
     this.setupInitialLanguage();
   }
 
-
-  public scrollToTop(): void { // <-- HIER IST DIE WICHTIGE ÄNDERUNG: public hinzufügen
+  public scrollToTop(): void {
     this.viewportScroller.scrollToPosition([0, 0]);
   }
 
   get currentActiveLanguage(): string {
-    return this._activeLanguageSubject.getValue();
+    return this.activeLanguageSubject.getValue();
   }
 
   async setLanguage(lang: string): Promise<void> {
     if (this.currentActiveLanguage === lang) {
-      // Wenn die Sprache bereits die aktuelle ist, brauche wir keine Navigation
-      // Nur die ngx-translate Sprache setzen, falls nicht schon geschehen
       if (this.translate.currentLang !== lang) {
         await this.translate.use(lang).toPromise();
       }
@@ -46,11 +42,8 @@ export class TranslateManagerService {
     }
 
     const oldLang = this.currentActiveLanguage;
-    // Sprache im ngx-translate Service wechseln
     await this.translate.use(lang).toPromise();
-    this._activeLanguageSubject.next(lang);
-
-    // Navigiere zur entsprechenden übersetzten URL
+    this.activeLanguageSubject.next(lang);
     await this.helper.navigateAfterLanguageChange(lang, oldLang);
   }
 
@@ -63,27 +56,20 @@ export class TranslateManagerService {
   }
 
   private setupLangChangeSubscription(): void {
-    // Abonnieren von Änderungen der Sprache im TranslateService
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-      this._activeLanguageSubject.next(event.lang);
+      this.activeLanguageSubject.next(event.lang);
     });
   }
 
   private setupInitialLanguage(): void {
-    // Setze die initiale Sprache basierend auf dem URL-Parameter
     this.activatedRoute.paramMap.pipe(
       map(params => params.get('lang'))
     ).subscribe(langParam => {
       const determinedLang = langParam || this.translate.getDefaultLang();
-      if (this._activeLanguageSubject.getValue() !== determinedLang) {
-        this._activeLanguageSubject.next(determinedLang);
-        // Stelle sicher, dass ngx-translate auch diese Sprache verwendet
+      if (this.activeLanguageSubject.getValue() !== determinedLang) {
+        this.activeLanguageSubject.next(determinedLang);
         this.translate.use(determinedLang).toPromise();
       }
     });
   }
-
-
-
-
 }
