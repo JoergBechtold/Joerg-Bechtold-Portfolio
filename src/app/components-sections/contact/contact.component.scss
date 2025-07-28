@@ -299,7 +299,6 @@ textarea {
 }
 
 .error-message-checkbox {
-  // position: absolute;
   @include errorMessage($bot: unset);
 }
 
