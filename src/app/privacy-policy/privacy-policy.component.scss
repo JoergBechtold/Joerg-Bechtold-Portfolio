@@ -33,7 +33,7 @@ section {
   padding-top: var(--header-height);
   display: flex;
   justify-content: center;
-  min-height: 100dvh;
+  min-height: calc(100dvh - 295px);
 
   @media screen and (max-width: $breakpoint-width-920) {
     padding-top: var(--header-height-responsive);
