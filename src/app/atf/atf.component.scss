@@ -61,7 +61,7 @@ section {
   position: relative;
   overflow: hidden;
 
-  @media screen and (min-width: $breakpoint-width-1920) {
+  @media screen and (min-width: $breakpoint-min-width-1921) {
     overflow: unset;
   }
 
@@ -134,7 +134,7 @@ section {
     z-index: 3;
     object-fit: cover;
 
-    @media screen and (min-width: $breakpoint-width-1920) {
+    @media screen and (min-width: $breakpoint-min-width-1921) {
       display: none;
     }
 

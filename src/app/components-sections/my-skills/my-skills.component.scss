@@ -6,7 +6,7 @@ section {
   @include commonSectionStyles();
   @include paddingTopMinWidthBreakpoint();
 
-  @media screen and (min-width: $breakpoint-width-1920) {
+  @media screen and (min-width: $breakpoint-min-width-1921) {
     height: unset;
   }
 
