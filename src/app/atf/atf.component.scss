@@ -4,14 +4,15 @@
 
 :host {
   position: relative;
+  display: block;
+  height: 100dvh;
   left: 0;
   right: 0;
   background-color: $primary-bg-gray;
-  @include paddingLeftRightHolePage();
 }
 
 section {
-  height: 100dvh;
+  height: 100%;
   width: 100%;
   background-color: $primary-bg-gray;
   position: relative;

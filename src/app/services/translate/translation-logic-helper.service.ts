@@ -1,4 +1,3 @@
-// services/translate/translation-logic-helper.service.ts
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
@@ -29,16 +28,12 @@ export class TranslationLogicHelperService {
 
     async navigateAfterLanguageChange(lang: string, oldLang: string): Promise<void> {
         const { pathSegmentAfterLang, currentFragment } = this._getNavigationDetailsForLanguageChange();
-
-        // Ermittle den AppRouteKey des aktuell angezeigten Pfades in der alten Sprache
         const appRouteKeyForCurrentPath = await this.getAppRouteKeyForTranslatedPath(oldLang, pathSegmentAfterLang);
 
         let newPathSegment = '';
         if (appRouteKeyForCurrentPath) {
-            // Hole den übersetzten Pfad für die NEUE Sprache
-            // Der TranslateService sollte bereits auf die neue Sprache 'lang' umgeschaltet sein.
             newPathSegment = this.translate.instant(AppRouteKeys[appRouteKeyForCurrentPath]);
-            // Sonderfall für Home-Route
+
             if (appRouteKeyForCurrentPath === 'home' && newPathSegment === '') {
                 newPathSegment = '';
             }
@@ -62,8 +57,7 @@ export class TranslationLogicHelperService {
     }
 
     async handleSectionNavigation(appRouteKey: keyof typeof AppRouteKeys): Promise<void> {
-        const currentLang = this.translate.currentLang;
-        // translate.instant() verwendet die aktuell aktive Sprache
+        const currentLang = this.translate.currentLang
         const translatedPath = this.translate.instant(AppRouteKeys[appRouteKey]);
 
         const segments: string[] = [`/${currentLang}`];
@@ -106,7 +100,6 @@ export class TranslationLogicHelperService {
 
     getRouterLinkForAppRoute(key: keyof typeof AppRouteKeys): string[] {
         const currentLang = this.translate.currentLang;
-        // translate.instant() verwendet die aktuell aktive Sprache
         const translatedPath = this.translate.instant(AppRouteKeys[key]);
 
         const isDedicatedRoute = (key === 'privacyPolicy' || key === 'legalNotice');
@@ -176,13 +169,9 @@ export class TranslationLogicHelperService {
 
     private async getAppRouteKeyForTranslatedPath(lang: string, translatedPath: string): Promise<keyof typeof AppRouteKeys | undefined> {
         if (!translatedPath) return 'home';
-
-        // Die Übersetzungen für die spezifische 'lang' abrufen
         const translations = await this.translate.getTranslation(lang).pipe(take(1)).toPromise();
 
         for (const key of Object.keys(AppRouteKeys) as Array<keyof typeof AppRouteKeys>) {
-            // Nur Routen-Keys betrachten, die tatsächlich Pfade übersetzen und keine Fragmente sind
-            // UND die explizit in den Routen als separate Pfade definiert sind.
             if (key === 'privacyPolicy' || key === 'legalNotice' || key === 'home') {
                 const pathInLang = this.getNestedTranslation(translations, AppRouteKeys[key]);
                 if (typeof pathInLang === 'string' && pathInLang === translatedPath) {
@@ -216,7 +205,6 @@ export class TranslationLogicHelperService {
         }
 
         if (fragmentTranslationKey) {
-            // translate.instant() verwendet hier die aktuell aktive Sprache
             return this.translate.instant(fragmentTranslationKey);
         }
         return undefined;
@@ -224,14 +212,12 @@ export class TranslationLogicHelperService {
 
     private async getTranslatedFragmentAfterLangChange(oldLang: string, currentFragment: string | null): Promise<string | undefined> {
         if (!currentFragment) return undefined;
-        // Übersetzungen für die alte Sprache abrufen, um den Fragment-Key zu finden
         const oldFragmentTranslations = await this.translate.getTranslation(oldLang).pipe(take(1)).toPromise();
 
         for (const keyName of Object.keys(AppRouteKeys) as Array<keyof typeof AppRouteKeys>) {
             if (keyName.endsWith('Fragment') || keyName === 'home') {
                 const translatedOldFragmentValue = this.getNestedTranslation(oldFragmentTranslations, AppRouteKeys[keyName]);
                 if (typeof translatedOldFragmentValue === 'string' && translatedOldFragmentValue === currentFragment) {
-                    // Und dann die Übersetzung des Fragment-Keys in der NEUEN, AKTIVEN Sprache zurückgeben
                     return this.translate.instant(AppRouteKeys[keyName]);
                 }
             }
