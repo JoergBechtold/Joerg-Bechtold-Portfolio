@@ -61,8 +61,8 @@ p {
 
 .animationLink {
   @include fontSizeWeightColor($si: 18px);
+  white-space: nowrap;
   position: relative;
-  overflow: hidden;
 
   &::before {
     content: "";

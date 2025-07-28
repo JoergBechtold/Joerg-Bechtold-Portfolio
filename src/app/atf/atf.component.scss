@@ -57,10 +57,6 @@ section {
       bottom: clamp(-525px, 348.6047px + -63.9535vw, -470px);
     }
 
-    @media screen and (min-height: 956px) {
-      bottom: -439px;
-    }
-
     @media screen and (max-width: $breakpoint-width-920) and (max-height: $responsive-height-814) {
       bottom: -575px;
     }
