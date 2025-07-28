@@ -2,29 +2,17 @@
 @use "../../assets/styles/mixins.scss" as *;
 @use "../../assets/styles/animations.scss" as *;
 
-// :host {
-//   position: relative;
-//   display: block;
-//   height: 100dvh;
-//   left: 0;
-//   right: 0;
-//   background-color: $primary-bg-gray;
-// }
-
 section {
   height: 100dvh;
   width: 100%;
   background-color: $primary-bg-gray;
-
   position: relative;
-  // left: 0;
-  // right: 0;
   overflow: hidden;
   @include dFlexAllCenter();
 
-  // @media screen and (min-width: $breakpoint-min-width-1921) {
-  //   height: unset;
-  // }
+  @media screen and (min-width: $responsive-width-2561) {
+    height: unset;
+  }
 
   > img {
     position: absolute;
@@ -32,19 +20,33 @@ section {
     right: 0;
     width: 100%;
     bottom: -720px;
-    // bottom: -665px;
     z-index: 3;
     object-fit: cover;
 
     @media screen and (min-width: $breakpoint-min-width-1921) {
       display: block;
-      // bottom: -1680px;
       bottom: -67%;
     }
 
-    // @media screen and (max-width: $breakpoint-width-1920) {
-    //   display: none;
-    // }
+    @media screen and (min-width: $responsive-width-2561) {
+      bottom: -67%;
+      width: 4500px;
+      left: unset;
+      right: 150px;
+    }
+
+    @media screen and (min-width: 3840px) {
+      bottom: -178%;
+      width: 4500px;
+      left: -62px;
+      transform: rotate(7deg);
+    }
+
+    @media screen and (min-width: 5120px) {
+      bottom: -222%;
+      width: 5500px;
+      left: -75px;
+    }
 
     @media screen and (max-width: $breakpoint-width-920) and (max-height: $responsive-height-814) {
       bottom: -575px;
@@ -64,139 +66,106 @@ section {
   @include dFlexAllCenter($g: 80px);
 }
 
-.atf-bg-img {
-  height: 100%;
-  width: 100%;
-  // position: relative;
-  overflow: hidden;
+// .atf-bg-img {
+//   height: 100%;
+//   width: 100%;
+//   overflow: hidden;
 
-  @media screen and (min-width: $breakpoint-min-width-1921) {
-    overflow: unset;
-  }
-
-  > img:nth-child(1) {
-    position: absolute;
-    left: clamp(-195px, -328.4px + 14.5vw, -50px);
-    bottom: clamp(-115px, -57.4px + -3vw, -85px);
-    width: clamp(650px, 581px + 21.5625vw, 995px);
-    display: block;
-    z-index: 1;
-
-    @media screen and (max-height: $responsive-height-814) {
-      width: clamp(775px, 742.8px + 3.5vw, 810px);
-      left: clamp(-153px, -210.96px + 6.3vw, -90px);
-    }
-
-    @media screen and (max-width: $breakpoint-width-920) {
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: clamp(55px, 15px + 12.5vw, 130px);
-    }
-
-    @media screen and (max-width: $breakpoint-width-920) and (max-height: $responsive-height-814) {
-      width: clamp(565px, 543.6667px + 6.6667vw, 605px);
-    }
-
-    @media screen and (max-height: $responsive-height-666) {
-      width: 595px;
-    }
-  }
-
-  > img:nth-child(2) {
-    left: clamp(0px, -156.4px + 17vw, 170px);
-    bottom: clamp(-17px, 15.64px + -1.7vw, 0px);
-    position: absolute;
-    width: clamp(505px, 426.8px + 8.5vw, 590px);
-    display: block;
-    z-index: 2;
-
-    @media screen and (max-height: $responsive-height-814) {
-      width: 445px;
-      bottom: -25px;
-    }
-
-    @media screen and (max-width: $breakpoint-width-920) {
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: clamp(205px, 228px + -2.5vw, 220px);
-      width: clamp(320px, 234.6667px + 26.6667vw, 480px);
-    }
-
-    @media screen and (max-width: $breakpoint-width-920) and (max-height: $responsive-height-814) {
-      bottom: clamp(220px, 210.4px + 3vw, 238px);
-      width: 260px;
-    }
-
-    @media screen and (max-height: $responsive-height-666) {
-      bottom: 168px;
-      width: 283px;
-    }
-  }
-
-  > img:nth-child(3) {
-    position: absolute;
-    left: clamp(-260px, -312px + 16.25vw, 0px);
-    right: 0;
-    width: 1920px;
-    bottom: -730px;
-    // display: block;
-    z-index: 3;
-    object-fit: cover;
-
-    @media screen and (min-width: $breakpoint-min-width-1921) {
-      display: none;
-    }
-
-    @media screen and (max-width: $breakpoint-width-1920) {
-      display: block;
-    }
-
-    @media screen and (max-height: $responsive-height-814) {
-      bottom: -770px;
-    }
-
-    @media screen and (max-width: $breakpoint-width-920) {
-      bottom: -550px;
-    }
-
-    @media screen and (max-width: $breakpoint-width-920) and (max-height: $responsive-height-814) {
-      bottom: -575px;
-    }
-
-    @media screen and (max-height: $responsive-height-666) {
-      bottom: -615px;
-    }
-  }
-}
-
-// .main-content {
-//   position: absolute;
-//   flex-direction: column;
-//   @include dFlexAllCenter($g: 25px);
-//   left: clamp(420px, 15.2px + 44vw, 860px);
-//   bottom: 385px;
-//   z-index: 5;
-
-//   > button {
-//     @include primaryButton(top, center);
+//   @media screen and (min-width: $breakpoint-min-width-1921) {
+//     overflow: unset;
 //   }
 
-//   @media screen and (max-height: $responsive-height-814) {
-//     bottom: 280px;
+//   > img:nth-child(1) {
+//     position: absolute;
+//     left: clamp(-195px, -328.4px + 14.5vw, -50px);
+//     bottom: clamp(-115px, -57.4px + -3vw, -85px);
+//     width: clamp(650px, 581px + 21.5625vw, 995px);
+//     display: block;
+//     z-index: 1;
+
+//     @media screen and (max-height: $responsive-height-814) {
+//       width: clamp(775px, 742.8px + 3.5vw, 810px);
+//       left: clamp(-153px, -210.96px + 6.3vw, -90px);
+//     }
+
+//     @media screen and (max-width: $breakpoint-width-920) {
+//       left: 50%;
+//       transform: translateX(-50%);
+//       bottom: clamp(55px, 15px + 12.5vw, 130px);
+//     }
+
+//     @media screen and (max-width: $breakpoint-width-920) and (max-height: $responsive-height-814) {
+//       width: clamp(565px, 543.6667px + 6.6667vw, 605px);
+//     }
+
+//     @media screen and (max-height: $responsive-height-666) {
+//       width: 595px;
+//     }
 //   }
 
-//   @media screen and (max-width: $breakpoint-width-920) {
-//     left: 50%;
-//     bottom: 105px;
-//     transform: translateX(-50%);
+//   > img:nth-child(2) {
+//     left: clamp(0px, -156.4px + 17vw, 170px);
+//     bottom: clamp(-17px, 15.64px + -1.7vw, 0px);
+//     position: absolute;
+//     width: clamp(505px, 426.8px + 8.5vw, 590px);
+//     display: block;
+//     z-index: 2;
+
+//     @media screen and (max-height: $responsive-height-814) {
+//       width: 445px;
+//       bottom: -25px;
+//     }
+
+//     @media screen and (max-width: $breakpoint-width-920) {
+//       left: 50%;
+//       transform: translateX(-50%);
+//       bottom: clamp(205px, 228px + -2.5vw, 220px);
+//       width: clamp(320px, 234.6667px + 26.6667vw, 480px);
+//     }
+
+//     @media screen and (max-width: $breakpoint-width-920) and (max-height: $responsive-height-814) {
+//       bottom: clamp(220px, 210.4px + 3vw, 238px);
+//       width: 260px;
+//     }
+
+//     @media screen and (max-height: $responsive-height-666) {
+//       bottom: 168px;
+//       width: 283px;
+//     }
 //   }
 
-//   @media screen and (max-width: $breakpoint-width-920) and (max-height: $responsive-height-814) {
-//     bottom: clamp(80px, 118.3333px + -4.1667vw, 105px);
-//   }
+//   > img:nth-child(3) {
+//     position: absolute;
+//     left: clamp(-260px, -312px + 16.25vw, 0px);
+//     right: 0;
+//     width: 1920px;
+//     bottom: -730px;
+//     z-index: 3;
+//     object-fit: cover;
 
-//   @media screen and (max-height: $responsive-height-666) {
-//     bottom: 80px;
+//     @media screen and (min-width: $breakpoint-min-width-1921) {
+//       display: none;
+//     }
+
+//     @media screen and (max-width: $breakpoint-width-1920) {
+//       display: block;
+//     }
+
+//     @media screen and (max-height: $responsive-height-814) {
+//       bottom: -770px;
+//     }
+
+//     @media screen and (max-width: $breakpoint-width-920) {
+//       bottom: -550px;
+//     }
+
+//     @media screen and (max-width: $breakpoint-width-920) and (max-height: $responsive-height-814) {
+//       bottom: -575px;
+//     }
+
+//     @media screen and (max-height: $responsive-height-666) {
+//       bottom: -615px;
+//     }
 //   }
 // }
 

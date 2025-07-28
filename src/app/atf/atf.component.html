@@ -1,10 +1,9 @@
 <section>
 
     <img src="../../assets/img/background/HERO-BACKGROUND.svg" alt="{{'ATF.ALT_TEXT_GRAY_BACKGROUND_IMG'| translate}}">
+
     <div class="atf-content">
         <app-contact-nav-atf></app-contact-nav-atf>
-
-
 
         <div class="scroll-down-box">
             <p [innerHTML]="'ATF.SCROLL_DOWN' | translate"></p>
@@ -13,15 +12,6 @@
                     d="M13 16.172L17.657 11.515C18.0475 11.1245 18.6805 11.1245 19.071 11.515C19.4615 11.9055 19.4614 12.5385 19.071 12.929L12.7071 19.2929C12.3166 19.6834 11.6834 19.6834 11.2929 19.2929L4.92898 12.929C4.53852 12.5385 4.53852 11.9055 4.92898 11.515C5.31945 11.1245 5.95252 11.1245 6.34299 11.515L11 16.172V5C11 4.44772 11.4477 4 12 4C12.5523 4 13 4.44772 13 5V16.172Z" />
             </svg>
         </div>
-
-        <!-- <div class="atf-bg-img">
-            <img src="../../assets/img/background/PROFILE_IMG_SHADOW.png"
-                alt="{{'ATF.ALT_TEXT_PURPLE_GREEN_SHADOW'| translate}}">
-            <img src="../../assets/img/profile-pictures/ATF_PROFILE_PICTURE.png"
-                alt="{{'ATF.ALT_TEXT_PROFILE_PICTURE'| translate}}">
-            <img src="../../assets/img/background/HERO-BACKGROUND.svg"
-                alt="{{'ATF.ALT_TEXT_GRAY_BACKGROUND_IMG'| translate}}">
-        </div> -->
 
         <div class="left-content">
             <div class="img-box">
@@ -43,43 +33,10 @@
                     <h1>Jörg Bechtold</h1>
                     <h2>FRONTEND DEVELOPER</h2>
                 </div>
-
-
             </div>
 
             <button (click)="navigateFromAtf('contact')" [innerHTML]="'ATF.LETS_TALK' | translate"
                 class="call-to-action-button"></button>
-        </div>
-
-        <div class="main-content">
-            <!-- <div class="img-box">
-                <img src="../../assets/img/background/PROFILE_IMG_SHADOW.png"
-                    alt="{{'ATF.ALT_TEXT_PURPLE_GREEN_SHADOW'| translate}}">
-                <img src="../../assets/img/profile-pictures/ATF_PROFILE_PICTURE.png"
-                    alt="{{'ATF.ALT_TEXT_PROFILE_PICTURE'| translate}}">
-            </div> -->
-
-            <!-- <div class="right-content">
-                <div class="text-box">
-                    <div class="vertical-text" [class.lang-de]="activeLanguage === 'de'"
-                        [class.lang-en]="activeLanguage === 'en'">
-                        <span [innerHTML]="'ATF.I_AM' | translate"></span>
-                    </div>
-
-                    <div class="intro-text">
-                        <h1>Jörg Bechtold</h1>
-                        <h2>FRONTEND DEVELOPER</h2>
-                    </div>
-
-
-                </div>
-
-                <button (click)="navigateFromAtf('contact')" [innerHTML]="'ATF.LETS_TALK' | translate"
-                    class="call-to-action-button"></button>
-            </div> -->
-
-            <!-- <button (click)="navigateFromAtf('contact')" [innerHTML]="'ATF.LETS_TALK' | translate"
-                class="call-to-action-button"></button> -->
         </div>
     </div>
 </section>
