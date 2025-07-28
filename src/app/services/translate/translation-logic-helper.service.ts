@@ -27,29 +27,24 @@ export class TranslationLogicHelperService {
     }
 
     async navigateAfterLanguageChange(lang: string, oldLang: string): Promise<void> {
-        const { pathSegmentAfterLang, currentFragment } = this._getNavigationDetailsForLanguageChange();
+        const { pathSegmentAfterLang, currentFragment } = this.getNavigationDetailsForLanguageChange();
         const appRouteKeyForCurrentPath = await this.getAppRouteKeyForTranslatedPath(oldLang, pathSegmentAfterLang);
 
         let newPathSegment = '';
         if (appRouteKeyForCurrentPath) {
             newPathSegment = this.translate.instant(AppRouteKeys[appRouteKeyForCurrentPath]);
 
-            if (appRouteKeyForCurrentPath === 'home' && newPathSegment === '') {
-                newPathSegment = '';
-            }
+            if (appRouteKeyForCurrentPath === 'home' && newPathSegment === '') newPathSegment = ''
         }
 
         const newTranslatedFragment = await this.getTranslatedFragmentAfterLangChange(oldLang, currentFragment);
-
         const segments: string[] = [`/${lang}`];
-        if (newPathSegment) {
-            segments.push(newPathSegment);
-        }
+        if (newPathSegment) segments.push(newPathSegment);
 
         await this.performNavigation(segments, newTranslatedFragment);
     }
 
-    private _getNavigationDetailsForLanguageChange(): { pathSegmentAfterLang: string; currentFragment: string | null } {
+    private getNavigationDetailsForLanguageChange(): { pathSegmentAfterLang: string; currentFragment: string | null } {
         const currentUrlSegments = this.router.url.split('/').filter(s => s);
         const pathSegmentAfterLang = currentUrlSegments.length > 1 ? currentUrlSegments.slice(1).join('/') : '';
         const currentFragment = this.activatedRoute.snapshot.fragment;
@@ -80,7 +75,7 @@ export class TranslationLogicHelperService {
         const shouldNavigate = currentUrlNormalized !== targetUrlNormalized || this.activatedRoute.snapshot.fragment !== translatedFragment;
 
         if (shouldNavigate) {
-            this._saveScrollPositionIfBrowser();
+            this.saveScrollPositionIfBrowser();
             await this.performNavigation(segments, translatedFragment, true);
         } else if (translatedFragment && this.isBrowser) {
             this.scrollToElementById(translatedFragment);
@@ -92,7 +87,7 @@ export class TranslationLogicHelperService {
         }
     }
 
-    private _saveScrollPositionIfBrowser(): void {
+    private saveScrollPositionIfBrowser(): void {
         if (this.isBrowser) {
             this.savedScrollPosition = this.viewportScroller.getScrollPosition();
         }
