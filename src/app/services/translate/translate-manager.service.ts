@@ -5,7 +5,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { AppRouteKeys } from '../../app.routes';
 import { TranslationLogicHelperService } from '../translate/translation-logic-helper.service';
 import { map } from 'rxjs/operators';
-import { ViewportScroller } from '@angular/common';
 
 @Injectable({ providedIn: 'root' })
 export class TranslateManagerService {
@@ -17,16 +16,11 @@ export class TranslateManagerService {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private helper: TranslationLogicHelperService,
-    private viewportScroller: ViewportScroller,
   ) {
     this.activeLanguageSubject = new BehaviorSubject<string>(this.translate.currentLang || this.translate.getDefaultLang());
     this.activeLanguage$ = this.activeLanguageSubject.asObservable();
     this.setupLangChangeSubscription();
     this.setupInitialLanguage();
-  }
-
-  public scrollToTop(): void {
-    this.viewportScroller.scrollToPosition([0, 0]);
   }
 
   get currentActiveLanguage(): string {

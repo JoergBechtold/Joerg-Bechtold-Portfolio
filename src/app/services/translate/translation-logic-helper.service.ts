@@ -51,28 +51,11 @@ export class TranslationLogicHelperService {
         return { pathSegmentAfterLang, currentFragment };
     }
 
+
     async handleSectionNavigation(appRouteKey: keyof typeof AppRouteKeys): Promise<void> {
-        const currentLang = this.translate.currentLang
-        const translatedPath = this.translate.instant(AppRouteKeys[appRouteKey]);
-
-        const segments: string[] = [`/${currentLang}`];
-        const isDedicatedRoute = (appRouteKey === 'privacyPolicy' || appRouteKey === 'legalNotice');
-
-        if (isDedicatedRoute) {
-            if (translatedPath) {
-                segments.push(translatedPath);
-            }
-        }
-
-        const translatedFragment = await this.getFragmentIdForAppRouteKey(appRouteKey);
-
-        const targetUrlPathWithoutFragment = segments.join('/');
-        const currentUrlWithoutFragment = this.router.url.split('#')[0];
-
-        const targetUrlNormalized = targetUrlPathWithoutFragment.endsWith('/') ? targetUrlPathWithoutFragment.slice(0, -1) : targetUrlPathWithoutFragment;
-        const currentUrlNormalized = currentUrlWithoutFragment.endsWith('/') ? currentUrlWithoutFragment.slice(0, -1) : currentUrlWithoutFragment;
-
-        const shouldNavigate = currentUrlNormalized !== targetUrlNormalized || this.activatedRoute.snapshot.fragment !== translatedFragment;
+        const currentLang = this.translate.currentLang;
+        const { segments, translatedFragment } = await this.buildNavigationSegmentsAndFragment(appRouteKey, currentLang);
+        const shouldNavigate = this.shouldPerformNavigation(segments, translatedFragment);
 
         if (shouldNavigate) {
             this.saveScrollPositionIfBrowser();
@@ -87,6 +70,26 @@ export class TranslationLogicHelperService {
         }
     }
 
+    private async buildNavigationSegmentsAndFragment(appRouteKey: keyof typeof AppRouteKeys, currentLang: string): Promise<{ segments: string[]; translatedFragment?: string }> {
+        const translatedPath = this.translate.instant(AppRouteKeys[appRouteKey]);
+        const segments: string[] = [`/${currentLang}`];
+        const isDedicatedRoute = (appRouteKey === 'privacyPolicy' || appRouteKey === 'legalNotice');
+
+        if (isDedicatedRoute && translatedPath) segments.push(translatedPath);
+
+        const translatedFragment = await this.getFragmentIdForAppRouteKey(appRouteKey);
+        return { segments, translatedFragment };
+    }
+
+    private shouldPerformNavigation(segments: string[], translatedFragment?: string): boolean {
+        const targetUrlPathWithoutFragment = segments.join('/');
+        const currentUrlWithoutFragment = this.router.url.split('#')[0];
+        const targetUrlNormalized = targetUrlPathWithoutFragment.endsWith('/') ? targetUrlPathWithoutFragment.slice(0, -1) : targetUrlPathWithoutFragment;
+        const currentUrlNormalized = currentUrlWithoutFragment.endsWith('/') ? currentUrlWithoutFragment.slice(0, -1) : currentUrlWithoutFragment;
+
+        return currentUrlNormalized !== targetUrlNormalized || this.activatedRoute.snapshot.fragment !== translatedFragment;
+    }
+
     private saveScrollPositionIfBrowser(): void {
         if (this.isBrowser) {
             this.savedScrollPosition = this.viewportScroller.getScrollPosition();
@@ -96,7 +99,6 @@ export class TranslationLogicHelperService {
     getRouterLinkForAppRoute(key: keyof typeof AppRouteKeys): string[] {
         const currentLang = this.translate.currentLang;
         const translatedPath = this.translate.instant(AppRouteKeys[key]);
-
         const isDedicatedRoute = (key === 'privacyPolicy' || key === 'legalNotice');
 
         if (key === 'home' && translatedPath === '') {
@@ -151,7 +153,7 @@ export class TranslationLogicHelperService {
         this.viewportScroller.scrollToAnchor(elementId);
     }
 
-    private scrollToTop(): void {
+    public scrollToTop(): void {
         this.viewportScroller.scrollToPosition([0, 0]);
     }
 
@@ -178,31 +180,16 @@ export class TranslationLogicHelperService {
     }
 
     private async getFragmentIdForAppRouteKey(appRouteKey: keyof typeof AppRouteKeys): Promise<string | undefined> {
-        let fragmentTranslationKey: string | undefined;
-        switch (appRouteKey) {
-            case 'home':
-                fragmentTranslationKey = AppRouteKeys.home;
-                break;
-            case 'aboutMe':
-                fragmentTranslationKey = AppRouteKeys.aboutMeFragment;
-                break;
-            case 'skills':
-                fragmentTranslationKey = AppRouteKeys.skillsFragment;
-                break;
-            case 'portfolio':
-                fragmentTranslationKey = AppRouteKeys.portfolioFragment;
-                break;
-            case 'contact':
-                fragmentTranslationKey = AppRouteKeys.contactFragment;
-                break;
-            default:
-                fragmentTranslationKey = undefined;
-        }
+        const fragmentMap: { [key in keyof typeof AppRouteKeys]?: string } = {
+            home: AppRouteKeys.home,
+            aboutMe: AppRouteKeys.aboutMeFragment,
+            skills: AppRouteKeys.skillsFragment,
+            portfolio: AppRouteKeys.portfolioFragment,
+            contact: AppRouteKeys.contactFragment,
+        };
 
-        if (fragmentTranslationKey) {
-            return this.translate.instant(fragmentTranslationKey);
-        }
-        return undefined;
+        const fragmentTranslationKey = fragmentMap[appRouteKey];
+        return fragmentTranslationKey ? this.translate.instant(fragmentTranslationKey) : undefined;
     }
 
     private async getTranslatedFragmentAfterLangChange(oldLang: string, currentFragment: string | null): Promise<string | undefined> {

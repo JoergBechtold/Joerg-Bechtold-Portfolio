@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { TranslateManagerService } from '../services/translate/translate-manager.service';
+import { TranslationLogicHelperService } from '../services/translate/translation-logic-helper.service';
 
 @Component({
     selector: 'app-legal-notice',
@@ -13,7 +14,7 @@ import { TranslateManagerService } from '../services/translate/translate-manager
 export class LegalNoticeComponent implements OnInit, AfterViewInit {
     activeLanguage: string = 'de';
 
-    constructor(private translateManager: TranslateManagerService) { }
+    constructor(private translateManager: TranslateManagerService, private translationLogicHelper: TranslationLogicHelperService) { }
 
     ngOnInit(): void {
         this.translateManager.activeLanguage$.subscribe(lang => {
@@ -22,11 +23,6 @@ export class LegalNoticeComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        // Entferne dieses manuelle Scrollen!
-        // window.scrollTo({ top: 0, left: 0 });
-
-        // Stattdessen rufe die Service-Methode auf, die das Scrollen mit Timer übernimmt
-        // Dies stellt sicher, dass das Scrollen nach der Komponente und Übersetzung geladen ist.
-        this.translateManager.scrollToTop(); // <-- Rufe die Methode deines Managers auf
+        this.translationLogicHelper.scrollToTop();
     }
 }
