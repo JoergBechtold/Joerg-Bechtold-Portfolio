@@ -117,14 +117,14 @@
                                         'CONTACT.LINK.PRIVACY_POLICY' | translate}}</a> {{
                                     'CONTACT.FORM.PRIVACY_TEXT_PART2' | translate }}
                                 </p>
+                                <div>@if (!privacyField.valid && privacyField.touched && contactData.message !== ''){
+                                    <p class="error-message-checkbox">{{ 'CONTACT.VALIDATION.PRIVACY_REQUIRED' |
+                                        translate
+                                        }}
+                                    </p>
+                                    }
+                                </div>
                             </label>
-                            <div>@if (!privacyField.valid && privacyField.touched && contactData.message !== ''){
-                                <p class="error-message-checkbox">{{ 'CONTACT.VALIDATION.PRIVACY_REQUIRED' | translate
-                                    }}
-                                </p>
-                                }
-                            </div>
-
                         </div>
 
                         <button appAnimateOnScroll [animationThreshold]="0.2" [disabled]="!contactForm.valid"
