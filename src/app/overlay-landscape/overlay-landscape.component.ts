@@ -15,7 +15,6 @@ import { debounceTime, tap } from 'rxjs/operators';
 export class OverlayLandscapeComponent implements OnInit, OnDestroy {
     showRotateOverlay: boolean = false;
     activeLanguage: string = 'de';
-    private resizeObserver: ResizeObserver | undefined;
     private translateSubscription: Subscription | undefined;
     private resizeSubscription: Subscription | undefined;
 
@@ -33,6 +32,7 @@ export class OverlayLandscapeComponent implements OnInit, OnDestroy {
         });
 
         this.checkOrientation();
+
         this.resizeSubscription = fromEvent(window, 'resize').pipe(
             debounceTime(50),
             tap(() => this.checkOrientation())
@@ -40,10 +40,6 @@ export class OverlayLandscapeComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.resizeObserver) {
-            this.resizeObserver.disconnect();
-        }
-
         if (this.translateSubscription) {
             this.translateSubscription.unsubscribe();
         }
@@ -59,13 +55,13 @@ export class OverlayLandscapeComponent implements OnInit, OnDestroy {
     }
 
     checkOrientation(): void {
-        const MIN_LANDSCAPE_WIDTH_FOR_OVERLAY = 1138;
+        const MAX_LANDSCAPE_WIDTH_FOR_OVERLAY = 920;
         const isLandscape = window.matchMedia("(orientation: landscape)").matches;
         const isTouch = this.isTouchDevice();
         const currentWidth = window.innerWidth;
         const wasOverlayShowing = this.showRotateOverlay;
 
-        this.showRotateOverlay = isTouch && isLandscape && (currentWidth <= MIN_LANDSCAPE_WIDTH_FOR_OVERLAY);
+        this.showRotateOverlay = isTouch && isLandscape && (currentWidth <= MAX_LANDSCAPE_WIDTH_FOR_OVERLAY);
         this.cdr.detectChanges();
 
         if (this.showRotateOverlay && !wasOverlayShowing) {
