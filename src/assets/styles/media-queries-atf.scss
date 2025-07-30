@@ -3,73 +3,73 @@
 @use "../../assets/styles/animations.scss" as *;
 
 //media queries for section img
-@mixin mediaQueriesSectionImg() {
-  @media screen and (min-height: 480px) and (max-height: 660px) {
-    bottom: clamp(75px, calc(0.05556 * 100vh + 48.3312px), 85px);
-  }
+// @mixin mediaQueriesSectionImg() {
+//   @media screen and (min-height: 480px) and (max-height: 660px) {
+//     bottom: clamp(75px, calc(0.05556 * 100vh + 48.3312px), 85px);
+//   }
 
-  @media screen and (width: 1024px) and (height: 600px) {
-    bottom: -385px;
-  }
+//   @media screen and (width: 1024px) and (height: 600px) {
+//     bottom: -385px;
+//   }
 
-  @media screen and (min-height: 661px) and (max-height: 720px) {
-    bottom: clamp(-20px, calc(-1.77966 * 100vh + 1261.42526px), 85px);
-  }
+//   @media screen and (min-height: 661px) and (max-height: 720px) {
+//     bottom: clamp(-20px, calc(-1.77966 * 100vh + 1261.42526px), 85px);
+//   }
 
-  @media screen and (min-height: 740px) and (max-height: 799px) {
-    bottom: clamp(75px, -11.53824px + 18.0288vh, 150px);
-  }
+//   @media screen and (min-height: 740px) and (max-height: 799px) {
+//     bottom: clamp(75px, -11.53824px + 18.0288vh, 150px);
+//   }
 
-  @media screen and (width: 1024px) and (height: 768px) {
-    bottom: -305px;
-  }
+//   @media screen and (width: 1024px) and (height: 768px) {
+//     bottom: -305px;
+//   }
 
-  @media screen and (width: 1366px) and (height: 768px) {
-    bottom: -525px;
-  }
+//   @media screen and (width: 1366px) and (height: 768px) {
+//     bottom: -525px;
+//   }
 
-  @media screen and (width: 1280px) and (height: 800px) {
-    bottom: -465px;
-  }
+//   @media screen and (width: 1280px) and (height: 800px) {
+//     bottom: -465px;
+//   }
 
-  @media screen and (width: 375px) and (height: 812px) {
-    bottom: 130px;
-  }
+//   @media screen and (width: 375px) and (height: 812px) {
+//     bottom: 130px;
+//   }
 
-  @media screen and (min-height: 1024px) and (max-height: 1138px) {
-    bottom: clamp(-10px, calc(0.7456 * 100vh - 773.53px), 75px);
-  }
+//   @media screen and (min-height: 1024px) and (max-height: 1138px) {
+//     bottom: clamp(-10px, calc(0.7456 * 100vh - 773.53px), 75px);
+//   }
 
-  @media screen and (min-width: 1680px) and (max-width: 1920px) {
-    bottom: clamp(-710px, 690px + -72.9167vw, -535px);
-  }
+//   @media screen and (min-width: 1680px) and (max-width: 1920px) {
+//     bottom: clamp(-710px, 690px + -72.9167vw, -535px);
+//   }
 
-  @media screen and (min-height: 1180px) and (max-height: 1366px) {
-    bottom: clamp(-85px, calc(-0.5914 * 100vh + 722.852px), 25px);
-  }
+//   @media screen and (min-height: 1180px) and (max-height: 1366px) {
+//     bottom: clamp(-85px, calc(-0.5914 * 100vh + 722.852px), 25px);
+//   }
 
-  @media screen and (width: 1920px) and (min-height: 1080px) and (max-height: 1200px) {
-    bottom: -710px;
-  }
+//   @media screen and (width: 1920px) and (min-height: 1080px) and (max-height: 1200px) {
+//     bottom: -710px;
+//   }
 
-  @media screen and (width: 912px) and (height: 1368px) {
-    bottom: 75px;
-  }
+//   @media screen and (width: 912px) and (height: 1368px) {
+//     bottom: 75px;
+//   }
 
-  @media screen and (min-width: 2560px) and (max-width: 3008px) and (min-height: 1440px) and (max-height: 1692px) {
-    bottom: clamp(-1290px, 825px + -70.3125vw, -975px);
-  }
+//   @media screen and (min-width: 2560px) and (max-width: 3008px) and (min-height: 1440px) and (max-height: 1692px) {
+//     bottom: clamp(-1290px, 825px + -70.3125vw, -975px);
+//   }
 
-  @media screen and (min-width: 3840px) and (min-height: 2160px) {
-    transform: rotate(4.5deg);
-    width: 110%;
-    left: -40px;
-  }
+//   @media screen and (min-width: 3840px) and (min-height: 2160px) {
+//     transform: rotate(4.5deg);
+//     width: 110%;
+//     left: -40px;
+//   }
 
-  @media screen and (min-width: 3840px) and (max-width: 5120px) and (min-height: 2160px) and (max-height: 2880px) {
-    bottom: clamp(-2590px, 70px + -51.9531vw, -1925px);
-  }
-}
+//   @media screen and (min-width: 3840px) and (max-width: 5120px) and (min-height: 2160px) and (max-height: 2880px) {
+//     bottom: clamp(-2590px, 70px + -51.9531vw, -1925px);
+//   }
+// }
 
 //media queries for img box
 @mixin mediaQueriesImgBox() {

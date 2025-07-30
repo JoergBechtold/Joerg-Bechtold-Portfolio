@@ -23,7 +23,7 @@ section {
     bottom: -695px;
     z-index: 3;
     object-fit: cover;
-    @include mediaQueriesSectionImg();
+    // @include mediaQueriesSectionImg();
   }
 }
 
@@ -72,6 +72,24 @@ section {
     position: absolute;
     width: 100%;
     transform: translateY(50px);
+  }
+
+  > img:nth-child(3) {
+    position: absolute;
+    bottom: -939px;
+    width: 1920px;
+    left: -306px;
+
+    @media screen and (min-width: 2561px) {
+      left: clamp(-565px, 472.6213px + -40.5321vw, -306px);
+      transform: rotate(7deg);
+    }
+
+    @media screen and (min-width: 1921px) and (max-width: 5550px) {
+      width: clamp(1921px, 0px + 100vw, 5500px);
+      bottom: clamp(-2578px, 45.2198px + -51.2348vw, -939px);
+      left: clamp(-1928px, 799.0653px + -53.263vw, -565px);
+    }
   }
 }
 
