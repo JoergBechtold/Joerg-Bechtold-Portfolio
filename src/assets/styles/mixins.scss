@@ -78,6 +78,10 @@
   background-color: var(--primary-bg-gray);
   @include dFlexAllCenter();
 
+  @media screen and (min-height: 1080px) {
+    height: unset;
+  }
+
   @media screen and (min-width: $breakpoint-min-width-1921) {
     height: unset;
   }
