@@ -14,17 +14,6 @@ section {
   @media screen and (min-width: $responsive-width-2561) {
     height: unset;
   }
-
-  // > img {
-  //   position: absolute;
-  //   left: 0;
-  //   right: 0;
-  //   width: 100%;
-  //   bottom: -695px;
-  //   z-index: 3;
-  //   object-fit: cover;
-  //   @include mediaQueriesSectionImg();
-  // }
 }
 
 .atf-content {
@@ -76,17 +65,21 @@ section {
 
   > img:nth-child(3) {
     position: absolute;
-    bottom: -939px;
+    bottom: clamp(-939px, -916.2px + -1.1875vw, -920px);
     width: 1920px;
-    left: -366px;
+    left: -306px;
 
     @media screen and (min-width: 2561px) {
-      left: clamp(-565px, 232.2457px + -31.1424vw, -366px);
+      left: clamp(-565px, 472.6213px + -40.5321vw, -306px);
       transform: rotate(7deg);
     }
 
+    @media screen and (min-height: 768px) and (max-height: 1079px) {
+      left: -370px;
+    }
+
     @media screen and (min-width: 1921px) and (max-width: 5550px) {
-      width: clamp(1921px, 0px + 100vw, 5500px);
+      width: clamp(1921px, calc(25px + 100vw), 5500px);
       bottom: clamp(-2578px, 45.2198px + -51.2348vw, -939px);
       left: clamp(-1928px, 799.0653px + -53.263vw, -565px);
     }
