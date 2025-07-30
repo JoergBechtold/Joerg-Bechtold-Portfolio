@@ -19,11 +19,11 @@
   pointer-events: none;
   transition: opacity 0.3s ease, visibility 0.3s ease;
 
-  &.show-overlay {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: all;
-  }
+  // &.show-overlay {
+  //   opacity: 1;
+  //   visibility: visible;
+  //   pointer-events: all;
+  // }
 }
 
 .overlay-content {
@@ -76,5 +76,13 @@
   }
   100% {
     transform: rotate(0deg);
+  }
+}
+
+@media screen and (orientation: landscape) and (pointer: coarse) and (max-width: 920px) {
+  .rotate-device-overlay {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
   }
 }

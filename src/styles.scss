@@ -59,6 +59,12 @@ button {
   }
 }
 
+@media screen and (orientation: landscape) and (pointer: coarse) and (max-width: 920px) {
+  body {
+    overflow: hidden;
+  }
+}
+
 ::-webkit-scrollbar {
   width: 4px;
   scrollbar-color: $primary-bg-green;

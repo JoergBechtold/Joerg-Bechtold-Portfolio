@@ -65,12 +65,16 @@ h1 {
 
 .info-block {
   margin-top: 32px;
-  @include dFlexAllCenter($g: 18px, $ai: flex-start);
+  @include dFlexAllCenter(
+    $g: clamp(1px, -11.1429px + 3.7946vw, 18px),
+    $ai: flex-start
+  );
+  width: 100%;
 }
 
 .icon-box {
   display: block;
-  height: 48px;
+  height: clamp(35px, 25.7143px + 2.9018vw, 48px);
   aspect-ratio: 1 / 1;
   margin-top: 10px;
 
