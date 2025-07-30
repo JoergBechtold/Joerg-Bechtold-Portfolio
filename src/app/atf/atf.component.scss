@@ -15,16 +15,16 @@ section {
     height: unset;
   }
 
-  > img {
-    position: absolute;
-    left: 0;
-    right: 0;
-    width: 100%;
-    bottom: -695px;
-    z-index: 3;
-    object-fit: cover;
-    // @include mediaQueriesSectionImg();
-  }
+  // > img {
+  //   position: absolute;
+  //   left: 0;
+  //   right: 0;
+  //   width: 100%;
+  //   bottom: -695px;
+  //   z-index: 3;
+  //   object-fit: cover;
+  //   @include mediaQueriesSectionImg();
+  // }
 }
 
 .atf-content {
@@ -78,10 +78,10 @@ section {
     position: absolute;
     bottom: -939px;
     width: 1920px;
-    left: -306px;
+    left: -366px;
 
     @media screen and (min-width: 2561px) {
-      left: clamp(-565px, 472.6213px + -40.5321vw, -306px);
+      left: clamp(-565px, 232.2457px + -31.1424vw, -366px);
       transform: rotate(7deg);
     }
 
