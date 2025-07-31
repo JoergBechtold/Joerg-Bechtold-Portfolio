@@ -27,7 +27,7 @@ export class SkillsdataService {
       img: './../../../assets/icons/skills-icons/TYPESCRIPT-icon.svg',
     },
     {
-      name: 'ANGULAR',
+      name: 'Angular',
       img: './../../../assets/icons/skills-icons/ANGULAR-icon.svg',
     },
     {
@@ -37,6 +37,10 @@ export class SkillsdataService {
     {
       name: 'Git',
       img: './../../../assets/icons/skills-icons/GIT-icon.svg',
+    },
+    {
+      name: 'Github',
+      img: './../../../assets/icons/skills-icons/GITHUB.png',
     },
     {
       name: 'REST-API',
