@@ -295,6 +295,11 @@ section {
   > p {
     @include fontSizeWeightColor($si: 18px);
     text-align: right;
+    padding-left: 100px;
+
+    @media screen and (max-width: 520px) {
+      padding-left: unset;
+    }
   }
 
   @media screen and (max-width: $breakpoint-width-920) {

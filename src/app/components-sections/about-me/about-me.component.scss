@@ -4,6 +4,8 @@
 
 section {
   @include commonSectionStyles();
+  height: unset;
+  padding-top: 50px;
   @include paddingTopMinWidthBreakpoint();
 }
 
@@ -16,7 +18,8 @@ h1 {
 }
 
 .about-me-content {
-  @include commonContentStyle();
+  position: relative;
+  @include commonContentStyle($ai: flex-start);
 
   @media screen and (max-width: $breakpoint-width-920) {
     @include dFlexAllCenter();
@@ -89,6 +92,8 @@ h1 {
 
 .content-right {
   z-index: 4;
+  top: 130px;
+  position: sticky;
   @include dFlexAllCenter();
   height: clamp(307px, 172.68px + 14.6vw, 453px);
 

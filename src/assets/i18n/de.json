@@ -21,7 +21,7 @@
   "ATF": {
     "SCROLL_DOWN": "nach unten scrollen",
     "I_AM": "Ich bin",
-    "LETS_TALK": "Lass uns reden",
+    "LETS_TALK": "Kontakt aufnehmen",
     "ALT_TEXT_PROFILE_PICTURE": "Profilbild von webseiten Besitzer",
     "ALT_TEXT_PURPLE_GREEN_SHADOW": "Bild von einem lila und grünen schatten",
     "ALT_TEXT_GRAY_BACKGROUND_IMG": "Bild von einem grauen Hintergrund"
@@ -29,11 +29,11 @@
 
   "ABOUT_ME": {
     "HEADLINE": "Über mich",
-    "DESCRIPTION_PART1": "Schreib etwas über dich, das IT-bezogen ist.",
+    "DESCRIPTION_PART1": "Ich bin Jörg Bechtold, ein engagierter Frontend-Entwickler aus Gründau-Lieblos, Hessen. Als Quereinsteiger habe ich nach vielen Jahren in der Industrie bewusst den Weg in die Web-Entwicklung gesucht und erfolgreich eine intensive Weiterbildung bei der Developer Akademie absolviert. Meine Begeisterung für das Programmieren speist sich aus der Möglichkeit, Ideen digital umzusetzen. Die stetige Weiterentwicklung der Technologie und das Schaffen sauberer, nutzerfreundlicher Anwendungen sind meine treibende Kraft.",
     "DESCRIPTION_PART2": "Warum brennst du für das Programmieren?  Was ist deine Inspirationsquelle, um deine Programmierkenntnisse zu verbessern?",
-    "LOCATION": "Wo befindest du dich? Bist du offen für verschiedene Arbeitsweisen, wie z.B. Remote-Arbeit oder sogar einen Umzug?",
-    "LEARNING": "Zeige, dass du aufgeschlossen bist. Bist du enthusiastisch, neue Technologien zu lernen und deine Fähigkeiten kontinuierlich zu verbessern?",
-    "PROBLEM_SOLVING": "Eine kurze Beschreibung deines Problemlösungsansatzes. Lernst du aus jeder Herausforderung, während du nach der effizientesten oder elegantesten Lösung suchst? Du kannst einige Schlüsselwörter wie: analytisches Denken, Kreativität, Ausdauer und Zusammenarbeit verwenden.",
+    "LOCATION": "Aktuell lebe ich in Gründau-Lieblos, Hessen. Ich bin offen für verschiedene Arbeitsweisen und kann mir sowohl Remote-Arbeit als auch einen Umzug vorstellen, um mich neuen beruflichen Herausforderungen zu stellen.",
+    "LEARNING": "Ich bin stets enthusiastisch, neue Technologien zu lernen und meine Fähigkeiten kontinuierlich zu verbessern. Herausforderungen sehe ich als wertvolle Gelegenheiten zur Weiterentwicklung. Mein Ziel ist es, mich stets an die Spitze der Technologie zu setzen und meine Kenntnisse in der Web-Entwicklung stetig zu vertiefen.",
+    "PROBLEM_SOLVING": "Mein Problemlösungsansatz ist geprägt von analytischem Denken und Kreativität. Ich lerne aus jeder Herausforderung, indem ich systematisch die Ursachen ergründe und nach der effizientesten oder elegantesten Lösung suche. Ausdauer und eine zielorientierte Arbeitsweise sind dabei meine ständigen Begleiter. Saubere und wartbare Code-Lösungen sind mir ebenso wichtig wie eine klare Kommunikation im Team und mit Kunden. Für mich bedeutet Programmieren, Ideen verständlich und professionell in die digitale Welt zu übersetzen – dazu gehört auch, stets die richtigen Fragen zu stellen.",
     "ALT_TEXT_IMG": "profilbild",
     "ALT_TEXT_LOCATION_ICON": "standort icon",
     "ALT_TEXT_BIRNE_ICON": "birne icon",
@@ -46,8 +46,8 @@
     "HEADLINE": "Meine Fähigkeiten",
     "UNDERHEADLINE_PART_1": "Auf der Suche nach ",
     "UNDERHEADLINE_PART_2": "weiteren Fähigkeiten",
-    "DESCRIPTION_SKILLS": "Zeigen Sie, dass Sie eine Vielzahl von Frontend-Technologien <br> in Ihren Projekten eingesetzt haben.",
-    "DESCRIPTION_LEARNING_ENTHUSIASM": "Zeigen Sie Begeisterung für das Erlernen neuer Technologien <br>  und Frameworks.",
+    "DESCRIPTION_SKILLS": "Hier sehen Sie eine Auswahl der Frontend-Technologien und Tools, die ich in meinen Projekten eingesetzt habe und mit denen ich vertraut bin. Mein Fokus liegt auf der Entwicklung moderner Webanwendungen mit robusten und effizienten Lösungen.",
+    "DESCRIPTION_LEARNING_ENTHUSIASM": "Ja, definitiv! Die IT-Welt entwickelt sich ständig weiter, und ich bin immer daran interessiert, mich in neue Technologien und Frameworks einzuarbeiten. Ich sehe jede neue Lernkurve als Chance, meine Fähigkeiten zu erweitern und innovative Lösungen zu schaffen.",
     "BUTTON": "Kontakt aufnehmen",
     "GREEN_SHADOW": "Bild von einem grünen Schatten"
   },

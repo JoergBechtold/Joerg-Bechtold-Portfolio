@@ -73,6 +73,9 @@
 
 //media queries for img box
 @mixin mediaQueriesImgBox() {
+  @media screen and (max-height: 957px) {
+    height: 450px;
+  }
   @media screen and (min-height: $responsive-height-1080) {
     height: 590px;
     transform: translateY(10px);

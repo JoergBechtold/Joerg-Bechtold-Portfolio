@@ -22,7 +22,7 @@
   "ATF": {
     "SCROLL_DOWN": "scroll down",
     "I_AM": "I am",
-    "LETS_TALK": "Let's talk!",
+    "LETS_TALK": "Get in touch",
     "ALT_TEXT_PROFILE_PICTURE": "Profile picture of website owner",
     "ALT_TEXT_PURPLE_GREEN_SHADOW": "Image of a purple and green shadow",
     "ALT_TEXT_GRAY_BACKGROUND_IMG": "Image of a gray background"
@@ -30,11 +30,11 @@
 
   "ABOUT_ME": {
     "HEADLINE": "About me",
-    "DESCRIPTION_PART1": "Write some information about yourself that is IT related",
+    "DESCRIPTION_PART1": "I am Jörg Bechtold, a dedicated Frontend Developer from Gründau-Lieblos, Hessen. As a career changer, after many years in industry, I consciously chose to enter web development and successfully completed intensive further training at the Developer Akademie. My enthusiasm for programming stems from the ability to bring ideas to life digitally. The continuous evolution of technology and the creation of clean, user-friendly applications are my driving force.",
     "DESCRIPTION_PART2": "Why are you passionate about coding? What is your source of inspiration for improving your programming skills?",
-    "LOCATION": "Where are you located? Are you open to different ways of working, such as working remotely or even relocating?",
-    "LEARNING": "Show that you are open-minded. Are you enthusiastic about learning new technologies and continually improving your skills?",
-    "PROBLEM_SOLVING": "A brief description of your problem-solving approach. Do you learn from each challenge as you search for the most efficient or elegant solution? You can include some keywords like: analytical thinking, creativity, persistence and collaboration.",
+    "LOCATION": "I currently live in Gründau-Lieblos, Hessen. I am open to various working arrangements and can envision both remote work and relocation to take on new professional challenges.",
+    "LEARNING": "I am always enthusiastic about learning new technologies and continuously improving my skills. I view challenges as valuable opportunities for further development. My goal is to always stay at the forefront of technology and continuously deepen my knowledge in web development.",
+    "PROBLEM_SOLVING": "My problem-solving approach is characterized by analytical thinking and creativity. I learn from every challenge by systematically investigating the causes and seeking the most efficient or elegant solution. Perseverance and a goal-oriented working style are my constant companions. Clean and maintainable code solutions are just as important to me as clear communication within the team and with clients. For me, programming means translating ideas understandably and professionally into the digital world – which also includes always asking the right questions.",
     "ALT_TEXT_IMG": "profile picture",
     "ALT_TEXT_LOCATION_ICON": "location icon",
     "ALT_TEXT_BIRNE_ICON": "bulb icon",
@@ -47,8 +47,8 @@
     "HEADLINE": "My skills",
     "UNDERHEADLINE_PART_1": "Looking for ",
     "UNDERHEADLINE_PART_2": "another skill",
-    "DESCRIPTION_SKILLS": "Show that you have used a variety of front-end <br> technologies in your projects.",
-    "DESCRIPTION_LEARNING_ENTHUSIASM": "Reveal enthusiasm for learning new technologies <br>  and frameworks.",
+    "DESCRIPTION_SKILLS": "Yes, absolutely! The IT world is constantly evolving, and I am always keen to familiarize myself with new technologies and frameworks. I see every new learning curve as an opportunity to expand my skills and create innovative solutions.",
+    "DESCRIPTION_LEARNING_ENTHUSIASM": "Here you can see a selection of the frontend technologies and tools I have used and am proficient with in my projects. My focus is on developing modern web applications with robust and efficient solutions.",
     "BUTTON": "Get in touch",
     "GREEN_SHADOW": "Image of a green shadow"
   },

@@ -4,7 +4,7 @@
 
 section {
   @include commonSectionStyles($hei-mob: unset);
-  // @include paddingTopMinWidthBreakpoint();
+  height: unset;
 }
 
 input:-webkit-autofill,
