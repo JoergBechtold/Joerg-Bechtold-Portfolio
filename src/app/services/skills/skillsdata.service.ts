@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SkillsdataService {
-
-  constructor() { }
+  constructor() {}
 
   skillsBox = [
     {
@@ -31,6 +30,10 @@ export class SkillsdataService {
       img: './../../../assets/icons/skills-icons/ANGULAR-icon.svg',
     },
     {
+      name: 'Vue.js',
+      img: './../../../assets/icons/skills-icons/VUE-JS-icon.svg',
+    },
+    {
       name: 'Firebase',
       img: './../../../assets/icons/skills-icons/FIREBASE-icon.svg',
     },
@@ -53,6 +56,10 @@ export class SkillsdataService {
     {
       name: 'Material Design',
       img: './../../../assets/icons/skills-icons/MATERIAL-DESIGN-icon.svg',
-    }
-  ]
+    },
+    {
+      name: 'WordPress',
+      img: './../../../assets/icons/skills-icons/WP-icon.svg',
+    },
+  ];
 }
