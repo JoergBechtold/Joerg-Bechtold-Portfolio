@@ -36,23 +36,34 @@
   border: 1px solid #70e61c;
   box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.2509803922);
   margin-top: 11%;
+  width: 44%;
+  margin-inline: 5px;
+
+
+  @media screen and (max-width: 1055px) {
+    width: 50%;
+  }
 
   @media screen and (max-width: $breakpoint-width-920) {
     margin-top: 23%;
   }
 }
 
-.text-left {
-  margin-left: 3.5%;
+// .text-left {
+//   // margin-left: 3.5%;
 
-  @media screen and (max-width: $breakpoint-width-920) {
-    margin-left: 5px;
-  }
-}
+//   @media screen and (max-width: $breakpoint-width-920) {
+//     margin-inline: 5px;
+//   }
+// }
 
-.text-right {
-  margin-right: 3.5%;
-}
+// .text-right {
+//   // margin-right: 3.5%;
+
+//   @media screen and (max-width: $breakpoint-width-920) {
+//     margin-inline: 5px;
+//   }
+// }
 
 .project-blur-text {
   @media screen and (max-width: $breakpoint-width-920) {
