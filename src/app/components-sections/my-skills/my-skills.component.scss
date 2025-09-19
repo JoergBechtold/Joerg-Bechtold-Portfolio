@@ -117,6 +117,7 @@ section {
   transform: translate(-100%, 100%);
 
   >img {
+    position: relative;
     width: clamp(48px, 41.6px + 2vw, 60px);
     transition: transform 0.1s ease-out;
     aspect-ratio: 1 / 1;
@@ -133,8 +134,22 @@ section {
 
   &:hover {
     >img {
-      transform: translateY(-10px);
+      transform: translateY(-15px);
     }
+  }
+}
+
+.skill-overlay {
+  width: 100%;
+  z-index: 2;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: $primary-bg-purple;
+
+  .skill-overlay-text {
+    @include fontSizeWeightColor($si: 16px, $we: 700, $co: $primary-bg-green);
+    text-align: center;
   }
 }
 

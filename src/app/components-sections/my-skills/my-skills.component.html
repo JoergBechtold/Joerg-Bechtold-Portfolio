@@ -8,9 +8,16 @@
                 <div *ngFor="let singleSkill of skillsdata.skillsBox; let i = index"
                     [style.--animation-delay]="i * 0.08 + 's'" class="skill-item-box">
                     <div appAnimateOnScroll [animationThreshold]="0.1" class="skill-item">
+                        @if(i >= skillsdata.skillsBox.length - 3){
+                        <div class="skill-overlay">
+                            <span class="skill-overlay-text">{{'MY_SKILLS.SKILLS_LEARNING'| translate}}</span>
+                        </div>
+                        }
                         <img [src]="singleSkill.img"
                             [alt]="'MY_SKILLS.SKILL_ICON_ALT' | translate: { skillName: singleSkill.name }">
                         <p> {{ singleSkill.name }}</p>
+
+
                     </div>
                 </div>
             </div>
