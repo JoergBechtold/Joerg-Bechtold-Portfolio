@@ -66,6 +66,10 @@
       "EL_POLLO_LOCO_ALT": "Screenshot der EL Pollo Loco App auf einem Laptop",
       "DA_BUBBLE_ALT": "Screenshot der DA Bubble App auf einem Laptop",
       "PURPLE_SHADOW": "Bild von einem lila Schatten"
+    },
+
+    "PROJECT_IN_PROGRESS": {
+      "IN_PROGRESS_TEXT": "Dieses Projekt ist gerade in Arbeit"
     }
   },
 

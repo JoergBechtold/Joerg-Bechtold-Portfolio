@@ -8,13 +8,9 @@ import { TranslateManagerService } from '../../../../services/translate/translat
 @Component({
   selector: 'app-navigation',
   standalone: true,
-  imports: [
-    CommonModule,
-    TranslateModule,
-    RouterModule
-  ],
+  imports: [CommonModule, TranslateModule, RouterModule],
   templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.scss']
+  styleUrls: ['./navigation.component.scss'],
 })
 export class NavigationComponent implements OnInit {
   activeLanguage: string = 'de';
@@ -23,10 +19,10 @@ export class NavigationComponent implements OnInit {
   @Output() closeSidebarRequest = new EventEmitter<void>();
   @Output() navigateRequest = new EventEmitter<keyof typeof AppRouteKeys>();
 
-  constructor(public translateManager: TranslateManagerService) { }
+  constructor(public translateManager: TranslateManagerService) {}
 
   ngOnInit(): void {
-    this.translateManager.activeLanguage$.subscribe(lang => {
+    this.translateManager.activeLanguage$.subscribe((lang) => {
       this.activeLanguage = lang;
     });
   }
@@ -35,7 +31,9 @@ export class NavigationComponent implements OnInit {
     this.closeSidebarRequest.emit();
   }
 
-  async navigateToSection(appRouteKey: keyof typeof AppRouteKeys): Promise<void> {
+  async navigateToSection(
+    appRouteKey: keyof typeof AppRouteKeys
+  ): Promise<void> {
     if (this.isInSidebar) {
       this.onCloseSidebar();
     }
@@ -44,6 +42,9 @@ export class NavigationComponent implements OnInit {
 
   async setLanguage(lang: string): Promise<void> {
     await this.translateManager.setLanguage(lang);
+    if (this.isInSidebar) {
+      this.onCloseSidebar();
+    }
   }
 
   getRouterLink(key: keyof typeof AppRouteKeys): string[] {

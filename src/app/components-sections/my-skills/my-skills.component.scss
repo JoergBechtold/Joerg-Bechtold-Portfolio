@@ -26,7 +26,7 @@ section {
   column-gap: 20px;
   align-items: center;
 
-  > img {
+  >img {
     position: absolute;
     left: -482px;
     bottom: -560px;
@@ -106,6 +106,7 @@ section {
 
 .skill-item-box {
   width: 90px;
+  height: 100px;
 }
 
 .skill-item {
@@ -115,7 +116,7 @@ section {
   opacity: 0;
   transform: translate(-100%, 100%);
 
-  > img {
+  >img {
     width: clamp(48px, 41.6px + 2vw, 60px);
     transition: transform 0.1s ease-out;
     aspect-ratio: 1 / 1;
@@ -125,13 +126,13 @@ section {
     }
   }
 
-  > p {
+  >p {
     text-align: center;
     @include fontSizeWeightColor($si: 18px, $we: 700);
   }
 
   &:hover {
-    > img {
+    >img {
       transform: translateY(-10px);
     }
   }
@@ -165,7 +166,7 @@ section {
     padding-right: var(--padding-44-178);
   }
 
-  > p {
+  >p {
     @include fontSizeWeightColor($si: 18px);
     text-align: right;
     padding-left: var(--padding-38);
@@ -176,16 +177,14 @@ section {
   display: flex;
   gap: 20px;
 
-  > h1 {
+  >h1 {
     text-align: right;
 
-    @include fontSizeWeightColor(
-      $si: clamp(45px, 36px + 2.8125vw, 90px),
-      $we: 700
-    );
+    @include fontSizeWeightColor($si: clamp(45px, 36px + 2.8125vw, 90px),
+      $we: 700);
   }
 
-  > h1.font-size-de {
+  >h1.font-size-de {
     white-space: nowrap;
     font-size: clamp(32px, 23.4px + 2.6875vw, 75px);
 
@@ -240,7 +239,7 @@ section {
     justify-content: center;
   }
 
-  > button {
+  >button {
     @include primaryButton(top, right);
 
     @media screen and (max-width: 640px) {
@@ -265,7 +264,7 @@ section {
   display: flex;
   gap: 20px;
 
-  > h2 {
+  >h2 {
     @include fontSizeWeightColor($si: 32px, $we: 700);
     text-align: right;
 
@@ -273,13 +272,11 @@ section {
       padding-left: var(--padding-38);
     }
 
-    > span {
+    >span {
       white-space: nowrap;
-      @include fontSizeWeightColor(
-        $si: 32px,
+      @include fontSizeWeightColor($si: 32px,
         $we: 700,
-        $co: $primary-bg-purple
-      );
+        $co: $primary-bg-purple );
 
       @media screen and (max-width: $breakpoint-width-920) {
         white-space: wrap;
@@ -292,7 +289,7 @@ section {
   display: flex;
   gap: 20px;
 
-  > p {
+  >p {
     @include fontSizeWeightColor($si: 18px);
     text-align: right;
     padding-left: 100px;
