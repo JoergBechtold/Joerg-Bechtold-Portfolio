@@ -61,10 +61,10 @@ export class SkillsdataService {
       name: 'Vue.js',
       img: './../../../assets/icons/skills-icons/VUE-JS-icon.svg',
     },
-    {
-      name: 'React',
-      img: './../../../assets/icons/skills-icons/REACT.png',
-    },
+    // {
+    //   name: 'React',
+    //   img: './../../../assets/icons/skills-icons/REACT.png',
+    // },
     {
       name: 'Capacitor',
       img: './../../../assets/icons/skills-icons/CAPACITOR.png',
