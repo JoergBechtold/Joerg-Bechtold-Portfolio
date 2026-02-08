@@ -42,6 +42,10 @@ export class SkillsdataService {
       img: './../../../assets/icons/skills-icons/GITHUB.png',
     },
     {
+      name: 'GITLAB',
+      img: './../../../assets/icons/skills-icons/GITLAB.png',
+    },
+    {
       name: 'REST-API',
       img: './../../../assets/icons/skills-icons/API-icon.svg',
     },
@@ -53,6 +57,7 @@ export class SkillsdataService {
       name: 'Material Design',
       img: './../../../assets/icons/skills-icons/MATERIAL-DESIGN-icon.svg',
     },
+
     {
       name: 'WordPress',
       img: './../../../assets/icons/skills-icons/WP-icon.svg',
