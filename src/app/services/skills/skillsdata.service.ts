@@ -65,5 +65,9 @@ export class SkillsdataService {
       name: 'React',
       img: './../../../assets/icons/skills-icons/REACT.png',
     },
+    {
+      name: 'Capacitor',
+      img: './../../../assets/icons/skills-icons/CAPACITOR.png',
+    },
   ];
 }
