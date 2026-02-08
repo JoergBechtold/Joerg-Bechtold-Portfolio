@@ -16,7 +16,7 @@ import {
   styleUrl: './portfolio.component.scss',
 })
 export class PortfolioComponent implements OnInit {
-  projectInProgressOverlay: boolean = true;
+  // projectInProgressOverlay: boolean = true;
 
   projectsService = inject(PortfolioService);
 

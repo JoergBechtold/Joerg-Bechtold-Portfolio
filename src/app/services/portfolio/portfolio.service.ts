@@ -56,7 +56,7 @@ export class PortfolioService implements OnInit {
       imgAlt: 'PORTFOLIO.ALT_TEXT.DA_BUBBLE_ALT',
       technologies: ['Angular', 'TypeScript', 'Firebase'],
       description: 'PORTFOLIO.PROJECTS.DA_BUBBLE_DESCRIPTION',
-      liveTestUrl: '',
+      liveTestUrl: 'https://projekte.joergbechtold.com/da-bubble',
       githubUrl: '',
     },
   ];
