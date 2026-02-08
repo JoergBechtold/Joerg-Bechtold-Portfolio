@@ -57,7 +57,7 @@ export class PortfolioService implements OnInit {
       technologies: ['Angular', 'TypeScript', 'Firebase'],
       description: 'PORTFOLIO.PROJECTS.DA_BUBBLE_DESCRIPTION',
       liveTestUrl: 'https://projekte.joergbechtold.com/da-bubble',
-      githubUrl: '',
+      githubUrl: 'https://github.com/JoergBechtold/DABubble.git',
     },
   ];
 }
