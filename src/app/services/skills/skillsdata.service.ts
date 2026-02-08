@@ -38,7 +38,7 @@ export class SkillsdataService {
       img: './../../../assets/icons/skills-icons/GIT-icon.svg',
     },
     {
-      name: 'Github',
+      name: 'GitHub',
       img: './../../../assets/icons/skills-icons/GITHUB.png',
     },
     {
