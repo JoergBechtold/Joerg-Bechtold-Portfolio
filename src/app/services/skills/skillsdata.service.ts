@@ -42,7 +42,7 @@ export class SkillsdataService {
       img: './../../../assets/icons/skills-icons/GITHUB.png',
     },
     {
-      name: 'GITLAB',
+      name: 'GitLab',
       img: './../../../assets/icons/skills-icons/GITLAB.png',
     },
     {
